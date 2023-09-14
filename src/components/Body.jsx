@@ -46,9 +46,17 @@ const Body = () => {
           </Tr>
         </Thead>
         <tbody>
-          {bibliotecaSrched.map((item) => (
+          {bibliotecaSrched.map((item, index) => (
             <>
-              <LibroCard key={item.id} libro={item} autor_id={item.autor_id} />
+              <LibroCard
+                key={index}
+                libro={item}
+                autor={
+                  item.autor_id
+                    ? autores.find((e) => e.id == item.autor_id)
+                    : "Desconocido"
+                }
+              />
             </>
           ))}
         </tbody>

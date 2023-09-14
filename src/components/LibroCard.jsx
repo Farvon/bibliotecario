@@ -3,25 +3,22 @@ import styled from "styled-components";
 
 import { getAutoresById } from "../services";
 
-const LibroCard = ({ libro, autor_id }) => {
-  const [nombreAutor, setNombreAutor] = useState([]);
+const LibroCard = ({ libro, autor }) => {
+  const [nombreAutor, setNombreAutor] = useState("");
   // console.log(autor_id);
 
   useEffect(() => {
-    autor_id != null &&
-      getAutoresById(autor_id).then((autorUnico) =>
-        setNombreAutor(autorUnico[0])
-      );
+    autor && setNombreAutor(autor);
   }, []);
 
-  //   console.log(nombreAutor[0].nombre);
+  // console.log(nombreAutor);
 
   return (
     <>
       <Tr>
         <Td>imagen</Td>
         <Td>{libro.titulo}</Td>
-        <Td>{autor_id != null ? nombreAutor[0].nombre : "Desconocido"}</Td>
+        {<Td>{autor.nombre ? autor.nombre : "Desconocido"}</Td>}
         <Td>{libro.editorial}</Td>
         <Td>{libro.cantidad}</Td>
       </Tr>
