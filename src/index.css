@@ -14,16 +14,11 @@
   -webkit-text-size-adjust: 100%;
 }
 
-
-body{
-  
-  margin:0;
-  padding:0;
-  
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #faf7f7;
 }
-
-
-
 
 button {
   border-radius: 8px;
