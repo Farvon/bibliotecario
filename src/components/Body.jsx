@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { getLibros, getAutores } from "../services";
+import { getLibros, getAutores } from "../services/libros";
 import LibroCard from "./LibroCard";
 
 const Body = () => {
