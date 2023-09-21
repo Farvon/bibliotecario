@@ -9,16 +9,23 @@ const LibroCard = ({ libro, autor }) => {
     autor && setNombreAutor(autor);
   }, []);
 
+  const handleClick = () => {
+    console.log("clic");
+  };
   // console.log(nombreAutor);
 
   return (
     <>
       <Tr>
-        <Td>
+        <Td onClick={(e) => handleClick()}>
           <Img src="src\assets\icons\book.png" />
         </Td>
         <Td>{libro.titulo}</Td>
-        {<Td>{autor.nombre ? autor.nombre : "Desconocido"}</Td>}
+        {autor === "Desconocido" ? (
+          <Td>Desconocido </Td>
+        ) : (
+          <Td>{autor.nombre}</Td>
+        )}
         <Td>{libro.editorial}</Td>
         <Td>{libro.cantidad}</Td>
       </Tr>
