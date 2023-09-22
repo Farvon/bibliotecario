@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { getLibros, getAutores } from "../services/libros";
-import LibroCard from "./LibroCard";
+import { getLibros, getAutores } from "../backend/controllers/libros";
+import Libro from "./Libro";
+import ModalBook from "./LibroCard";
 
 const Body = () => {
   const [bookSrch, setBookSrch] = useState();
@@ -28,6 +29,8 @@ const Body = () => {
     setBibliotecaSrched(bookSrched);
   };
 
+  const handleModal = ({ libro }) => {};
+
   return (
     <>
       <Input
@@ -49,7 +52,7 @@ const Body = () => {
         <tbody>
           {bibliotecaSrched.map((item, index) => (
             <>
-              <LibroCard
+              <Libro
                 key={index}
                 libro={item}
                 autor={

@@ -1,17 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
-import { crearUsuario } from "../backend/controllers/usuarios";
-
-const Login = () => {
+import { loginUser } from "../backend/controllers/usuarios";
+const Login = ({ setUser }) => {
   const [userData, setUserData] = useState({
-    nombre: "",
     email: "",
     password: "",
   });
-
-  console.log(userData);
 
   const handleChange = (e) => {
     setUserData((prevUserData) => {
@@ -24,7 +20,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    crearUsuario(userData).then(console.log("Usuario Creado"));
+
+    loginUser(userData).then((data) => {
+      data.user != null
+        ? (setUser(data), console.log(data))
+        : console.log("error de logueo");
+    });
   };
 
   return (

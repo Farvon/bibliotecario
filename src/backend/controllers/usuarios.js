@@ -13,3 +13,16 @@ export const crearUsuario = async (user) => {
     },
   });
 };
+
+export const loginUser = async (user) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: user.password,
+  });
+  return data;
+};
+
+export const verificarSesion = async () => {
+  const { data, error } = await supabase.auth.getSession();
+  return data;
+};
