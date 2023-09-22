@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { crearUsuario } from "../backend/controllers/usuarios";
@@ -29,13 +30,6 @@ const Login = () => {
   return (
     <>
       <form>
-        <label>Nombre</label>
-        <input
-          type="text"
-          name="nombre"
-          placeholder="Nombre"
-          onChange={handleChange}
-        />
         <label>E-mail</label>
         <input
           type="email"
@@ -51,9 +45,12 @@ const Login = () => {
           onChange={handleChange}
         />
         <button type="submit" onClick={(e) => handleSubmit(e)}>
-          Crear Usuario
+          Ingresar
         </button>
       </form>
+      <button>
+        <Link to="/singup">Registrarse</Link>
+      </button>
     </>
   );
 };
