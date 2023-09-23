@@ -1,10 +1,9 @@
 import Body from "../components/Body";
 import Header from "../components/Header";
 
-const Home = ({ setLoginStatus }) => {
+const Home = () => {
   return (
     <>
-      <Header setLoginStatus={setLoginStatus} />
       <Body />
     </>
   );

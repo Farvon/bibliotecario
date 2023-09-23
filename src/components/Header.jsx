@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { singOut } from "../backend/controllers/usuarios";
 
-const Header = ({ setLoginStatus }) => {
+const Header = ({ loginStatus, setLoginStatus }) => {
   const handleSingOut = () => {
     singOut().then(() => {
       setLoginStatus(false);
@@ -11,7 +11,9 @@ const Header = ({ setLoginStatus }) => {
   return (
     <Container>
       <H1>Bibliotecario</H1>
-      <button onClick={() => handleSingOut()}>Cerrar Sesión</button>
+      {loginStatus && (
+        <button onClick={() => handleSingOut()}>Cerrar Sesión</button>
+      )}
     </Container>
   );
 };

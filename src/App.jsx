@@ -8,6 +8,7 @@ import Admin from "./views/Admin";
 import Home from "./views/Home";
 import { useEffect, useState } from "react";
 import { verificarSesion } from "./backend/controllers/usuarios";
+import Header from "./components/Header";
 
 function App() {
   const [user, setUser] = useState([]);
@@ -24,25 +25,26 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          loginStatus ? (
-            userEmail === "admin@bibliotecario.com" ? (
-              <Admin />
+    <>
+      <Header loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            loginStatus ? (
+              userEmail === "admin@bibliotecario.com" ? (
+                <Admin />
+              ) : (
+                <Home setLoginStatus={setLoginStatus} />
+              )
             ) : (
-              <Home setLoginStatus={setLoginStatus} />
+              <Login setUser={setUser} setLoginStatus={setLoginStatus} />
             )
-          ) : (
-            <Login setUser={setUser} setLoginStatus={setLoginStatus} />
-          )
-        }
-      />
-      <Route path="/singup" element={<SingUp />} />
-
-      {/* <Route path="/home" element={<Home />} /> */}
-    </Routes>
+          }
+        />
+        <Route path="/singup" element={<SingUp />} />
+      </Routes>
+    </>
   );
 }
 

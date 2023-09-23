@@ -31,30 +31,68 @@ const Login = ({ setUser, setLoginStatus }) => {
 
   return (
     <>
-      <form>
-        <label>E-mail</label>
-        <input
+      <Form>
+        <Label>E-mail</Label>
+        <Input
           type="email"
           name="email"
-          placeholder="E-mail"
+          placeholder="..."
           onChange={handleChange}
         />
-        <label>Password</label>
-        <input
+        <Label>Password</Label>
+        <Input
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="..."
           onChange={handleChange}
         />
-        <button type="submit" onClick={(e) => handleSubmit(e)}>
+        <Button type="submit" onClick={(e) => handleSubmit(e)}>
           Ingresar
-        </button>
-      </form>
-      <button>
-        <Link to="/singup">Registrarse</Link>
-      </button>
+        </Button>
+      </Form>
+      <div>
+        Aun no eres usuario?
+        <ButtonRegistro>
+          <Link to="/singup">Regístrate</Link>
+        </ButtonRegistro>
+      </div>
     </>
   );
 };
 
 export default Login;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  margin: auto;
+`;
+
+const Input = styled.input`
+  padding: 8px;
+  border-radius: 10px;
+  font-style: italic;
+`;
+
+const Label = styled.label`
+  display: flex;
+  padding: 4px;
+  border-radius: 10px;
+  font-style: italic;
+`;
+const Button = styled.button`
+  display: flex;
+  margin: 20px auto;
+  justify-content: center;
+  width: 40%;
+  background: lightblue;
+  border: none;
+  box-shadow: 2px 2px 3px #c5c5c5, -6px -6px 12px #ffffff;
+`;
+
+const ButtonRegistro = styled.button`
+  border: none;
+  color: red;
+  text-decoration: none;
+`;
