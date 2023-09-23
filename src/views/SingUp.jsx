@@ -24,7 +24,7 @@ const SingUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    crearUsuario(userData); //agregar un Then({data,error}) para redirigir o mostrar una alerta
+    crearUsuario(userData).then(() => (window.location.href = "/")); //agregar un Then({data,error}) para redirigir o mostrar una alerta
   };
 
   return (

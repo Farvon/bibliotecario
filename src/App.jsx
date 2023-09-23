@@ -4,22 +4,22 @@ import "./App.css";
 
 import Login from "./views/Login";
 import SingUp from "./views/SingUp";
+import Admin from "./views/Admin";
 import Home from "./views/Home";
 import { useEffect, useState } from "react";
-import { getUser, verificarSesion } from "./backend/controllers/usuarios";
+import { verificarSesion } from "./backend/controllers/usuarios";
 
 function App() {
   const [user, setUser] = useState([]);
+  const [userEmail, setUserEmail] = useState();
   const [loginStatus, setLoginStatus] = useState();
 
   useEffect(() => {
     verificarSesion().then((data) => {
       setUser(data);
       data.session != null && setLoginStatus(true);
-    });
-
-    getUser().then((data) => {
-      setUser(data);
+      setUserEmail(user.session.user.email);
+      console.log(userEmail);
     });
   }, []);
 
@@ -29,7 +29,11 @@ function App() {
         path="/"
         element={
           loginStatus ? (
-            <Home setLoginStatus={setLoginStatus} />
+            userEmail === "admin@bibliotecario.com" ? (
+              <Admin />
+            ) : (
+              <Home setLoginStatus={setLoginStatus} />
+            )
           ) : (
             <Login setUser={setUser} setLoginStatus={setLoginStatus} />
           )
