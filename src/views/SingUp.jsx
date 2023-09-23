@@ -8,9 +8,10 @@ const SingUp = () => {
     nombre: "",
     email: "",
     password: "",
+    nombre: "",
+    telefono: "",
+    direccion: "",
   });
-
-  console.log(userData);
 
   const handleChange = (e) => {
     setUserData((prevUserData) => {
@@ -23,7 +24,7 @@ const SingUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    crearUsuario(userData).then(console.log("Usuario Creado"));
+    crearUsuario(userData);
   };
 
   return (
@@ -48,6 +49,20 @@ const SingUp = () => {
           type="password"
           name="password"
           placeholder="Password"
+          onChange={handleChange}
+        />
+        <label>Telefono</label>
+        <input
+          type="text"
+          name="telefono"
+          placeholder="Nombre"
+          onChange={handleChange}
+        />
+        <label>Direccion</label>
+        <input
+          type="text"
+          name="direccion"
+          placeholder="Nombre"
           onChange={handleChange}
         />
         <button type="submit" onClick={(e) => handleSubmit(e)}>

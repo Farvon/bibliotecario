@@ -10,21 +10,30 @@ import { getUser, verificarSesion } from "./backend/controllers/usuarios";
 
 function App() {
   const [user, setUser] = useState([]);
+  const [loginStatus, setLoginStatus] = useState();
 
   useEffect(() => {
     verificarSesion().then((data) => {
-      setUser(data), console.log(data);
+      setUser(data);
+      data.session != null && setLoginStatus(true);
     });
 
     getUser().then((data) => {
-      console.log(data), setUser(data);
+      setUser(data);
     });
   }, []);
+
   return (
     <Routes>
       <Route
         path="/"
-        element={user != null ? <Home /> : <Login setUser={setUser} />}
+        element={
+          loginStatus ? (
+            <Home setLoginStatus={setLoginStatus} />
+          ) : (
+            <Login setUser={setUser} setLoginStatus={setLoginStatus} />
+          )
+        }
       />
       <Route path="/singup" element={<SingUp />} />
 

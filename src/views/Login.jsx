@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { loginUser } from "../backend/controllers/usuarios";
-const Login = ({ setUser }) => {
+
+const Login = ({ setUser, setLoginStatus }) => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -23,7 +24,7 @@ const Login = ({ setUser }) => {
 
     loginUser(userData).then((data) => {
       data.user != null
-        ? (setUser(data), console.log(data))
+        ? (setUser(data), console.log("Logueado"), setLoginStatus(true))
         : console.log("error de logueo");
     });
   };
