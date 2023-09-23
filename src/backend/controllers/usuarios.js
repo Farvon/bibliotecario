@@ -2,13 +2,10 @@ import { supabase } from "../client";
 import Usuario from "../models/usuario";
 
 export const crearUsuario = async (user) => {
-  const { data, error } = await supabase.auth
-    .signUp({
-      email: user.email,
-      password: user.password,
-    })
-    .then((error) => console.log(error));
-
+  const { data, error } = await supabase.auth.signUp({
+    email: user.email,
+    password: user.password,
+  });
   const nuevoUsuario = new Usuario(
     data.user.id,
     user.email,
