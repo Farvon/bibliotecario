@@ -1,14 +1,17 @@
 import { Route, Routes } from "react-router";
 import { supabase } from "./backend/client";
-import "./App.css";
+import { useEffect, useState } from "react";
 
+import Header from "./components/Header";
 import Login from "./views/Login";
 import SingUp from "./views/SingUp";
 import Admin from "./views/Admin";
 import Home from "./views/Home";
-import { useEffect, useState } from "react";
+import Testing from "./views/Testing";
+
 import { verificarSesion } from "./backend/controllers/usuarios";
-import Header from "./components/Header";
+
+import "./App.css";
 
 function App() {
   const [user, setUser] = useState([]);
@@ -43,6 +46,7 @@ function App() {
           }
         />
         <Route path="/singup" element={<SingUp />} />
+        <Route path="/test" element={<Testing />} />
       </Routes>
     </>
   );

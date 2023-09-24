@@ -24,7 +24,7 @@ const SingUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    crearUsuario(userData).then(() => (window.location.href = "/")); //agregar un Then({data,error}) para redirigir o mostrar una alerta
+    crearUsuario(userData).then(() => (window.location.href = "/"), show()); //agregar un Then({data,error}) para redirigir o mostrar una alerta
   };
 
   return (
@@ -65,6 +65,7 @@ const SingUp = () => {
           placeholder="Nombre"
           onChange={handleChange}
         />
+
         <button type="submit" onClick={(e) => handleSubmit(e)}>
           Crear Usuario
         </button>
