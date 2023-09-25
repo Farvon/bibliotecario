@@ -1,5 +1,15 @@
+import * as React from "react";
 import { useState } from "react";
 import { styled } from "styled-components";
+
+// Inputs
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import { crearUsuario } from "../backend/controllers/usuarios";
 
@@ -8,7 +18,6 @@ const SingUp = () => {
     nombre: "",
     email: "",
     password: "",
-    nombre: "",
     telefono: "",
     direccion: "",
   });
@@ -24,54 +33,121 @@ const SingUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    crearUsuario(userData).then(() => (window.location.href = "/"), show()); //agregar un Then({data,error}) para redirigir o mostrar una alerta
+    userData.nombre != "" &&
+    userData.email != "" &&
+    userData.password != "" &&
+    userData.telefono != "" &&
+    userData.direccion != ""
+      ? crearUsuario(userData).then(() => (window.location.href = "/"))
+      : console.log("Completar todos los campos"); //agregar un Then({data,error}) para redirigir o mostrar una alerta
   };
+
+  //Inputs
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  //-------------------------------------------------------
 
   return (
     <>
-      <form>
-        <label>Nombre</label>
-        <input
-          type="text"
-          name="nombre"
-          placeholder="Nombre"
-          onChange={handleChange}
-        />
-        <label>E-mail</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="E-mail"
-          onChange={handleChange}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-        <label>Telefono</label>
-        <input
-          type="text"
-          name="telefono"
-          placeholder="Nombre"
-          onChange={handleChange}
-        />
-        <label>Direccion</label>
-        <input
-          type="text"
-          name="direccion"
-          placeholder="Nombre"
-          onChange={handleChange}
-        />
+      <FormContainer>
+        <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-nombre">Nombre</InputLabel>
+          <OutlinedInput
+            onChange={handleChange}
+            id="outlined-adornment-nombre"
+            type="text"
+            label="Nombre"
+            name="nombre"
+          />
+        </FormControl>
+        <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <InputLabel htmlFor="outline-adornment-email">Email</InputLabel>
+          <OutlinedInput
+            onChange={handleChange}
+            id="outline-adornment-email"
+            type="text"
+            label="Email"
+            name="email"
+          />
+        </FormControl>
 
-        <button type="submit" onClick={(e) => handleSubmit(e)}>
+        <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            onChange={handleChange}
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+            name="password"
+          />
+        </FormControl>
+
+        <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-telefono">
+            Teléfono
+          </InputLabel>
+          <OutlinedInput
+            onChange={handleChange}
+            id="outlined-adornment-telefono"
+            type="text"
+            label="Teléfono"
+            name="telefono"
+          />
+        </FormControl>
+        <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-direccion">
+            Dirección
+          </InputLabel>
+          <OutlinedInput
+            onChange={handleChange}
+            id="outlined-adornment-direccion"
+            type="text"
+            label="Dirección"
+            name="direccion"
+          />
+        </FormControl>
+
+        <Button type="submit" onClick={(e) => handleSubmit(e)}>
           Crear Usuario
-        </button>
-      </form>
+        </Button>
+      </FormContainer>
     </>
   );
 };
 
 export default SingUp;
+
+const FormContainer = styled.form`
+  display: flex;
+  margin: auto;
+  align-items: center;
+  flex-direction: column;
+`;
+const Button = styled.button`
+  display: flex;
+  margin: 20px auto;
+  justify-content: center;
+  width: 20%;
+  background: lightblue;
+  border: none;
+  box-shadow: 2px 2px 3px #c5c5c5, -6px -6px 12px #ffffff;
+`;

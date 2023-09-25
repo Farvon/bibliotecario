@@ -1,9 +1,12 @@
 import * as React from "react";
+import styled from "styled-components";
 
 import { singOut } from "../backend/controllers/usuarios";
 
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
+import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
+import LocalLibraryRoundedIcon from "@mui/icons-material/LocalLibraryRounded";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -30,8 +33,14 @@ export default function AccountMenu({ setLoginStatus }) {
   };
   return (
     <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Tooltip title="Account settings">
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <Tooltip>
           <IconButton
             onClick={handleClick}
             size="small"
@@ -40,7 +49,8 @@ export default function AccountMenu({ setLoginStatus }) {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            {/* <Avatar sx={{ width: 30, height: 30 }}>M</Avatar> */}
+            <Img src="src/assets/icons/book-User-Icon.svg" />
           </IconButton>
         </Tooltip>
       </Box>
@@ -80,10 +90,11 @@ export default function AccountMenu({ setLoginStatus }) {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={handleClose}>
-          <Avatar /> Mis Datos
+          <LocalLibraryRoundedIcon /> Mis Datos
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Avatar /> Mis Reservas
+          <MenuBookRoundedIcon />
+          Mis Reservas
         </MenuItem>
         <Divider />
         <MenuItem onClick={(handleClose, handleSingOut)}>
@@ -96,3 +107,7 @@ export default function AccountMenu({ setLoginStatus }) {
     </React.Fragment>
   );
 }
+
+const Img = styled.img`
+  width: 34px;
+`;

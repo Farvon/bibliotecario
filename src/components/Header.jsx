@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { singOut } from "../backend/controllers/usuarios";
 import AccountMenu from "./AccountMenu";
+import { Link } from "react-router-dom";
 
 const Header = ({ loginStatus, setLoginStatus }) => {
   return (
     <Container>
-      <H1>Bibliotecario</H1>
+      <H1 onClick={() => (window.location.href = "/")}>Bibliotecario</H1>
+
       {loginStatus && (
         <AvatarAccount>
           <AccountMenu setLoginStatus={setLoginStatus} />
@@ -27,6 +29,8 @@ const H1 = styled.h1`
   margin: 0;
   font-size: 5em;
   font-family: Youth Touch DEMO;
+  color: black;
+  cursor: pointer;
 `;
 
 const AvatarAccount = styled.div`
