@@ -21,7 +21,6 @@ export const crearUsuario = async (user) => {
     const { newData, newError } = await supabase
       .from("Usuarios")
       .insert([userData]);
-    console.log(userData);
     if (newError) {
       console.log(newError);
     }

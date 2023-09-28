@@ -5,7 +5,7 @@ import LibroCard from "./LibroCard";
 const Libro = ({ libro, autor }) => {
   const [showCard, setShowCard] = useState(false);
   const [infoCard, setInfoCard] = useState([]);
-  const [nombreAutor, setNombreAutor] = useState();
+  const [nombreAutor, setNombreAutor] = useState("");
 
   const handleClick = () => {
     setShowCard(true);

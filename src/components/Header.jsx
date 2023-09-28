@@ -3,7 +3,7 @@ import { singOut } from "../backend/controllers/usuarios";
 import AccountMenu from "./AccountMenu";
 import { Link } from "react-router-dom";
 
-const Header = ({ loginStatus, setLoginStatus }) => {
+const Header = (loginStatus, setLoginStatus) => {
   return (
     <Container>
       <H1 onClick={() => (window.location.href = "/")}>Bibliotecario</H1>

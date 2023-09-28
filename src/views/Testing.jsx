@@ -12,6 +12,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import MainRouter from "../components/routes/MainRouter";
 
 export default function Testing() {
   const [open, setOpen] = React.useState(false);
@@ -88,6 +89,8 @@ export default function Testing() {
           label="Password"
         />
       </FormControl>
+
+      <MainRouter />
     </>
   );
 }

@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-const Login = ({ setUser, setLoginStatus }) => {
+const Login = ({ setUser }) => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -30,15 +30,15 @@ const Login = ({ setUser, setLoginStatus }) => {
   };
 
   const handleSubmit = (e) => {
-    console.log(userData);
     e.preventDefault();
     userData.email != "" &&
       userData.password != "" &&
-      loginUser(userData).then((data) => {
-        data.user != null
-          ? (setUser(data), console.log("Logueado"), setLoginStatus(true))
-          : console.log("error de logueo");
-      });
+      loginUser(userData)
+        .then((data) => {
+          setUser(data);
+          window.location.reload();
+        })
+        .catch((err) => console.log(err));
   };
 
   //del Input
@@ -52,21 +52,6 @@ const Login = ({ setUser, setLoginStatus }) => {
   return (
     <FormContainer>
       <Form>
-        {/* <Label>E-mail</Label>
-        <Input
-          type="email"
-          name="email"
-          placeholder="..."
-          onChange={handleChange}
-        />
-        <Label>Password</Label>
-        <Input
-          type="password"
-          name="password"
-          placeholder="..."
-          onChange={handleChange}
-        /> */}
-
         <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="filled-adornment-email">Email</InputLabel>
           <OutlinedInput

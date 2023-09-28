@@ -15,7 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 
-export default function AccountMenu({ setLoginStatus }) {
+const AccountMenu = (setLoginStatus) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -27,8 +27,7 @@ export default function AccountMenu({ setLoginStatus }) {
 
   const handleSingOut = () => {
     singOut().then(() => {
-      setLoginStatus(false);
-      console.log("deslogueado");
+      window.location.reload();
     });
   };
   return (
@@ -106,7 +105,9 @@ export default function AccountMenu({ setLoginStatus }) {
       </Menu>
     </React.Fragment>
   );
-}
+};
+
+export default AccountMenu;
 
 const Img = styled.img`
   width: 34px;

@@ -3,22 +3,21 @@ import styled from "styled-components";
 
 import { getLibros, getAutores } from "../backend/controllers/libros";
 import Libro from "./Libro";
-import ModalBook from "./LibroCard";
 
 const Body = () => {
   const [bookSrch, setBookSrch] = useState();
-  const [biblioteca, setBiblioteca] = useState([]);
-  const [bibliotecaSrched, setBibliotecaSrched] = useState([]);
-  const [autores, setAutores] = useState([]);
+  const [biblioteca, setBiblioteca] = useState();
+  const [bibliotecaSrched, setBibliotecaSrched] = useState();
+  const [autores, setAutores] = useState();
 
   useEffect(() => {
+    getAutores().then((allAutores) => {
+      setAutores(allAutores[1]);
+    });
+
     getLibros().then((libros) => {
       setBiblioteca(libros[1]);
       setBibliotecaSrched(libros[1]);
-    });
-
-    getAutores().then((allAutores) => {
-      setAutores(allAutores[1]);
     });
   }, []);
 
@@ -28,8 +27,6 @@ const Body = () => {
     );
     setBibliotecaSrched(bookSrched);
   };
-
-  const handleModal = ({ libro }) => {};
 
   return (
     <>
@@ -50,19 +47,21 @@ const Body = () => {
           </Tr>
         </Thead>
         <tbody>
-          {bibliotecaSrched.map((item, index) => (
-            <>
-              <Libro
-                key={index}
-                libro={item}
-                autor={
-                  item.autor_id
-                    ? autores.find((e) => e.id == item.autor_id)
-                    : "Desconocido"
-                }
-              />
-            </>
-          ))}
+          {autores &&
+            biblioteca &&
+            bibliotecaSrched.map((item, index) => (
+              <>
+                <Libro
+                  key={index}
+                  libro={item}
+                  autor={
+                    item.autor_id
+                      ? autores.find((e) => e.id === item.autor_id)
+                      : "Desconocido"
+                  }
+                />
+              </>
+            ))}
         </tbody>
       </Table>
     </>
