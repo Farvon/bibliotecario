@@ -13,7 +13,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import { crearUsuario } from "../backend/controllers/usuarios";
 
-const SingUp = ({ setShowToast, notificar }) => {
+const SingUp = ({ setShowToast, notificar, setLoading }) => {
   const [userData, setUserData] = useState({
     nombre: "",
     email: "",
@@ -33,6 +33,7 @@ const SingUp = ({ setShowToast, notificar }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     userData.nombre != "" &&
     userData.email != "" &&
     userData.password != "" &&
@@ -42,6 +43,7 @@ const SingUp = ({ setShowToast, notificar }) => {
           notificar("Usuario Creado", "success");
           setTimeout(() => {
             window.location.href = "/";
+            setLoading(false);
           }, 3000);
         })
       : notificar("Completa todos los campos", "error");

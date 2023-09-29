@@ -4,7 +4,7 @@ const Loading = () => {
   return (
     <LoadingContainer>
       <LoadingImg src="src/assets/icons/book-loading.gif" />
-      <h2>Loading...</h2>
+      <H2>Tomando nota...</H2>
     </LoadingContainer>
   );
 };
@@ -14,11 +14,16 @@ export default Loading;
 const LoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100px;
+  width: 200px;
   margin: auto;
   align-items: center;
 `;
 
 const LoadingImg = styled.img`
-  width: 80%;
+  width: 40%;
+`;
+
+const H2 = styled.h2`
+  width: 100%;
+  font-size: 1.5em;
 `;

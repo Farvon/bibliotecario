@@ -74,6 +74,7 @@ const MainRouter = () => {
               setLoginStatus={setLoginStatus}
               setShowToast={setShowToast}
               notificar={notificar}
+              setLoading={setLoading}
             />
           )}
         </BrowserRouter>
