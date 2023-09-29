@@ -1,34 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Admin from "../views/Admin";
 import Home from "../views/Home";
-import Header from "../components/Header";
+import Loading from "../components/Loading";
 
-const AuthRouter = (user, setLoginStatus, loginStatus) => {
-  useEffect(() => {}, []);
+const AuthRouter = ({ user }) => {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    user && setLoading(false);
+  }, []);
 
   return (
     <>
-      <Header loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
-      <Routes>
-        <Route
-          path="/"
-          name="auth"
-          element={
-            <>
-              {/* Si el usuario es Admin nos deriva a su respectiva página
-            sino nos deriva al WelcomePage */}
-              {user && user.user.email === "admin@bibliotecario.com" ? (
-                <Admin />
-              ) : (
-                <Home />
-              )}
-            </>
-          }
-          exact
-        />
-      </Routes>
+      {!loading ? (
+        <Routes>
+          <Route
+            path="/"
+            name="auth"
+            element={
+              <>
+                {user && user.email === "admin@bibliotecario.com" ? (
+                  <Admin />
+                ) : (
+                  <Home />
+                )}
+              </>
+            }
+            exact
+          />
+        </Routes>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };

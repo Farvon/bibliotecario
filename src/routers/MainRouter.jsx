@@ -7,10 +7,12 @@ import { getUser, verificarSesion } from "../backend/controllers/usuarios";
 
 import AuthRouter from "./AuthRouter";
 import UnauthRouter from "./UnauthRouter";
+import Header from "../components/Header";
+import Loading from "../components/Loading";
 
 const MainRouter = () => {
   const [user, setUser] = useState();
-  const [loginStatus, setLoginStatus] = useState();
+  const [loginStatus, setLoginStatus] = useState(false);
   const [loading, setLoading] = useState();
 
   useEffect(() => {
@@ -22,7 +24,6 @@ const MainRouter = () => {
 
     verificarSesion().then((data) => {
       data.session != null && setLoginStatus(true);
-      console.log(loginStatus);
     });
 
     // const loggedUserJSON = localStorage.getItem('loggedRegMedUser');
@@ -34,17 +35,26 @@ const MainRouter = () => {
 
   return (
     <>
-      <BrowserRouter>
-        {user ? (
-          <AuthRouter
-            user={user}
-            loginStatus={loginStatus}
-            setLoginStatus={setLoginStatus}
-          />
-        ) : (
-          <UnauthRouter setUser={setUser} setLoginStatus={setLoginStatus} />
-        )}
-      </BrowserRouter>
+      <Header loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
+      {!loading ? (
+        <BrowserRouter>
+          {user ? (
+            <AuthRouter
+              user={user}
+              loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+            />
+          ) : (
+            <UnauthRouter
+              setUser={setUser}
+              loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+            />
+          )}
+        </BrowserRouter>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };
