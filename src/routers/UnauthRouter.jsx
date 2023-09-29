@@ -4,7 +4,10 @@ import Login from "../views/Login";
 import SingUp from "../views/SingUp";
 import Header from "../components/Header";
 
-const UnauthRouter = ({ setUser, setLoginStatus }, loginStatus) => {
+const UnauthRouter = (
+  { setUser, setLoginStatus, setShowToast, notificar },
+  loginStatus
+) => {
   useEffect(() => {}, []);
 
   return (
@@ -16,7 +19,12 @@ const UnauthRouter = ({ setUser, setLoginStatus }, loginStatus) => {
           element={<Login setUser={setUser} />}
           exact
         />
-        <Route path="/singup" name="singup" element={<SingUp />} exact />
+        <Route
+          path="/singup"
+          name="singup"
+          element={<SingUp setShowToast={setShowToast} notificar={notificar} />}
+          exact
+        />
       </Routes>
     </>
   );

@@ -5,8 +5,9 @@ import Admin from "../views/Admin";
 import Home from "../views/Home";
 import Loading from "../components/Loading";
 
-const AuthRouter = ({ user }) => {
+const AuthRouter = ({ user, setShowToast, notificar }) => {
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     user && setLoading(false);
   }, []);
@@ -23,7 +24,7 @@ const AuthRouter = ({ user }) => {
                 {user && user.email === "admin@bibliotecario.com" ? (
                   <Admin />
                 ) : (
-                  <Home />
+                  <Home notificar={notificar} />
                 )}
               </>
             }
