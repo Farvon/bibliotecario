@@ -17,3 +17,11 @@ export const getAutoresById = async (autor_id) => {
     .eq("id", autor_id);
   return [AutorById, error];
 };
+
+export const getDisponibles = async (libro_id) => {
+  const { data, count } = await supabase
+    .from("Inventario")
+    .select("*", { count: "exact" })
+    .eq("libro_id", libro_id);
+  return count;
+};

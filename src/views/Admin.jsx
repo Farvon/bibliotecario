@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 
+import { getDisponibles } from "../backend/controllers/libros";
+
 const Admin = () => {
   const [showedPanel, setShowedPanel] = useState({});
   useEffect(() => {
+    getDisponibles(/*libro_id*/ 73).then((data) =>
+      console.log("disponible ", data)
+    );
+
     setShowedPanel({
       retiro: true,
       devolucion: false,
