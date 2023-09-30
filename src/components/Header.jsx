@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import AccountMenu from "./AccountMenu";
 
-const Header = ({ loginStatus, setLoginStatus }) => {
+const Header = ({ user }) => {
   return (
     <Container>
       <H1 onClick={() => (window.location.href = "/")}>Bibliotecario</H1>
 
-      {loginStatus && (
+      {user != null && (
         <AvatarAccount>
-          <AccountMenu setLoginStatus={setLoginStatus} />
+          <AccountMenu />
         </AvatarAccount>
       )}
     </Container>

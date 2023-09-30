@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-const Login = ({ setUser }) => {
+const Login = (user) => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -35,10 +35,10 @@ const Login = ({ setUser }) => {
       userData.password != "" &&
       loginUser(userData)
         .then((data) => {
-          setUser(data);
-          window.location.reload();
+          user.current = data;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err))
+        .finally(() => (window.location.href = "/"));
   };
 
   //del Input

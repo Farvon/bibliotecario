@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { getUser, verificarSesion } from "../backend/controllers/usuarios";
+import { getUser } from "../backend/controllers/usuarios";
 
 import AuthRouter from "./AuthRouter";
 import UnauthRouter from "./UnauthRouter";
@@ -18,20 +18,12 @@ const MainRouter = () => {
 
   useEffect(() => {
     setLoading(true);
-    getUser().then((data) => {
-      setUser(data);
-      setLoading(false);
-    });
-
-    verificarSesion().then((data) => {
-      data.session != null && setLoginStatus(true);
-    });
-
-    // const loggedUserJSON = localStorage.getItem('loggedRegMedUser');
-    // if (loggedUserJSON) {
-    //   const user = JSON.parse(loggedUserJSON);
-    //   setUser(user);
-    // }
+    getUser()
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }, []);
 
   const notificar = (msj, tipo) => {
@@ -56,7 +48,7 @@ const MainRouter = () => {
 
   return (
     <>
-      <Header loginStatus={loginStatus} setLoginStatus={setLoginStatus} />
+      <Header user={user} />
       {!loading ? (
         <BrowserRouter>
           {user ? (
