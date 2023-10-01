@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LibroCard from "./LibroCard";
 
-const Libro = ({ libro, autor }) => {
+import IconButton from "@mui/material/IconButton";
+import LayersClearIcon from "@mui/icons-material/LayersClear";
+import Tooltip from "@mui/material/Tooltip";
+import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
+
+const Libro = ({ libro, autor, admin }) => {
   const [showCard, setShowCard] = useState(false);
   const [infoCard, setInfoCard] = useState([]);
   const [nombreAutor, setNombreAutor] = useState("");
@@ -27,6 +32,21 @@ const Libro = ({ libro, autor }) => {
         <Td>{nombreAutor}</Td>
         <Td>{libro.editorial}</Td>
         <Td>{libro.cantidad}</Td>
+        {admin == true && (
+          <Td>
+            <Tooltip title="Editar" placement="top" arrow>
+              <IconButton onClick={() => alert("Editar " + libro.titulo)}>
+                <StickyNote2OutlinedIcon />
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Eliminar" placement="top" arrow>
+              <IconButton onClick={() => alert("Borrar " + libro.titulo)}>
+                <LayersClearIcon />
+              </IconButton>
+            </Tooltip>
+          </Td>
+        )}
       </Tr>
 
       {showCard ? (
@@ -57,6 +77,7 @@ const Td = styled.td`
   display: flex;
   justify-content: center;
   width: 25%;
+  gap: 5%;
 `;
 
 const Img = styled.img`

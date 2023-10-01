@@ -6,7 +6,7 @@ const Home = ({ notificar }) => {
 
   return (
     <>
-      <Body />
+      <Body admin={false} />
       <button onClick={() => notificar(msj, tipo)}>Notificar</button>
     </>
   );

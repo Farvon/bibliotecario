@@ -1,10 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { getDisponibles } from "../backend/controllers/libros";
 
 const LibroCard = ({ onCloseIconClick, libro, autor }) => {
   const cardRef = useRef(null);
+  const [disponibles, setDisponibles] = useState();
 
   useEffect(() => {
+    // Trae disponibles segun inventario
+    getDisponibles(libro.id).then((data) => setDisponibles(data));
+
     const handleClickOutside = (event) => {
       if (cardRef.current && !cardRef.current.contains(event.target)) {
         onCloseIconClick();
@@ -51,8 +56,13 @@ const LibroCard = ({ onCloseIconClick, libro, autor }) => {
                 <InfoLibro> {libro.isbn}</InfoLibro>
               </Info>
               <Info>
-                <Etiqueta>Disponibles en biblioteca:</Etiqueta>
+                <Etiqueta>Cantidad de copias:</Etiqueta>
                 <InfoLibro> {libro.cantidad}</InfoLibro>
+              </Info>
+              <Info>
+                <Etiqueta>Disponibles en biblioteca:</Etiqueta>
+                <InfoLibro> {disponibles}</InfoLibro>
+                <select></select>
               </Info>
             </FormInfo>
           </CardForm>

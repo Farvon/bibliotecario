@@ -4,7 +4,11 @@ import styled from "styled-components";
 import { getLibros, getAutores } from "../backend/controllers/libros";
 import Libro from "./Libro";
 
-const Body = () => {
+import AddToPhotosRoundedIcon from "@mui/icons-material/AddToPhotosRounded";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+
+const Body = ({ admin }) => {
   const [bookSrch, setBookSrch] = useState();
   const [biblioteca, setBiblioteca] = useState();
   const [bibliotecaSrched, setBibliotecaSrched] = useState();
@@ -30,11 +34,22 @@ const Body = () => {
 
   return (
     <>
-      <Input
-        value={bookSrch}
-        placeholder="Que vas a leer hoy?..."
-        onChange={(e) => handleSrcBook(e.target.value.toLowerCase())}
-      />
+      <InputContainer>
+        <Input
+          value={bookSrch}
+          placeholder="Que vas a leer hoy?..."
+          onChange={(e) => handleSrcBook(e.target.value.toLowerCase())}
+        />
+        {admin == true && (
+          <AgregarContainer>
+            <Tooltip title="Agregar" placement="bottom" arrow>
+              <IconButton>
+                <AddToPhotosRoundedIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
+          </AgregarContainer>
+        )}
+      </InputContainer>
 
       <Table>
         <Thead>
@@ -44,6 +59,7 @@ const Body = () => {
             <Td>Autor</Td>
             <Td>Editorial</Td>
             <Td>Ejemplares</Td>
+            {admin == true && <Td>Acciones</Td>}
           </Tr>
         </Thead>
         <tbody>
@@ -59,6 +75,7 @@ const Body = () => {
                       ? autores.find((e) => e.id === item.autor_id)
                       : "Desconocido"
                   }
+                  admin={admin}
                 />
               </>
             ))}
@@ -70,9 +87,21 @@ const Body = () => {
 
 export default Body;
 
+const InputContainer = styled.div`
+  display: Flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2%;
+`;
+
+const AgregarContainer = styled.div`
+  dismplay: flex;
+`;
+
 const Input = styled.input`
   display: flex;
-  margin: 0 auto;
+
   min-width: 20vw;
   width: 50vw;
   height: 20px;
