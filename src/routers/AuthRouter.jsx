@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Admin from "../views/Admin";
 import Home from "../views/Home";
-import Loading from "../components/Loading";
+import PerfilUser from "../views/PerfilUser";
 
 const AuthRouter = ({ user, setShowToast, notificar }) => {
   useEffect(() => {}, []);
@@ -23,6 +23,12 @@ const AuthRouter = ({ user, setShowToast, notificar }) => {
               )}
             </>
           }
+          exact
+        />
+        <Route
+          path="/perfil"
+          name="perfil"
+          element={<PerfilUser user={user} notificar={notificar} />}
           exact
         />
       </Routes>

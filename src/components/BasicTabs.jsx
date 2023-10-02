@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { blueGrey, purple, brown } from "@mui/material/colors";
+import { brown } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Body from "./Body";
 
 const theme = createTheme({
   palette: {
     primary: brown,
-    secondary: purple,
   },
 });
 

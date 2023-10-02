@@ -13,7 +13,7 @@ const Header = ({ user }) => {
       {user != null && (
         <AvatarAccount>
           {user.email != "admin@bibliotecario.com" ? (
-            <AccountMenu admin={admin} />
+            <AccountMenu />
           ) : (
             <AdminAccountMenu />
           )}

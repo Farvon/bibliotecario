@@ -1,11 +1,10 @@
 import * as React from "react";
+
 import styled from "styled-components";
 
 import { singOut } from "../backend/controllers/usuarios";
 
 import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LocalLibraryRoundedIcon from "@mui/icons-material/LocalLibraryRounded";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -25,13 +24,17 @@ const AccountMenu = () => {
     setAnchorEl(null);
   };
 
+  const handleClickPerfil = () => {
+    window.location.href = "/perfil";
+  };
+
   const handleSingOut = () => {
     singOut().then(() => {
-      window.location.reload();
+      window.location.href = "/";
     });
   };
   return (
-    <React.Fragment>
+    <>
       <Box
         sx={{
           display: "flex",
@@ -48,7 +51,6 @@ const AccountMenu = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            {/* <Avatar sx={{ width: 30, height: 30 }}>M</Avatar> */}
             <Img src="src/assets/icons/book-User-Icon.svg" />
           </IconButton>
         </Tooltip>
@@ -88,13 +90,14 @@ const AccountMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
-          <LocalLibraryRoundedIcon /> Mis Datos
+        <MenuItem onClick={(handleClose, handleClickPerfil)}>
+          <LocalLibraryRoundedIcon /> Mi Perfil
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+
+        {/* <MenuItem onClick={handleClose}>
           <MenuBookRoundedIcon />
           Mis Reservas
-        </MenuItem>
+        </MenuItem> */}
         <Divider />
 
         <MenuItem onClick={(handleClose, handleSingOut)}>
@@ -104,7 +107,7 @@ const AccountMenu = () => {
           Logout
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   );
 };
 
