@@ -1,14 +1,22 @@
 import styled from "styled-components";
 import AccountMenu from "./AccountMenu";
+import AdminAccountMenu from "./AdminAccountMenu";
+import { useEffect, useState } from "react";
 
 const Header = ({ user }) => {
+  const [admin, setAdmin] = useState(false);
+
   return (
     <Container>
       <H1 onClick={() => (window.location.href = "/")}>Bibliotecario</H1>
 
       {user != null && (
         <AvatarAccount>
-          <AccountMenu />
+          {user.email != "admin@bibliotecario.com" ? (
+            <AccountMenu admin={admin} />
+          ) : (
+            <AdminAccountMenu />
+          )}
         </AvatarAccount>
       )}
     </Container>

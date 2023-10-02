@@ -15,7 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 
-const AccountMenu = () => {
+const AdminAccountMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -88,14 +88,14 @@ const AccountMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        {/* <MenuItem onClick={handleClose}>
           <LocalLibraryRoundedIcon /> Mis Datos
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <MenuBookRoundedIcon />
           Mis Reservas
         </MenuItem>
-        <Divider />
+        <Divider /> */}
 
         <MenuItem onClick={(handleClose, handleSingOut)}>
           <ListItemIcon>
@@ -108,7 +108,7 @@ const AccountMenu = () => {
   );
 };
 
-export default AccountMenu;
+export default AdminAccountMenu;
 
 const Img = styled.img`
   width: 34px;

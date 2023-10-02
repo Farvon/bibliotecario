@@ -68,7 +68,7 @@ export default function BasicTabs() {
           >
             <Tab label="Retiros" {...a11yProps(0)} />
             <Tab label="Gestionar Biblioteca" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
+            {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
           </Tabs>
         </ThemeProvider>
       </Box>
@@ -78,9 +78,9 @@ export default function BasicTabs() {
       <CustomTabPanel value={value} index={1}>
         <Body admin={true} />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      {/* <CustomTabPanel value={value} index={2}>
         Item Three
-      </CustomTabPanel>
+      </CustomTabPanel> */}
     </Box>
   );
 }
