@@ -19,7 +19,7 @@ const AuthRouter = ({ user, setShowToast, notificar }) => {
               {user && user.email === "admin@bibliotecario.com" ? (
                 <Admin />
               ) : (
-                <Home notificar={notificar} />
+                <Home user={user} notificar={notificar} />
               )}
             </>
           }

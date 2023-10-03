@@ -7,7 +7,7 @@ import LayersClearIcon from "@mui/icons-material/LayersClear";
 import Tooltip from "@mui/material/Tooltip";
 import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 
-const Libro = ({ libro, autor, admin }) => {
+const Libro = ({ notificar, user, libro, autor, admin }) => {
   const [showCard, setShowCard] = useState(false);
   const [infoCard, setInfoCard] = useState([]);
   const [nombreAutor, setNombreAutor] = useState("");
@@ -51,6 +51,8 @@ const Libro = ({ libro, autor, admin }) => {
 
       {showCard ? (
         <LibroCard
+          user={user}
+          notificar={notificar}
           libro={libro}
           autor={nombreAutor}
           onCloseIconClick={() => setShowCard(false)}

@@ -1,12 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import * as React from "react";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import styled from "styled-components";
-import { getDisponibles } from "../backend/controllers/libros";
 
-const LibroCard = ({ onCloseIconClick, libro, autor }) => {
+import {
+  getDisponibles,
+  getInventario,
+  updateInventario,
+} from "../backend/controllers/libros";
+import { crearReserva } from "../backend/controllers/reservas";
+
+const LibroCard = ({ user, notificar, onCloseIconClick, libro, autor }) => {
+  const [alignment, setAlignment] = React.useState("web");
+
   const cardRef = useRef(null);
   const [disponibles, setDisponibles] = useState();
+  const [dataReserva, setDataReserva] = useState({
+    usuario_id: "",
+    inventario_id: "",
+    fecha_retiro: "",
+    fecha_devolucion: "",
+  });
+
+  const [inventarioCompleto, setInventarioCompleto] = useState([]);
+  const [inventarioSelected, setInventarioSelected] = useState();
 
   useEffect(() => {
+    //Trae todos los inventarios del Libro
+    getInventario(libro.id).then((data) => setInventarioCompleto(data));
+
     // Trae disponibles segun inventario
     getDisponibles(libro.id).then((data) => setDisponibles(data));
 
@@ -22,6 +45,34 @@ const LibroCard = ({ onCloseIconClick, libro, autor }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
+  const handleInventario = (inventario) => {
+    console.log(inventario);
+    setInventarioSelected(inventario);
+  };
+
+  const handleReserva = () => {
+    // var today = new Date();
+    // var day = today.getDate();
+    // var month = today.getMonth() + 1;
+    // var year = today.getFullYear();
+    // var fecha = `${year}/${month}/${day}`;
+
+    setDataReserva({
+      usuario_id: user.id,
+      inventario_id: inventarioSelected,
+      fecha_retiro: new Date().toLocaleDateString("es-ES"),
+      fecha_devolucion: "",
+    });
+
+    crearReserva(dataReserva)
+      .then(() => updateInventario(dataReserva.inventario_id))
+      .then(() => notificar("Reserva generada", "success"));
+  };
 
   return (
     <>
@@ -62,12 +113,32 @@ const LibroCard = ({ onCloseIconClick, libro, autor }) => {
               <Info>
                 <Etiqueta>Disponibles en biblioteca:</Etiqueta>
                 <InfoLibro> {disponibles}</InfoLibro>
-                <select></select>
+              </Info>
+              <Info>
+                <ToggleButtonGroup
+                  size="small"
+                  color="primary"
+                  value={alignment}
+                  exclusive
+                  onChange={handleChange}
+                >
+                  {inventarioCompleto.map((item) => (
+                    <ToggleButton
+                      value={item.inventario}
+                      onClick={() => handleInventario(item.id)}
+                      disabled={item.reservado}
+                    >
+                      {item.inventario}
+                    </ToggleButton>
+                  ))}
+                </ToggleButtonGroup>
               </Info>
             </FormInfo>
           </CardForm>
           <CardButtons>
-            <ReservarButton>Reservar</ReservarButton>
+            <ReservarButton onClick={() => handleReserva()}>
+              Reservar
+            </ReservarButton>
             <CloseButton onClick={() => onCloseIconClick()}>
               Cancelar
             </CloseButton>

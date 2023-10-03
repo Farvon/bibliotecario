@@ -8,7 +8,7 @@ import AddToPhotosRoundedIcon from "@mui/icons-material/AddToPhotosRounded";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 
-const Body = ({ admin, notificar }) => {
+const Body = ({ user, admin, notificar }) => {
   const [bookSrch, setBookSrch] = useState();
   const [biblioteca, setBiblioteca] = useState();
   const [bibliotecaSrched, setBibliotecaSrched] = useState();
@@ -69,6 +69,8 @@ const Body = ({ admin, notificar }) => {
               <>
                 <Libro
                   key={index}
+                  user={user}
+                  notificar={notificar}
                   libro={item}
                   autor={
                     item.autor_id
