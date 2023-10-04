@@ -29,6 +29,33 @@ export const crearUsuario = async (user) => {
   }
 };
 
+export const updateUsuario = async (id, user) => {
+  const nuevoUsuario = new Usuario(
+    id,
+    user.email,
+    user.nombre,
+    user.telefono,
+    user.direccion,
+    false
+  );
+
+  const userData = nuevoUsuario.toSupabaseFormat();
+  console.log(userData);
+
+  try {
+    const { newData, newError } = await supabase
+      .from("Usuarios")
+      .update([userData])
+      .eq("id", id)
+      .select();
+    if (newError) {
+      console.log(newError);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const loginUser = async (user) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: user.email,

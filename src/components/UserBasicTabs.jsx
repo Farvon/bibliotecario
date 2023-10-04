@@ -1,4 +1,7 @@
 import * as React from "react";
+
+import HojaPerfil from "./HojaPerfil";
+
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -82,7 +85,7 @@ export default function UserBasicTabs({ user, notificar }) {
         </ThemeProvider>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Perfil
+        <HojaPerfil user_id={user.id} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         'Reservas'
