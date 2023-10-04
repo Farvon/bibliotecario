@@ -6,6 +6,15 @@ export const getLibros = async () => {
   return [error, libros];
 };
 
+export const getLibrosById = async (id) => {
+  const { data: libro, error } = await supabase
+    .from("Libros")
+    .select("*")
+    .eq("id", id);
+
+  return libro;
+};
+
 // Controladores de tabla Autores
 export const getAutores = async () => {
   const { data: Autores, error } = await supabase.from("Autores").select("*");
@@ -29,6 +38,14 @@ export const getInventario = async (libro_id) => {
   return Inventario;
 };
 
+export const getInventarioById = async (id) => {
+  const { data: Inventario, error } = await supabase
+    .from("Inventario")
+    .select("*")
+    .eq("id", id);
+  return Inventario;
+};
+
 export const getDisponibles = async (libro_id) => {
   const { data, count } = await supabase
     .from("Inventario")
@@ -42,6 +59,22 @@ export const updateInventario = async (id) => {
   const { data, error } = await supabase
     .from("Inventario")
     .update({ reservado: true })
+    .eq("id", id)
+    .select();
+};
+
+export const updateInventarioUndo = async (id) => {
+  const { data, error } = await supabase
+    .from("Inventario")
+    .update({ reservado: false })
+    .eq("id", id)
+    .select();
+};
+
+export const updateInventarioDevuelto = async (id) => {
+  const { data, error } = await supabase
+    .from("Inventario")
+    .update({ reservado: false })
     .eq("id", id)
     .select();
 };

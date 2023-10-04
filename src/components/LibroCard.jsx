@@ -11,7 +11,14 @@ import {
 } from "../backend/controllers/libros";
 import { crearReserva } from "../backend/controllers/reservas";
 
-const LibroCard = ({ user, notificar, onCloseIconClick, libro, autor }) => {
+const LibroCard = ({
+  admin,
+  user,
+  notificar,
+  onCloseIconClick,
+  libro,
+  autor,
+}) => {
   const [alignment, setAlignment] = React.useState("web");
 
   const cardRef = useRef(null);
@@ -116,6 +123,7 @@ const LibroCard = ({ user, notificar, onCloseIconClick, libro, autor }) => {
                 <InfoLibro> {disponibles}</InfoLibro>
               </Info>
               <Info>
+                <Etiqueta>N° Inventario</Etiqueta>
                 <ToggleButtonGroup
                   size="small"
                   color="primary"
@@ -136,14 +144,16 @@ const LibroCard = ({ user, notificar, onCloseIconClick, libro, autor }) => {
               </Info>
             </FormInfo>
           </CardForm>
-          <CardButtons>
-            <ReservarButton onClick={() => handleReserva()}>
-              Reservar
-            </ReservarButton>
-            <CloseButton onClick={() => onCloseIconClick()}>
-              Cancelar
-            </CloseButton>
-          </CardButtons>
+          {admin == false && (
+            <CardButtons>
+              <ReservarButton onClick={() => handleReserva()}>
+                Reservar
+              </ReservarButton>
+              <CloseButton onClick={() => onCloseIconClick()}>
+                Cancelar
+              </CloseButton>
+            </CardButtons>
+          )}
         </CardContainer>
       </Backdrop>
     </>
@@ -167,24 +177,27 @@ const Backdrop = styled.div`
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: auto;
   background: #fff;
   border-radius: 8px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding: 18px 0px;
-  width: auto;
+  width: 50vw;
 `;
 
 const CardForm = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: row;
   width: 100%;
   margin: auto;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 `;
 
 const FormImg = styled.img`
   display: flex;
   width: 40%;
+  height: 40%;
 `;
 
 const FormInfo = styled.div`
@@ -203,7 +216,10 @@ const Titulo = styled.span`
 const Info = styled.div`
   display: flex;
   flex-direction: row;
+  width: 90%;
   margin-bottom: 12px;
+  padding: 0 20px;
+  flex-wrap: wrap;
 `;
 
 const Etiqueta = styled.span`

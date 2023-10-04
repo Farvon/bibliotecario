@@ -66,20 +66,18 @@ const Body = ({ user, admin, notificar }) => {
           {autores &&
             biblioteca &&
             bibliotecaSrched.map((item, index) => (
-              <>
-                <Libro
-                  key={index}
-                  user={user}
-                  notificar={notificar}
-                  libro={item}
-                  autor={
-                    item.autor_id
-                      ? autores.find((e) => e.id === item.autor_id)
-                      : "Desconocido"
-                  }
-                  admin={admin}
-                />
-              </>
+              <Libro
+                key={item.id}
+                user={user}
+                notificar={notificar}
+                libro={item}
+                autor={
+                  item.autor_id
+                    ? autores.find((e) => e.id === item.autor_id)
+                    : "Desconocido"
+                }
+                admin={admin}
+              />
             ))}
         </tbody>
       </Table>

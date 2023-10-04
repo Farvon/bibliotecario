@@ -9,7 +9,6 @@ import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 
 const Libro = ({ notificar, user, libro, autor, admin }) => {
   const [showCard, setShowCard] = useState(false);
-  const [infoCard, setInfoCard] = useState([]);
   const [nombreAutor, setNombreAutor] = useState("");
 
   const handleClick = () => {
@@ -51,6 +50,7 @@ const Libro = ({ notificar, user, libro, autor, admin }) => {
 
       {showCard ? (
         <LibroCard
+          admin={admin}
           user={user}
           notificar={notificar}
           libro={libro}

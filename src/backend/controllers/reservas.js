@@ -24,16 +24,39 @@ export const crearReserva = async (reserva) => {
   }
 };
 
-export const getReservasNuevas = async (reserva) => {
-  const { newData, newError } = await supabase
+export const getReservasNuevas = async () => {
+  const { data: newData, newError } = await supabase
     .from("Reservas")
     .select("*")
     .eq("aprobado", false);
+
+  return newData;
 };
 
-export const getReservasAprobadas = async (reserva) => {
-  const { newData, newError } = await supabase
+export const getReservasAprobadas = async () => {
+  const { data: newData, newError } = await supabase
     .from("Reservas")
     .select("*")
     .eq("aprobado", true);
+  return newData;
+};
+
+export const updateReserva = async (id) => {
+  const { data, error } = await supabase
+    .from("Reservas")
+    .update({ aprobado: true })
+    .eq("id", id)
+    .select();
+};
+
+export const updateDevolucion = async (id) => {
+  const { data, error } = await supabase
+    .from("Reservas")
+    .update({ devuelto: true })
+    .eq("id", id)
+    .select();
+};
+
+export const deleteReserva = async (id) => {
+  const { error } = await supabase.from("Reservas").delete().eq("id", id);
 };

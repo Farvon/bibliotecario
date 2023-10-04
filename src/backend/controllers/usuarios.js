@@ -49,6 +49,14 @@ export const getUser = async () => {
   return user;
 };
 
+export const getUserById = async (id) => {
+  const { data: user, error } = await supabase
+    .from("Usuarios")
+    .select("*")
+    .eq("id", id);
+  return user;
+};
+
 export const singOut = async () => {
   const { error } = await supabase.auth.signOut();
 };
