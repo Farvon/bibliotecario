@@ -40,7 +40,6 @@ export const updateUsuario = async (id, user) => {
   );
 
   const userData = nuevoUsuario.toSupabaseFormat();
-  console.log(userData);
 
   try {
     const { newData, newError } = await supabase

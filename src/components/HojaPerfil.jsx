@@ -15,7 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { getUserById, updateUsuario } from "../backend/controllers/usuarios";
 import LoadingEditar from "./LoadingEditar";
 
-function HojaPerfil({ user_id }) {
+function HojaPerfil({ user_id, notificar }) {
   const [user, setUser] = useState();
   const [editando, setEditando] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -27,22 +27,27 @@ function HojaPerfil({ user_id }) {
   });
 
   useEffect(() => {
-    console.log(user_id);
     getUserById(user_id)
-      .then((data) => setUser(data[0]))
-      .then(() =>
-        setUserData({
-          nombre: user.nombre,
-          email: user.email,
-          telefono: user.telefono,
-          direccion: user.direccion,
-        })
-      );
+      .then(
+        (data) => (
+          setUser(data[0]),
+          setUserData({
+            nombre: data[0].nombre,
+            email: data[0].email,
+            telefono: data[0].telefono,
+            direccion: data[0].direccion,
+          })
+        )
+      )
+      .then(() => setLoading(false));
   }, []);
 
   const handleEdit = () => {
-    console.log(userData);
-    updateUsuario(user_id, userData).then(() => setEditando(false));
+    setEditando(true);
+    setLoading(true);
+    updateUsuario(user_id, userData)
+      .then(() => (setEditando(false), setLoading(false)))
+      .then(() => notificar("Usuario Editado", "success"));
   };
 
   const handleChange = (e) => {
@@ -72,7 +77,7 @@ function HojaPerfil({ user_id }) {
     >
       <Paper>
         <h2>Información de Usuario</h2>
-        {user && loading ? (
+        {user && !loading ? (
           <>
             <UserInfoContainer>
               <TextField

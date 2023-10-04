@@ -68,7 +68,6 @@ export default function UserBasicTabs({ user, notificar }) {
             aria-label="basic tabs example"
             centered
             indicatorColor="primary"
-            textColor="black    "
           >
             <Tab
               icon={<LocalLibraryRoundedIcon />}
@@ -85,7 +84,7 @@ export default function UserBasicTabs({ user, notificar }) {
         </ThemeProvider>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <HojaPerfil user_id={user.id} />
+        <HojaPerfil user_id={user.id} notificar={notificar} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         'Reservas'
