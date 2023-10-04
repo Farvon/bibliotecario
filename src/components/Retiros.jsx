@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import {
-  getReservasAprobadas,
-  updateDevolucion,
-} from "../backend/controllers/reservas";
-import { updateInventarioDevuelto } from "../backend/controllers/libros";
+import { getReservasAprobadas } from "../backend/controllers/reservas";
+import RetiroCard from "./RetiroCard";
 
 const Retiros = () => {
   const [reservas, setReservas] = useState([]);
@@ -13,13 +10,6 @@ const Retiros = () => {
   useEffect(() => {
     getReservasAprobadas().then((data) => setReservas(data));
   }, []);
-
-  const handleDevolucion = (id, inventario_id) => {
-    updateDevolucion(id);
-    updateInventarioDevuelto(inventario_id);
-    const newReservas = reservas.filter((item) => item.id != id);
-    setReservas(newReservas);
-  };
 
   return (
     <Table>
@@ -32,22 +22,13 @@ const Retiros = () => {
         </Tr>
       </Thead>
       <tbody>
-        //FALTA MODIFICAR ESTO
-        {reservas.map((reserva) => (
-          <Tr key={reserva.id}>
-            <Td>{reserva.usuario_id}</Td>
-            <Td>Libro</Td>
-            <Td>{reserva.inventario_id}</Td>
-            <Td>
-              <button
-                onClick={() =>
-                  handleDevolucion(reserva.id, reserva.inventario_id)
-                }
-              >
-                Devuelto
-              </button>
-            </Td>
-          </Tr>
+        {reservas.map((item) => (
+          <RetiroCard
+            key={item.id}
+            reserva={item}
+            reservas={reservas}
+            setReservas={setReservas}
+          />
         ))}
       </tbody>
     </Table>

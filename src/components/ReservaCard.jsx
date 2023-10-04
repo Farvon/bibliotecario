@@ -26,8 +26,6 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
       })
     );
 
-    var newInventario = inventarioById;
-
     getUserById(reserva.usuario_id).then((data) => setUserById(data[0]));
 
     // getLibrosById(inventarioById.libro_id)

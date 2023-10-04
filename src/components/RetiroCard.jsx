@@ -3,16 +3,17 @@ import styled from "styled-components";
 
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import DoNotDisturbAltRoundedIcon from "@mui/icons-material/DoNotDisturbAltRounded";
+import BeenhereRoundedIcon from "@mui/icons-material/BeenhereRounded";
+import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
 
-import { deleteReserva, updateReserva } from "../backend/controllers/reservas";
 import { getUserById } from "../backend/controllers/usuarios";
 import {
   getInventarioById,
   getLibrosById,
-  updateInventarioUndo,
+  updateInventarioDevuelto,
 } from "../backend/controllers/libros";
+
+import { updateDevolucion } from "../backend/controllers/reservas";
 
 const RetiroCard = ({ reserva, reservas, setReservas }) => {
   const [userById, setUserById] = useState();
@@ -26,46 +27,40 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
       })
     );
 
-    var newInventario = inventarioById;
-
     getUserById(reserva.usuario_id).then((data) => setUserById(data[0]));
-
-    // getLibrosById(inventarioById.libro_id)
   }, []);
 
-  const handleAprobar = (id) => {
-    updateReserva(id);
+  const handleDevolucion = (id, inventario_id) => {
+    updateDevolucion(id);
+    updateInventarioDevuelto(inventario_id);
     const newReservas = reservas.filter((item) => item.id != id);
     setReservas(newReservas);
   };
-
-  const handleRechazar = (reserva_id, inventario_id) => {
-    deleteReserva(reserva_id);
-    updateInventarioUndo(inventario_id);
-    const newReservas = reservas.filter((item) => item.id != reserva_id);
-    setReservas(newReservas);
-  };
-
   return (
-    <Tr>
+    <Tr key={reserva.id}>
       {userById && inventarioById && libroById ? (
         <>
-          <Td>{userById.nombre}</Td>
+          <Td>
+            <Tooltip title="Info" placement="top" arrow>
+              <IconButton color="warning">
+                <ContactPageRoundedIcon
+                  fontSize="small"
+                  onClick={() => handleShowUserInfo()}
+                />
+              </IconButton>
+            </Tooltip>
+            {userById.nombre}
+          </Td>
           <Td>{libroById.titulo}</Td>
           <Td>{inventarioById.inventario}</Td>
           <Td>
-            <Tooltip title="Aprobar" placement="top" arrow>
-              <IconButton onClick={() => handleAprobar(reserva.id)}>
-                <CheckCircleOutlineRoundedIcon color="success" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Denegar" placement="top" arrow>
+            <Tooltip title="Reibido" placement="top" arrow>
               <IconButton
                 onClick={() =>
-                  handleRechazar(reserva.id, reserva.inventario_id)
+                  handleDevolucion(reserva.id, reserva.inventario_id)
                 }
               >
-                <DoNotDisturbAltRoundedIcon color="error" />
+                <BeenhereRoundedIcon color="primary" />
               </IconButton>
             </Tooltip>
           </Td>
@@ -90,6 +85,7 @@ const Tr = styled.tr`
 const Td = styled.td`
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 25%;
   gap: 5%;
 `;
