@@ -33,13 +33,13 @@ const Libro = ({ notificar, user, libro, autor, admin }) => {
         <Td>{libro.cantidad}</Td>
         {admin == true && (
           <Td>
-            <Tooltip title="Editar" placement="top" arrow>
+            <Tooltip color="primary" title="Editar" placement="top" arrow>
               <IconButton onClick={() => alert("Editar " + libro.titulo)}>
                 <StickyNote2OutlinedIcon />
               </IconButton>
             </Tooltip>
 
-            <Tooltip title="Eliminar" placement="top" arrow>
+            <Tooltip color="error" title="Eliminar" placement="top" arrow>
               <IconButton onClick={() => alert("Borrar " + libro.titulo)}>
                 <LayersClearIcon />
               </IconButton>

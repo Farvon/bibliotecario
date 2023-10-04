@@ -42,7 +42,7 @@ const Body = ({ user, admin, notificar }) => {
         />
         {admin == true && (
           <AgregarContainer>
-            <Tooltip title="Agregar" placement="bottom" arrow>
+            <Tooltip color="success" title="Agregar" placement="bottom" arrow>
               <IconButton>
                 <AddToPhotosRoundedIcon fontSize="large" />
               </IconButton>
