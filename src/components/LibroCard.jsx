@@ -51,7 +51,6 @@ const LibroCard = ({ user, notificar, onCloseIconClick, libro, autor }) => {
   };
 
   const handleInventario = (inventario) => {
-    console.log(inventario);
     setInventarioSelected(inventario);
   };
 
@@ -62,16 +61,18 @@ const LibroCard = ({ user, notificar, onCloseIconClick, libro, autor }) => {
     // var year = today.getFullYear();
     // var fecha = `${year}/${month}/${day}`;
 
-    setDataReserva({
+    const newReserva = {
       usuario_id: user.id,
       inventario_id: inventarioSelected,
       fecha_retiro: new Date().toLocaleDateString("es-ES"),
       fecha_devolucion: "",
-    });
+    };
 
-    crearReserva(dataReserva)
-      .then(() => updateInventario(dataReserva.inventario_id))
+    setDataReserva(newReserva);
+    crearReserva(newReserva)
+      .then(() => updateInventario(newReserva.inventario_id))
       .then(() => notificar("Reserva generada", "success"));
+    onCloseIconClick();
   };
 
   return (

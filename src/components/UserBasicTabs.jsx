@@ -74,7 +74,7 @@ export default function UserBasicTabs({ user, notificar }) {
             />
             <Tab
               icon={<MenuBookRounded />}
-              label="Gestionar Reservas"
+              label="Mis Reservas"
               {...a11yProps(1)}
             />
             {/* <Tab label="Item Three" {...a11yProps(2)} /> */}

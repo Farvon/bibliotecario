@@ -23,3 +23,17 @@ export const crearReserva = async (reserva) => {
     console.log(error);
   }
 };
+
+export const getReservasNuevas = async (reserva) => {
+  const { newData, newError } = await supabase
+    .from("Reservas")
+    .select("*")
+    .eq("aprobado", false);
+};
+
+export const getReservasAprobadas = async (reserva) => {
+  const { newData, newError } = await supabase
+    .from("Reservas")
+    .select("*")
+    .eq("aprobado", true);
+};
