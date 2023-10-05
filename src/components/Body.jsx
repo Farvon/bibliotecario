@@ -65,7 +65,7 @@ const Body = ({ user, admin }) => {
         <tbody>
           {autores &&
             biblioteca &&
-            bibliotecaSrched.map((item, index) => (
+            bibliotecaSrched.map((item) => (
               <Libro
                 key={item.id}
                 user={user}

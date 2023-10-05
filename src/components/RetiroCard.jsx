@@ -18,12 +18,14 @@ import {
   updateFechaDevolucion,
 } from "../backend/controllers/reservas";
 
+import UsuarioCard from "./UsuarioCard";
 import useAlert from "../hooks/useAlerts";
 
 const RetiroCard = ({ reserva, reservas, setReservas }) => {
   const [userById, setUserById] = useState();
   const [inventarioById, setInventarioById] = useState();
   const [libroById, setLibroById] = useState();
+  const [showCard, setShowCard] = useState(false);
 
   const { alertSuccess, alertError } = useAlert();
 
@@ -36,6 +38,10 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
 
     getUserById(reserva.usuario_id).then((data) => setUserById(data[0]));
   }, []);
+
+  const handleClick = () => {
+    setShowCard(true);
+  };
 
   const handleDevolucion = (id, inventario_id) => {
     const fechaDevolucion = new Date().toLocaleDateString("es-ES");
@@ -57,7 +63,7 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
               <IconButton color="warning">
                 <ContactPageRoundedIcon
                   fontSize="small"
-                  onClick={() => handleShowUserInfo()}
+                  onClick={() => handleClick()}
                 />
               </IconButton>
             </Tooltip>
@@ -76,6 +82,13 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
               </IconButton>
             </Tooltip>
           </Td>
+
+          {showCard ? (
+            <UsuarioCard
+              user={userById}
+              onCloseIconClick={() => setShowCard(false)}
+            />
+          ) : null}
         </>
       ) : null}
     </Tr>
