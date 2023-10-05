@@ -57,6 +57,7 @@ function MisReservas({ user_id }) {
           <TdSort onClick={() => sortByEstado()}>
             Devolución{sortedDevo ? "⮟" : "⮝"}
           </TdSort>
+          <Td>Estado</Td>
         </Tr>
       </Thead>
       <tbody>
@@ -75,11 +76,11 @@ export default MisReservas;
 const Table = styled.table`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 10px;
   padding-top: 0px;
   margin: 0 auto;
   font-size: 0.8em;
-  width: 80vw;
+  width: 70vw;
 `;
 
 const Thead = styled.thead``;
@@ -99,13 +100,13 @@ const Td = styled.td`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25%;
+  width: 20%;
 `;
 
 const TdSort = styled.td`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25%;
+  width: 20%;
   cursor: pointer;
 `;

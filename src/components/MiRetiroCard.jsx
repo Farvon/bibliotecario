@@ -22,6 +22,19 @@ const MiRetiroCard = ({ retiro }) => {
     );
   }, []);
 
+  const fechaRetiroString = retiro.fecha_retiro; // Supongamos que esto es "2023-03-10"
+  const partesFechaRetiro = fechaRetiroString.split("-");
+  const fechaRetiro = new Date(
+    partesFechaRetiro[0], // Año
+    partesFechaRetiro[2] - 1, // Mes (restamos 1 porque en JavaScript los meses van de 0 a 11)
+    partesFechaRetiro[1] // Día
+  );
+
+  const fechaHoy = new Date();
+  const diferenciaEnMilisegundos = fechaHoy - fechaRetiro;
+  const dias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+  const estado = dias <= 1 ? "En tiempo" : "Excedido";
+
   return (
     <Tr>
       {inventarioById && libroById ? (
@@ -47,6 +60,9 @@ const MiRetiroCard = ({ retiro }) => {
               </DevueltoContainer>
             )}
           </Td>
+          <Td>
+            <TdEstado dias={dias}>{!retiro.devuelto ? estado : null}</TdEstado>
+          </Td>
         </>
       ) : null}
     </Tr>
@@ -56,7 +72,6 @@ export default MiRetiroCard;
 
 const Tr = styled.tr`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 10px;
   margin: 10px;
@@ -68,8 +83,7 @@ const Td = styled.td`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25%;
-  gap: 5%;
+  width: 20%;
 `;
 
 const DevueltoContainer = styled.div`
@@ -77,4 +91,11 @@ const DevueltoContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+`;
+
+const TdEstado = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${({ dias }) => (dias <= 1 ? "green" : "red")};
 `;
