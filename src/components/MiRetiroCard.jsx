@@ -22,14 +22,8 @@ const MiRetiroCard = ({ retiro }) => {
     );
   }, []);
 
-  //   const handleDevolucion = (id, inventario_id) => {
-  //     updateDevolucion(id);
-  //     updateInventarioDevuelto(inventario_id);
-  //     const newReservas = reservas.filter((item) => item.id != id);
-  //     setReservas(newReservas);
-  //   };
   return (
-    <Tr key={retiro.id}>
+    <Tr>
       {inventarioById && libroById ? (
         <>
           <Td>{libroById.titulo}</Td>

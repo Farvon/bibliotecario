@@ -27,8 +27,6 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
     );
 
     getUserById(reserva.usuario_id).then((data) => setUserById(data[0]));
-
-    // getLibrosById(inventarioById.libro_id)
   }, []);
 
   const handleAprobar = (id) => {

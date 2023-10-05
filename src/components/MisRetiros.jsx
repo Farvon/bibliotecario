@@ -1,47 +1,69 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { getReservasByUserId } from "../backend/controllers/reservas";
+import { getReservasAprobadasByUserId } from "../backend/controllers/reservas";
 
 import MiRetiroCard from "./MiRetiroCard";
 
 function MisReservas({ user_id }) {
   const [misRetiros, setMisRetiros] = useState([]);
   const [misRetirosSorted, setMisRetirosSorted] = useState([]);
+  const [sortedFecha, setSortedFecha] = useState(true);
+  const [sortedDevo, setSortedDevo] = useState(true);
 
   useEffect(() => {
-    getReservasByUserId(user_id).then(
+    getReservasAprobadasByUserId(user_id).then(
       (data) => (setMisRetiros(data), setMisRetirosSorted(data))
     );
   }, []);
 
-  const sortByInventario = () => {
-    const retirosSorted = misRetiros.sort(
-      (a, b) => a.inventario_id - b.inventario_id
-    );
+  const sortByFecha = () => {
+    const retirosSorted = sortedFecha
+      ? misRetiros.toSorted((a, b) => {
+          return b.fecha_retiro
+            .toString()
+            .localeCompare(a.fecha_retiro.toString());
+        })
+      : misRetiros.toSorted((a, b) => {
+          return a.fecha_retiro
+            .toString()
+            .localeCompare(b.fecha_retiro.toString());
+        });
     setMisRetirosSorted(retirosSorted);
-    console.log(misRetirosSorted);
+    setSortedFecha(!sortedFecha);
   };
 
-  const sortByLibro = () => {
-    const retirosSorted = misRetiros.sort((a, b) => a.id - b.id);
+  const sortByEstado = () => {
+    const retirosSorted = sortedDevo
+      ? misRetiros.toSorted((a, b) => {
+          return b.devuelto.toString().localeCompare(a.devuelto.toString());
+        })
+      : misRetiros.toSorted((a, b) => {
+          return a.devuelto.toString().localeCompare(b.devuelto.toString());
+        });
     setMisRetirosSorted(retirosSorted);
-    console.log(misRetirosSorted);
+    setSortedDevo(!sortedDevo);
   };
 
   return (
     <Table>
       <Thead>
         <Tr>
-          <Td onClick={() => sortByLibro()}>Libro</Td>
-          <Td onClick={() => sortByInventario()}>Inventario</Td>
-          <Td>Fecha de retiro</Td>
-          <Td>Devolución</Td>
+          <Td>Libro</Td>
+          <Td>Inventario</Td>
+          <TdSort onClick={() => sortByFecha()}>
+            Fecha de retiro {sortedFecha ? "⮟" : "⮝"}
+          </TdSort>
+          <TdSort onClick={() => sortByEstado()}>
+            Devolución{sortedDevo ? "⮟" : "⮝"}
+          </TdSort>
         </Tr>
       </Thead>
       <tbody>
         {misRetirosSorted.map((item) => (
-          <MiRetiroCard key={item.id} retiro={item} />
+          <>
+            <MiRetiroCard key={item.id} retiro={item} />
+          </>
         ))}
       </tbody>
     </Table>
@@ -78,4 +100,12 @@ const Td = styled.td`
   justify-content: center;
   align-items: center;
   width: 25%;
+`;
+
+const TdSort = styled.td`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  cursor: pointer;
 `;
