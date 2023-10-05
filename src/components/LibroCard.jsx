@@ -3,6 +3,7 @@ import * as React from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import styled from "styled-components";
+import useAlert from "../hooks/useAlerts";
 
 import {
   getDisponibles,
@@ -11,14 +12,9 @@ import {
 } from "../backend/controllers/libros";
 import { crearReserva } from "../backend/controllers/reservas";
 
-const LibroCard = ({
-  admin,
-  user,
-  notificar,
-  onCloseIconClick,
-  libro,
-  autor,
-}) => {
+const LibroCard = ({ admin, user, onCloseIconClick, libro, autor }) => {
+  const { alertSuccess, alertError } = useAlert();
+
   const [alignment, setAlignment] = React.useState("web");
 
   const cardRef = useRef(null);
@@ -72,13 +68,12 @@ const LibroCard = ({
       usuario_id: user.id,
       inventario_id: inventarioSelected,
       fecha_retiro: new Date().toLocaleDateString("es-ES"),
-      fecha_devolucion: "",
     };
 
     setDataReserva(newReserva);
     crearReserva(newReserva)
       .then(() => updateInventario(newReserva.inventario_id))
-      .then(() => notificar("Reserva generada", "success"));
+      .then(() => alertSuccess("Reserva generada"));
     onCloseIconClick();
   };
 

@@ -12,8 +12,10 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import { crearUsuario } from "../backend/controllers/usuarios";
+import useAlert from "../hooks/useAlerts";
 
-const SingUp = ({ setShowToast, notificar, setLoading }) => {
+const SingUp = ({ setLoading }) => {
+  const { alertSuccess, alertError } = useAlert();
   const [userData, setUserData] = useState({
     nombre: "",
     email: "",
@@ -39,16 +41,8 @@ const SingUp = ({ setShowToast, notificar, setLoading }) => {
     userData.password != "" &&
     userData.telefono != "" &&
     userData.direccion != ""
-      ? crearUsuario(userData).then(() => {
-          notificar("Usuario Creado", "success");
-          setTimeout(() => {
-            window.location.href = "/";
-            setLoading(false);
-          }, 3000);
-        })
-      : notificar("Completa todos los campos", "error");
-
-    //agregar un Then({data,error}) para redirigir o mostrar una alerta
+      ? crearUsuario(userData).then(() => alertSuccess("Usuario Creado"))
+      : alertError("Completa todos los campos");
   };
 
   //Inputs

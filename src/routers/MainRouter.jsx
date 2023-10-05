@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { ToastContainer, toast, Flip } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { getUser } from "../backend/controllers/usuarios";
@@ -14,7 +14,6 @@ const MainRouter = () => {
   const [user, setUser] = useState();
   const [loginStatus, setLoginStatus] = useState(false);
   const [loading, setLoading] = useState();
-  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -26,26 +25,6 @@ const MainRouter = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const notificar = (msj, tipo) => {
-    const estilos = {
-      position: "bottom-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Flip,
-    };
-    tipo == "info" && toast.info(msj, estilos);
-    tipo == "success" && toast.success(msj, estilos);
-    tipo == "warn" && toast.warn(msj, estilos);
-    tipo == "error" && toast.error(msj, estilos);
-  };
-
-  showToast && notificar();
-
   return (
     <>
       <Header user={user} />
@@ -56,16 +35,12 @@ const MainRouter = () => {
               user={user}
               loginStatus={loginStatus}
               setLoginStatus={setLoginStatus}
-              setShowToast={setShowToast}
-              notificar={notificar}
             />
           ) : (
             <UnauthRouter
               setUser={setUser}
               loginStatus={loginStatus}
               setLoginStatus={setLoginStatus}
-              setShowToast={setShowToast}
-              notificar={notificar}
               setLoading={setLoading}
             />
           )}

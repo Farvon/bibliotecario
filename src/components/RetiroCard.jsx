@@ -13,12 +13,19 @@ import {
   updateInventarioDevuelto,
 } from "../backend/controllers/libros";
 
-import { updateDevolucion } from "../backend/controllers/reservas";
+import {
+  updateDevolucion,
+  updateFechaDevolucion,
+} from "../backend/controllers/reservas";
+
+import useAlert from "../hooks/useAlerts";
 
 const RetiroCard = ({ reserva, reservas, setReservas }) => {
   const [userById, setUserById] = useState();
   const [inventarioById, setInventarioById] = useState();
   const [libroById, setLibroById] = useState();
+
+  const { alertSuccess, alertError } = useAlert();
 
   useEffect(() => {
     getInventarioById(reserva.inventario_id).then((data2) =>
@@ -31,8 +38,13 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
   }, []);
 
   const handleDevolucion = (id, inventario_id) => {
+    const fechaDevolucion = new Date().toLocaleDateString("es-ES");
+
     updateDevolucion(id);
     updateInventarioDevuelto(inventario_id);
+    updateFechaDevolucion(id, fechaDevolucion).then(() =>
+      alertSuccess("Libro Devuelto")
+    );
     const newReservas = reservas.filter((item) => item.id != id);
     setReservas(newReservas);
   };

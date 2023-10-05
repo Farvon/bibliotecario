@@ -75,6 +75,14 @@ export const updateDevolucion = async (id) => {
     .select();
 };
 
+export const updateFechaDevolucion = async (id, fecha) => {
+  const { data, error } = await supabase
+    .from("Reservas")
+    .update({ fecha_devolucion: fecha })
+    .eq("id", id)
+    .select();
+};
+
 export const deleteReserva = async (id) => {
   const { error } = await supabase.from("Reservas").delete().eq("id", id);
 };

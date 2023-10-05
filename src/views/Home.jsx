@@ -1,12 +1,9 @@
 import Body from "../components/Body";
 
-const Home = ({ user, notificar }) => {
-  const msj = "Hola Carola";
-  const tipo = "error";
-
+const Home = ({ user }) => {
   return (
     <>
-      <Body user={user} admin={false} notificar={notificar} />
+      <Body user={user} admin={false} />
     </>
   );
 };

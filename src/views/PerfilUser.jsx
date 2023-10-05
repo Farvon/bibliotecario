@@ -1,9 +1,9 @@
 import UserBasicTabs from "../components/UserBasicTabs";
 
-const PerfilUser = ({ notificar, user }) => {
+const PerfilUser = ({ user }) => {
   return (
     <>
-      <UserBasicTabs user={user} notificar={notificar} />
+      <UserBasicTabs user={user} />
     </>
   );
 };

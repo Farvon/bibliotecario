@@ -52,7 +52,7 @@ function a11yProps(index) {
   };
 }
 
-export default function UserBasicTabs({ user, notificar }) {
+export default function UserBasicTabs({ user }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -85,7 +85,7 @@ export default function UserBasicTabs({ user, notificar }) {
         </ThemeProvider>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <HojaPerfil user_id={user.id} notificar={notificar} />
+        <HojaPerfil user_id={user.id} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <MisRetiros user_id={user.id} />
