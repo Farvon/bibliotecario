@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import HojaPerfil from "./HojaPerfil";
+import MisRetiros from "./MisRetiros";
 
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -87,7 +88,7 @@ export default function UserBasicTabs({ user, notificar }) {
         <HojaPerfil user_id={user.id} notificar={notificar} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        'Reservas'
+        <MisRetiros user_id={user.id} />
       </CustomTabPanel>
       {/* <CustomTabPanel value={value} index={2}>
         Item Three

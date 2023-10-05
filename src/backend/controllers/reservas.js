@@ -41,6 +41,24 @@ export const getReservasAprobadas = async () => {
   return newData;
 };
 
+export const getReservasByUserId = async (user_id) => {
+  const { data: newData, newError } = await supabase
+    .from("Reservas")
+    .select("*")
+    .eq("usuario_id", user_id);
+  return newData;
+};
+
+export const getReservasAprobadasByUserId = async (user_id) => {
+  const { data: newData, newError } = await supabase
+    .from("Reservas")
+    .select("*")
+    .eq("aprobado", true)
+    .eq("usuario_id", user_id);
+
+  return newData;
+};
+
 export const updateReserva = async (id) => {
   const { data, error } = await supabase
     .from("Reservas")
