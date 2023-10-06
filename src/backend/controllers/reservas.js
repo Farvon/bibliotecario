@@ -37,7 +37,8 @@ export const getReservasAprobadas = async () => {
   const { data: newData, newError } = await supabase
     .from("Reservas")
     .select("*")
-    .eq("aprobado", true);
+    .eq("aprobado", true)
+    .eq("devuelto", false);
   return newData;
 };
 
