@@ -1,5 +1,5 @@
 // Crear una instancia de la fuente
-const font = new FontFace("MiFuente", "url(./fonts/mifuente.ttf)");
+const font = new FontFace("Bibliotecario", "url(./youth-touch.ttf)");
 
 // Cargar la fuente
 font.load().then(function () {
