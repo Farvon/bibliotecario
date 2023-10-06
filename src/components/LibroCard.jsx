@@ -82,7 +82,7 @@ const LibroCard = ({ admin, user, onCloseIconClick, libro, autor }) => {
       <Backdrop>
         <CardContainer ref={cardRef}>
           <CardForm>
-            <FormImg src="src\assets\icons\book.png" />
+            <FormImg src="./book.png" />
             <FormInfo>
               <Titulo>{libro.titulo}</Titulo>
               <Info>

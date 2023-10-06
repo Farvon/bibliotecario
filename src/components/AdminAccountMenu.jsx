@@ -49,7 +49,7 @@ const AdminAccountMenu = () => {
             aria-expanded={open ? "true" : undefined}
           >
             {/* <Avatar sx={{ width: 30, height: 30 }}>M</Avatar> */}
-            <Img src="src/assets/icons/book-User-Icon.svg" />
+            <Img src="./book-User-Icon.svg" />
           </IconButton>
         </Tooltip>
       </Box>

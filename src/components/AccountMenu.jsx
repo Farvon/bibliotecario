@@ -51,7 +51,7 @@ const AccountMenu = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Img src="src/assets/icons/book-User-Icon.svg" />
+            <Img src="./book-User-Icon.svg" />
           </IconButton>
         </Tooltip>
       </Box>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 function LoadingEditar() {
   return (
     <ImgContainer>
-      <Img src="src\assets\icons\editar-loading.gif" />
+      <Img src="./editar-loading.gif" />
     </ImgContainer>
   );
 }

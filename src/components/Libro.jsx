@@ -25,7 +25,7 @@ const Libro = ({ user, libro, autor, admin }) => {
     <>
       <Tr>
         <Td onClick={(e) => handleClick()}>
-          <Img src="src\assets\icons\book.png" />
+          <Img src="./book.png" />
         </Td>
         <Td>{libro.titulo}</Td>
         <Td>{nombreAutor}</Td>
