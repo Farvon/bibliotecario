@@ -41,7 +41,10 @@ const SingUp = ({ setLoading }) => {
     userData.password != "" &&
     userData.telefono != "" &&
     userData.direccion != ""
-      ? crearUsuario(userData).then(() => alertSuccess("Usuario Creado"))
+      ? crearUsuario(userData)
+          .then(() => alertSuccess("Usuario Creado"))
+          .then(() => setTimeout(() => {}, 2000))
+          .then(() => setLoading(false))
       : alertError("Completa todos los campos");
   };
 
