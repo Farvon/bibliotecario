@@ -14,6 +14,11 @@
   -webkit-text-size-adjust: 100%;
 }
 
+@font-face {
+  font-family: "Bibliotecario";
+  src: url("./youth-touch.ttf") format("truetype");
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -31,8 +36,6 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-
-
 
 @media (prefers-color-scheme: light) {
   :root {

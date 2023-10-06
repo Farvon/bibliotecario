@@ -34,7 +34,7 @@ const Container = styled.div`
 const H1 = styled.h1`
   margin: 0;
   font-size: 5em;
-  font-family: Youth Touch DEMO;
+  font-family: Bibliotecario;
   color: black;
   cursor: pointer;
 `;
