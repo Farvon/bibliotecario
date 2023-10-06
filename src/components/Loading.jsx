@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Loading = () => {
   return (
     <LoadingContainer>
-      <LoadingImg src="src/assets/icons/book-loading.gif" />
+      <LoadingImg src="./book-loading.gif" />
       <H2>Tomando nota...</H2>
     </LoadingContainer>
   );
