@@ -14,11 +14,6 @@
   -webkit-text-size-adjust: 100%;
 }
 
-@font-face {
-  font-family: "Bibliotecario";
-  src: url("./youth-touch.ttf") format("truetype");
-}
-
 body {
   margin: 0;
   padding: 0;
