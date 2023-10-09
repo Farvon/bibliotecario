@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { styled } from "styled-components";
+import { Link } from "react-router-dom";
 
 // Inputs
 import FormControl from "@mui/material/FormControl";
@@ -10,6 +11,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import FormHelperText from "@mui/material/FormHelperText";
 
 import { crearUsuario } from "../backend/controllers/usuarios";
 import useAlert from "../hooks/useAlerts";
@@ -42,7 +44,7 @@ const SingUp = ({ setLoading }) => {
     userData.telefono != "" &&
     userData.direccion != ""
       ? crearUsuario(userData)
-          .then(() => alertSuccess("Usuario Creado"))
+          .then(() => alertSuccess("Usuario Creado - Verifique su E-mail"))
           .then(() => setTimeout(() => {}, 2000))
           .then(() => setLoading(false))
       : alertError("Completa todos los campos");
@@ -84,7 +86,7 @@ const SingUp = ({ setLoading }) => {
 
         <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">
-            Password
+            Contraseña
           </InputLabel>
           <OutlinedInput
             onChange={handleChange}
@@ -105,6 +107,9 @@ const SingUp = ({ setLoading }) => {
             label="Password"
             name="password"
           />
+          <FormHelperText id="outlined-adornment-password">
+            *mínimo 6 caracteres
+          </FormHelperText>
         </FormControl>
 
         <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
@@ -136,6 +141,11 @@ const SingUp = ({ setLoading }) => {
           Crear Usuario
         </Button>
       </FormContainer>
+      <div>
+        <ButtonRegistro>
+          <Link to="/">Volver</Link>
+        </ButtonRegistro>
+      </div>
     </>
   );
 };
@@ -156,4 +166,10 @@ const Button = styled.button`
   background: lightblue;
   border: none;
   box-shadow: 2px 2px 3px #c5c5c5, -6px -6px 12px #ffffff;
+`;
+
+const ButtonRegistro = styled.button`
+  border: none;
+  color: red;
+  text-decoration: none;
 `;

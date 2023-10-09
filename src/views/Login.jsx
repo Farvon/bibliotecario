@@ -64,7 +64,7 @@ const Login = (user) => {
         </FormControl>
         <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">
-            Password
+            Contraseña
           </InputLabel>
           <OutlinedInput
             onChange={handleChange}
@@ -117,18 +117,6 @@ const Form = styled.form`
   align-items: center;
 `;
 
-const Input = styled.input`
-  padding: 8px;
-  border-radius: 10px;
-  font-style: italic;
-`;
-
-const Label = styled.label`
-  display: flex;
-  padding: 4px;
-  border-radius: 10px;
-  font-style: italic;
-`;
 const Button = styled.button`
   display: flex;
   margin: 20px auto;
