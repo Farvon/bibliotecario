@@ -81,7 +81,7 @@ export default function BasicTabs() {
     const fechaHoy = new Date();
     const diferenciaEnMilisegundos = fechaHoy - fechaRetiro;
     const dias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
-    dias > 2 ? contador++ : null;
+    dias > 1 ? contador++ : null;
   });
 
   return (
@@ -96,17 +96,17 @@ export default function BasicTabs() {
             indicatorColor="primary"
           >
             <Tab label="Reservas" {...a11yProps(0)} />
+
             <Tab label="Retiros" {...a11yProps(1)} />
+            <Tab label="Gestionar Biblioteca" {...a11yProps(2)} />
             {contador > 0 ? (
               <Badge
                 badgeContent={4}
                 color="primary"
                 variant="dot"
-                sx={{ top: "15px", left: "-15px", padding: "0 4px" }}
+                sx={{ top: "15px", left: "-230px", padding: "0 4px" }}
               ></Badge>
             ) : null}
-
-            <Tab label="Gestionar Biblioteca" {...a11yProps(2)} />
           </Tabs>
         </ThemeProvider>
       </Box>
