@@ -18,6 +18,8 @@ const Retiros = () => {
           <Td>Alumno</Td>
           <Td>Libro</Td>
           <Td>N° Inventario</Td>
+          <Td>Fecha de Retiro</Td>
+          <Td>Estado</Td>
           <Td>Devuelto</Td>
         </Tr>
       </Thead>

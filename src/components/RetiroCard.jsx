@@ -5,6 +5,8 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import BeenhereRoundedIcon from "@mui/icons-material/BeenhereRounded";
 import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
+import AlarmOnIcon from "@mui/icons-material/AlarmOn";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 import { getUserById } from "../backend/controllers/usuarios";
 import {
@@ -54,11 +56,25 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
     const newReservas = reservas.filter((item) => item.id != id);
     setReservas(newReservas);
   };
+
+  const fechaRetiroString = reserva.fecha_retiro; // Supongamos que esto es "2023-03-10"
+  const partesFechaRetiro = fechaRetiroString.split("-");
+  const fechaRetiro = new Date(
+    partesFechaRetiro[0], // Año
+    partesFechaRetiro[2] - 1, // Mes (restamos 1 porque en JavaScript los meses van de 0 a 11)
+    partesFechaRetiro[1] // Día
+  );
+
+  const fechaHoy = new Date();
+  const diferenciaEnMilisegundos = fechaHoy - fechaRetiro;
+  const dias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+  const estado = dias <= 2 ? true : false;
+
   return (
     <Tr key={reserva.id}>
       {userById && inventarioById && libroById ? (
         <>
-          <Td>
+          <TdAlumno>
             <Tooltip title="Info" placement="top" arrow>
               <IconButton color="warning">
                 <ContactPageRoundedIcon
@@ -68,9 +84,21 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
               </IconButton>
             </Tooltip>
             {userById.nombre}
-          </Td>
+          </TdAlumno>
           <Td>{libroById.titulo}</Td>
           <Td>{inventarioById.inventario}</Td>
+          <Td>{reserva.fecha_retiro}</Td>
+          <Td>
+            {estado ? (
+              <DevueltoContainer>
+                <AlarmOnIcon color="terciary" sx={{ opacity: 0.1 }} />
+              </DevueltoContainer>
+            ) : (
+              <DevueltoContainer>
+                <NotificationsActiveIcon color="error" />
+              </DevueltoContainer>
+            )}
+          </Td>
           <Td>
             <Tooltip title="Reibido" placement="top" arrow>
               <IconButton
@@ -111,6 +139,22 @@ const Td = styled.td`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25%;
+  width: 20%;
   gap: 5%;
+`;
+
+const TdAlumno = styled.td`
+  display: flex;
+  justify-content: left;
+  font-size: 100%;
+  align-items: center;
+  width: 20%;
+  gap: 5%;
+`;
+
+const DevueltoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
