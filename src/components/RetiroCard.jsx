@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import BeenhereRoundedIcon from "@mui/icons-material/BeenhereRounded";
 import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
 import AlarmOnIcon from "@mui/icons-material/AlarmOn";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
 import { getUserById } from "../backend/controllers/usuarios";
 import {
@@ -100,13 +100,22 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
             )}
           </Td>
           <Td>
-            <Tooltip title="Reibido" placement="top" arrow>
+            <Tooltip title="Recibir" placement="top" arrow>
               <IconButton
                 onClick={() =>
-                  handleDevolucion(reserva.id, reserva.inventario_id)
+                  swal({
+                    title: "Recibir?",
+                    closeOnClickOutside: false,
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                      handleDevolucion(reserva.id, reserva.inventario_id);
+                    }
+                  })
                 }
               >
-                <BeenhereRoundedIcon color="primary" />
+                <SaveAltIcon color="primary" />
               </IconButton>
             </Tooltip>
           </Td>

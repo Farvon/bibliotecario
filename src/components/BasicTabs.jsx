@@ -81,7 +81,7 @@ export default function BasicTabs() {
     const fechaHoy = new Date();
     const diferenciaEnMilisegundos = fechaHoy - fechaRetiro;
     const dias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
-    dias > 1 ? contador++ : null;
+    dias > 2 ? contador++ : null;
   });
 
   return (

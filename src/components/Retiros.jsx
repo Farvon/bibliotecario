@@ -20,7 +20,7 @@ const Retiros = () => {
           <Td>N° Inventario</Td>
           <Td>Fecha de Retiro</Td>
           <Td>Estado</Td>
-          <Td>Devuelto</Td>
+          <Td>Recibir</Td>
         </Tr>
       </Thead>
       <tbody>
