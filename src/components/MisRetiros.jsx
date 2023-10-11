@@ -92,7 +92,7 @@ const Tr = styled.tr`
   padding: 10px;
   padding-bottom: 0px;
   margin: 10px;
-  font-size: 1.2em;
+  font-size: 1.4vw;
   font-weight: bold;
 `;
 
