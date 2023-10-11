@@ -5,6 +5,7 @@ import { getReservasAprobadas } from "../backend/controllers/reservas";
 import Body from "./Body";
 import Reservas from "./Reservas";
 import Retiros from "./Retiros";
+import CrearEditarLibro from "./CrearEditarLibro";
 
 import Badge from "@mui/material/Badge";
 
@@ -56,6 +57,7 @@ function a11yProps(index) {
 
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
+  const [newBook, setNewBook] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -95,9 +97,17 @@ export default function BasicTabs() {
             centered
             indicatorColor="primary"
           >
-            <Tab label="Reservas" {...a11yProps(0)} />
+            <Tab
+              label="Reservas"
+              {...a11yProps(0)}
+              onClick={() => setNewBook(false)}
+            />
 
-            <Tab label="Retiros" {...a11yProps(1)} />
+            <Tab
+              label="Retiros"
+              {...a11yProps(1)}
+              onClick={() => setNewBook(false)}
+            />
             <Tab label="Gestionar Biblioteca" {...a11yProps(2)} />
             {contador > 0 ? (
               <Badge
@@ -117,7 +127,11 @@ export default function BasicTabs() {
         <Retiros />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Body admin={true} />
+        {!newBook ? (
+          <Body admin={true} setNewBook={setNewBook} />
+        ) : (
+          <CrearEditarLibro setNewBook={setNewBook} />
+        )}
       </CustomTabPanel>
       {/* <CustomTabPanel value={value} index={2}>
         Item Three
