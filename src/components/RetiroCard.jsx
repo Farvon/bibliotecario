@@ -104,12 +104,12 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
               <IconButton
                 onClick={() =>
                   swal({
-                    title: "Recibir?",
+                    title: "Recibir Libro?",
                     closeOnClickOutside: false,
                     buttons: true,
                     dangerMode: true,
-                  }).then((willDelete) => {
-                    if (willDelete) {
+                  }).then((willReceived) => {
+                    if (willReceived) {
                       handleDevolucion(reserva.id, reserva.inventario_id);
                     }
                   })

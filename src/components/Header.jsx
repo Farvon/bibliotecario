@@ -29,6 +29,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 `;
 
 const H1 = styled.h1`
@@ -41,4 +42,5 @@ const H1 = styled.h1`
 
 const AvatarAccount = styled.div`
   display: flex;
+  margin-top: -5px;
 `;

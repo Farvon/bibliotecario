@@ -51,14 +51,36 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
           <Td>{inventarioById.inventario}</Td>
           <Td>
             <Tooltip title="Aprobar" placement="top" arrow>
-              <IconButton onClick={() => handleAprobar(reserva.id)}>
+              <IconButton
+                onClick={() =>
+                  swal({
+                    title: "Se entregó el libro al Alumno/a?",
+                    closeOnClickOutside: false,
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willGiven) => {
+                    if (willGiven) {
+                      handleAprobar(reserva.id);
+                    }
+                  })
+                }
+              >
                 <CheckCircleOutlineRoundedIcon color="success" />
               </IconButton>
             </Tooltip>
             <Tooltip title="Denegar" placement="top" arrow>
               <IconButton
                 onClick={() =>
-                  handleRechazar(reserva.id, reserva.inventario_id)
+                  swal({
+                    title: "Rechazar Reserva?",
+                    closeOnClickOutside: false,
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willNotGiven) => {
+                    if (willNotGiven) {
+                      handleRechazar(reserva.id, reserva.inventario_id);
+                    }
+                  })
                 }
               >
                 <DoNotDisturbAltRoundedIcon color="error" />

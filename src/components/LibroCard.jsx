@@ -54,7 +54,9 @@ const LibroCard = ({ admin, user, onCloseIconClick, libro, autor }) => {
   };
 
   const handleInventario = (inventario) => {
-    setInventarioSelected(inventario);
+    inventarioSelected == inventario
+      ? setInventarioSelected(null)
+      : setInventarioSelected(inventario);
   };
 
   const handleReserva = () => {
@@ -141,7 +143,22 @@ const LibroCard = ({ admin, user, onCloseIconClick, libro, autor }) => {
           </CardForm>
           {admin == false && (
             <CardButtons>
-              <ReservarButton onClick={() => handleReserva()}>
+              <ReservarButton
+                onClick={() =>
+                  inventarioSelected != null
+                    ? swal({
+                        title: "Reservar?",
+                        closeOnClickOutside: true,
+                        buttons: true,
+                        dangerMode: false,
+                      }).then((willReserved) => {
+                        if (willReserved) {
+                          handleReserva();
+                        }
+                      })
+                    : alertError("No se seleccionó ningún invenario")
+                }
+              >
                 Reservar
               </ReservarButton>
               <CloseButton onClick={() => onCloseIconClick()}>
