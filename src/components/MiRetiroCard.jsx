@@ -84,7 +84,6 @@ const Td = styled.td`
   justify-content: center;
   align-items: center;
   width: 20%;
-  font-size: 1.4vw;
 `;
 
 const DevueltoContainer = styled.div`
@@ -92,7 +91,6 @@ const DevueltoContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  font-size: 1.4vw;
 `;
 
 const TdEstado = styled.div`
@@ -100,5 +98,4 @@ const TdEstado = styled.div`
   justify-content: center;
   align-items: center;
   color: ${({ dias }) => (dias <= 1 ? "green" : "red")};
-  font-size: 1.4vw;
 `;

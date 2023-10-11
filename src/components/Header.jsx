@@ -27,13 +27,13 @@ export default Header;
 
 const Container = styled.div`
   display: flex;
-  position: relative;
+  flex-wrap: wrap;
   justify-content: center;
 `;
 
 const H1 = styled.h1`
   margin: 0;
-  font-size: 5em;
+  font-size: 4em;
   font-family: Bibliotecario;
   color: black;
   cursor: pointer;
@@ -41,7 +41,4 @@ const H1 = styled.h1`
 
 const AvatarAccount = styled.div`
   display: flex;
-  position: absolute;
-  right: 15%;
-  top: 30%;
 `;
