@@ -7,6 +7,8 @@ import Libro from "./Libro";
 import AddToPhotosRoundedIcon from "@mui/icons-material/AddToPhotosRounded";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 const Body = ({ user, admin }) => {
   const [bookSrch, setBookSrch] = useState();
@@ -62,10 +64,9 @@ const Body = ({ user, admin }) => {
             {admin == true && <Td>Acciones</Td>}
           </Tr>
         </Thead>
-        <tbody>
-          {autores &&
-            biblioteca &&
-            bibliotecaSrched.map((item) => (
+        {autores && biblioteca ? (
+          <tbody>
+            {bibliotecaSrched.map((item) => (
               <Libro
                 key={item.id}
                 user={user}
@@ -78,7 +79,12 @@ const Body = ({ user, admin }) => {
                 admin={admin}
               />
             ))}
-        </tbody>
+          </tbody>
+        ) : (
+          <Box sx={{ display: "flex", margin: "auto" }}>
+            <CircularProgress color="inherit" sx={{ opacity: "0.3" }} />
+          </Box>
+        )}
       </Table>
     </>
   );
@@ -132,4 +138,13 @@ const Td = styled.td`
   display: flex;
   justify-content: center;
   width: 25%;
+`;
+
+const ImgContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 20px;
 `;

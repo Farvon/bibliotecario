@@ -7,6 +7,8 @@ import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
 import AlarmOnIcon from "@mui/icons-material/AlarmOn";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 import { getUserById } from "../backend/controllers/usuarios";
 import {
@@ -127,7 +129,11 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
             />
           ) : null}
         </>
-      ) : null}
+      ) : (
+        <Box sx={{ display: "flex", margin: "auto" }}>
+          <CircularProgress color="inherit" sx={{ opacity: "0.3" }} />
+        </Box>
+      )}
     </Tr>
   );
 };

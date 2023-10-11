@@ -5,6 +5,8 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import DoNotDisturbAltRoundedIcon from "@mui/icons-material/DoNotDisturbAltRounded";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 import { deleteReserva, updateReserva } from "../backend/controllers/reservas";
 import { getUserById } from "../backend/controllers/usuarios";
@@ -88,7 +90,11 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
             </Tooltip>
           </Td>
         </>
-      ) : null}
+      ) : (
+        <Box sx={{ display: "flex", margin: "auto" }}>
+          <CircularProgress color="inherit" sx={{ opacity: "0.3" }} />
+        </Box>
+      )}
     </Tr>
   );
 };

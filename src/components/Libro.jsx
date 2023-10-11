@@ -24,27 +24,33 @@ const Libro = ({ user, libro, autor, admin }) => {
   return (
     <>
       <Tr>
-        <Td onClick={(e) => handleClick()}>
-          <Img src="./book.png" />
-        </Td>
-        <Td>{libro.titulo}</Td>
-        <Td>{nombreAutor}</Td>
-        <Td>{libro.editorial}</Td>
-        <Td>{libro.cantidad}</Td>
-        {admin == true && (
-          <Td>
-            <Tooltip color="primary" title="Editar" placement="top" arrow>
-              <IconButton onClick={() => alert("Editar " + libro.titulo)}>
-                <StickyNote2OutlinedIcon />
-              </IconButton>
-            </Tooltip>
+        {libro ? (
+          <>
+            <Td onClick={(e) => handleClick()}>
+              <Img src="./book.png" />
+            </Td>
+            <Td>{libro.titulo}</Td>
+            <Td>{nombreAutor}</Td>
+            <Td>{libro.editorial}</Td>
+            <Td>{libro.cantidad}</Td>
+            {admin == true && (
+              <Td>
+                <Tooltip color="primary" title="Editar" placement="top" arrow>
+                  <IconButton onClick={() => alert("Editar " + libro.titulo)}>
+                    <StickyNote2OutlinedIcon />
+                  </IconButton>
+                </Tooltip>
 
-            <Tooltip color="error" title="Eliminar" placement="top" arrow>
-              <IconButton onClick={() => alert("Borrar " + libro.titulo)}>
-                <LayersClearIcon />
-              </IconButton>
-            </Tooltip>
-          </Td>
+                <Tooltip color="error" title="Eliminar" placement="top" arrow>
+                  <IconButton onClick={() => alert("Borrar " + libro.titulo)}>
+                    <LayersClearIcon />
+                  </IconButton>
+                </Tooltip>
+              </Td>
+            )}
+          </>
+        ) : (
+          "Hola"
         )}
       </Tr>
 

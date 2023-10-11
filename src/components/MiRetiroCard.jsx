@@ -4,6 +4,8 @@ import styled from "styled-components";
 import FileDownloadDoneIcon from "@mui/icons-material/FileDownloadDone";
 import Tooltip from "@mui/material/Tooltip";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 import {
   getInventarioById,
@@ -13,13 +15,16 @@ import {
 const MiRetiroCard = ({ retiro }) => {
   const [inventarioById, setInventarioById] = useState();
   const [libroById, setLibroById] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getInventarioById(retiro.inventario_id).then((data2) =>
-      getLibrosById(data2[0].libro_id).then((data3) => {
-        setInventarioById(data2[0]), setLibroById(data3[0]);
-      })
-    );
+    getInventarioById(retiro.inventario_id)
+      .then((data2) =>
+        getLibrosById(data2[0].libro_id).then((data3) => {
+          setInventarioById(data2[0]), setLibroById(data3[0]);
+        })
+      )
+      .then(() => setLoading(false));
   }, []);
 
   const fechaRetiroString = retiro.fecha_retiro; // Supongamos que esto es "2023-03-10"
@@ -37,7 +42,7 @@ const MiRetiroCard = ({ retiro }) => {
 
   return (
     <Tr>
-      {inventarioById && libroById ? (
+      {!loading && inventarioById && libroById ? (
         <>
           <Td>{libroById.titulo}</Td>
 
@@ -64,7 +69,11 @@ const MiRetiroCard = ({ retiro }) => {
             <TdEstado dias={dias}>{!retiro.devuelto ? estado : null}</TdEstado>
           </Td>
         </>
-      ) : null}
+      ) : (
+        <Box sx={{ display: "flex", margin: "auto" }}>
+          <CircularProgress color="inherit" sx={{ opacity: "0.3" }} />
+        </Box>
+      )}
     </Tr>
   );
 };
