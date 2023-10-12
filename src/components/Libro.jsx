@@ -55,7 +55,9 @@ const Libro = ({
             <Td onClick={(e) => handleClick()}>
               <Img src="./book.png" />
             </Td>
-            <Td>{libro.titulo}</Td>
+            <Td onClick={(e) => handleClick()}>
+              <A>{libro.titulo}</A>
+            </Td>
             <Td>{nombreAutor}</Td>
             <Td>{libro.editorial}</Td>
             <Td>{libro.cantidad}</Td>
@@ -71,9 +73,10 @@ const Libro = ({
                   <IconButton
                     onClick={() =>
                       swal({
+                        icon: "warning",
                         title: `Eliminar libro "${libro.titulo}"?`,
                         closeOnClickOutside: false,
-                        buttons: true,
+                        buttons: ["No", "Si"],
                         dangerMode: true,
                       }).then((willGiven) => {
                         if (willGiven) {
@@ -128,4 +131,14 @@ const Img = styled.img`
   display: flex;
   width: 5vw;
   cursor: pointer;
+`;
+
+const A = styled.a`
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: bold;
+    color: black;
+  }
 `;

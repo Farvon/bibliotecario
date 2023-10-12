@@ -58,8 +58,7 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
                   swal({
                     title: "Se entregó el libro al Alumno/a?",
                     closeOnClickOutside: false,
-                    buttons: true,
-                    dangerMode: true,
+                    buttons: ["No", "Si"],
                   }).then((willGiven) => {
                     if (willGiven) {
                       handleAprobar(reserva.id);
@@ -76,7 +75,7 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
                   swal({
                     title: "Rechazar Reserva?",
                     closeOnClickOutside: false,
-                    buttons: true,
+                    buttons: ["No", "Si"],
                     dangerMode: true,
                   }).then((willNotGiven) => {
                     if (willNotGiven) {

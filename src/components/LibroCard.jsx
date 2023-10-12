@@ -149,8 +149,7 @@ const LibroCard = ({ admin, user, onCloseIconClick, libro, autor }) => {
                     ? swal({
                         title: "Reservar?",
                         closeOnClickOutside: true,
-                        buttons: true,
-                        dangerMode: false,
+                        buttons: ["No", "Si"],
                       }).then((willReserved) => {
                         if (willReserved) {
                           handleReserva();

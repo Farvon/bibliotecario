@@ -92,13 +92,17 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
           <Td>{reserva.fecha_retiro}</Td>
           <Td>
             {estado ? (
-              <DevueltoContainer>
-                <AlarmOnIcon color="terciary" sx={{ opacity: 0.1 }} />
-              </DevueltoContainer>
+              <Tooltip title="En tiempo" placement="top">
+                <DevueltoContainer>
+                  <AlarmOnIcon color="terciary" sx={{ opacity: 0.1 }} />
+                </DevueltoContainer>
+              </Tooltip>
             ) : (
-              <DevueltoContainer>
-                <NotificationsActiveIcon color="error" />
-              </DevueltoContainer>
+              <Tooltip title="Excedido" placement="top">
+                <DevueltoContainer>
+                  <NotificationsActiveIcon color="error" />
+                </DevueltoContainer>
+              </Tooltip>
             )}
           </Td>
           <Td>
@@ -108,8 +112,7 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
                   swal({
                     title: "Recibir Libro?",
                     closeOnClickOutside: false,
-                    buttons: true,
-                    dangerMode: true,
+                    buttons: ["No", "Si"],
                   }).then((willReceived) => {
                     if (willReceived) {
                       handleDevolucion(reserva.id, reserva.inventario_id);

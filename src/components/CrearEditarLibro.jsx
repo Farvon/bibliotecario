@@ -96,19 +96,13 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
       };
     });
 
-    // setLoading(true);
     libroData.titulo != "" &&
     libroData.autor_id != "" &&
-    libroData.editorial != "" &&
-    libroData.lugar != "" &&
-    libroData.fecha_publicacion != null &&
-    libroData.cantidad != null &&
-    libroData.paginas != null
+    libroData.cantidad != null
       ? crearLibro(libroData)
           .then(() => alertSuccess("Libro creado correctamente"))
           .then(() => handleCancel())
-      : //   .then(() => setLoading(false))
-        null;
+      : alertError("Título, Autor y Cantidad no pueden quedar vacios");
   };
 
   const actualizarLibro = () => {
@@ -124,19 +118,14 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
       };
     });
 
-    // setLoading(true);
     libroData.titulo != "" &&
     libroData.autor_id != "" &&
-    libroData.editorial != "" &&
-    libroData.lugar != "" &&
-    libroData.fecha_publicacion != null &&
     libroData.cantidad != null &&
     libroData.paginas != null
       ? editarLibro(infoLibro.id, libroData)
           .then(() => alertSuccess("Libro Actualizado correctamente"))
           .then(() => handleCancel())
-      : //   .then(() => setLoading(false))
-        null;
+      : alertError("Título, Autor y Cantidad no pueden quedar vacios");
   };
 
   const handleAddAutor = () => {
@@ -278,10 +267,11 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
               <Tooltip
                 onClick={(e) =>
                   swal({
-                    title: `Agregar nuevo libro "${libroData.titulo}"?`,
+                    title: !editar
+                      ? `Agregar nuevo libro "${libroData.titulo}"?`
+                      : `Actualizar libro "${libroData.titulo}"?`,
                     closeOnClickOutside: false,
-                    buttons: true,
-                    dangerMode: true,
+                    buttons: ["No", "Si"],
                   }).then((willGiven) => {
                     if (willGiven) {
                       hundleSubmitLibro(e);

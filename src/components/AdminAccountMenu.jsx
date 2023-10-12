@@ -39,7 +39,7 @@ const AdminAccountMenu = () => {
           textAlign: "center",
         }}
       >
-        <Tooltip>
+        <Tooltip color="primary" title="Menu" placement="right">
           <IconButton
             onClick={handleClick}
             size="small"
