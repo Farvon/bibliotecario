@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
-const Body = ({ user, admin, setNewBook }) => {
+const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [bookSrch, setBookSrch] = useState();
   const [biblioteca, setBiblioteca] = useState();
   const [bibliotecaSrched, setBibliotecaSrched] = useState();
@@ -34,6 +34,11 @@ const Body = ({ user, admin, setNewBook }) => {
     setBibliotecaSrched(bookSrched);
   };
 
+  const handleAdd = () => {
+    setEditar(false);
+    setNewBook(true);
+  };
+
   return (
     <>
       <InputContainer>
@@ -45,7 +50,7 @@ const Body = ({ user, admin, setNewBook }) => {
         {admin == true && (
           <AgregarContainer>
             <Tooltip
-              onClick={() => setNewBook(true)}
+              onClick={() => handleAdd()}
               color="success"
               title="Agregar"
               placement="bottom"
@@ -83,6 +88,9 @@ const Body = ({ user, admin, setNewBook }) => {
                     : "Desconocido"
                 }
                 admin={admin}
+                setInfoLibro={setInfoLibro}
+                setNewBook={setNewBook}
+                setEditar={setEditar}
               />
             ))}
           </tbody>

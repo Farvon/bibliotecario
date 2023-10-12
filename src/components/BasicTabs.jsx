@@ -54,10 +54,12 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
+//------------ Inicia Componente ----------- //
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
   const [newBook, setNewBook] = useState(false);
+  const [infoLibro, setInfoLibro] = useState([]);
+  const [editar, setEditar] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -67,6 +69,7 @@ export default function BasicTabs() {
 
   useEffect(() => {
     getReservasAprobadas().then((data) => setReservas(data));
+    setEditar(false);
   }, []);
 
   var contador = 0;
@@ -128,9 +131,19 @@ export default function BasicTabs() {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         {!newBook ? (
-          <Body admin={true} setNewBook={setNewBook} />
+          <Body
+            admin={true}
+            setNewBook={setNewBook}
+            setInfoLibro={setInfoLibro}
+            setEditar={setEditar}
+          />
         ) : (
-          <CrearEditarLibro setNewBook={setNewBook} />
+          <CrearEditarLibro
+            setNewBook={setNewBook}
+            setInfoLibro={setInfoLibro}
+            infoLibro={infoLibro}
+            editar={editar}
+          />
         )}
       </CustomTabPanel>
       {/* <CustomTabPanel value={value} index={2}>

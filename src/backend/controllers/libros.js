@@ -42,6 +42,37 @@ export const crearLibro = async (libro) => {
   }
 };
 
+export const editarLibro = async (id, libro) => {
+  const nuevoLibro = new Libro(
+    libro.titulo,
+    libro.autor_id,
+    libro.editorial,
+    libro.lugar,
+    libro.cantidad,
+    libro.paginas,
+    libro.fecha_publicacion,
+    libro.isbn
+  );
+
+  const libroData = nuevoLibro.toSupabaseFormat();
+
+  try {
+    const { newData, newError } = await supabase
+      .from("Libros")
+      .update([libroData])
+      .eq("id", id);
+    if (newError) {
+      console.log(newError);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteLibro = async (id) => {
+  const { error } = await supabase.from("Libros").delete().eq("id", id);
+};
+
 // Controladores de tabla Autores
 export const getAutores = async () => {
   const { data: Autores, error } = await supabase.from("Autores").select("*");

@@ -19,12 +19,13 @@ import Tooltip from "@mui/material/Tooltip";
 import {
   getAutores,
   postNewAutor,
+  editarLibro,
   crearLibro,
 } from "../backend/controllers/libros";
 
 import useAlert from "../hooks/useAlerts";
 
-const CrearEditarLibro = ({ setNewBook }) => {
+const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const [libroData, setLibroData] = useState({
     titulo: "",
     autor_id: null,
@@ -44,6 +45,17 @@ const CrearEditarLibro = ({ setNewBook }) => {
   useEffect(() => {
     getAutores().then((allAutores) => {
       setAutores(allAutores[1]);
+    });
+
+    setLibroData({
+      titulo: infoLibro.titulo,
+      autor_id: infoLibro.autor_id,
+      editorial: infoLibro.editorial,
+      lugar: infoLibro.lugar,
+      cantidad: infoLibro.cantidad,
+      paginas: infoLibro.paginas,
+      fecha_publicacion: infoLibro.fecha_publicacion,
+      isbn: infoLibro.isbn,
     });
   }, []);
 
@@ -65,8 +77,13 @@ const CrearEditarLibro = ({ setNewBook }) => {
         });
   };
 
-  const handleCrearEditarLibro = (e) => {
+  const hundleSubmitLibro = (e) => {
     e.preventDefault();
+    console.log(editar);
+    editar ? actualizarLibro() : crearNuevoLibro();
+  };
+
+  const crearNuevoLibro = () => {
     const cantidadInt = Number(libroData.cantidad);
     const paginasInt = Number(libroData.paginas);
     const fechaInt = Number(libroData.fecha_publicacion);
@@ -78,7 +95,6 @@ const CrearEditarLibro = ({ setNewBook }) => {
         fecha_publicacion: fechaInt,
       };
     });
-    console.log(libroData);
 
     // setLoading(true);
     libroData.titulo != "" &&
@@ -90,7 +106,35 @@ const CrearEditarLibro = ({ setNewBook }) => {
     libroData.paginas != null
       ? crearLibro(libroData)
           .then(() => alertSuccess("Libro creado correctamente"))
-          .then(() => setNewBook(false))
+          .then(() => handleCancel())
+      : //   .then(() => setLoading(false))
+        null;
+  };
+
+  const actualizarLibro = () => {
+    const cantidadInt = Number(libroData.cantidad);
+    const paginasInt = Number(libroData.paginas);
+    const fechaInt = Number(libroData.fecha_publicacion);
+    setLibroData((prevUserData) => {
+      return {
+        ...prevUserData,
+        cantidad: cantidadInt,
+        paginas: paginasInt,
+        fecha_publicacion: fechaInt,
+      };
+    });
+
+    // setLoading(true);
+    libroData.titulo != "" &&
+    libroData.autor_id != "" &&
+    libroData.editorial != "" &&
+    libroData.lugar != "" &&
+    libroData.fecha_publicacion != null &&
+    libroData.cantidad != null &&
+    libroData.paginas != null
+      ? editarLibro(infoLibro.id, libroData)
+          .then(() => alertSuccess("Libro Actualizado correctamente"))
+          .then(() => handleCancel())
       : //   .then(() => setLoading(false))
         null;
   };
@@ -99,8 +143,10 @@ const CrearEditarLibro = ({ setNewBook }) => {
     swal("Ingrese el nombre del autor", {
       content: "input",
     }).then((value) => {
-      swal(`Autor ${value} Agregado`);
-      postNewAutor(value);
+      value != null ??
+        postNewAutor(value).then(() =>
+          alertSuccess("Autor creado correctamente")
+        );
     });
   };
 
@@ -115,7 +161,19 @@ const CrearEditarLibro = ({ setNewBook }) => {
     });
   };
 
-  const editando = false;
+  const handleCancel = () => {
+    setInfoLibro({
+      titulo: "",
+      autor_id: null,
+      editorial: "",
+      lugar: "",
+      cantidad: null,
+      paginas: null,
+      fecha_publicacion: null,
+      isbn: "",
+    });
+    setNewBook(false);
+  };
 
   return (
     <>
@@ -143,9 +201,8 @@ const CrearEditarLibro = ({ setNewBook }) => {
                 label="Título"
                 name="titulo"
                 variant="standard"
-                value={libroData.nombre}
+                value={libroData.titulo}
                 onChange={handleChange}
-                disabled={editando}
               />
 
               <FormControl variant="standard" sx={{ m: 1, width: 200 }}>
@@ -174,7 +231,6 @@ const CrearEditarLibro = ({ setNewBook }) => {
                 variant="standard"
                 value={libroData.editorial}
                 onChange={handleChange}
-                disabled={editando}
               />
               <TextField
                 id="libroLugar"
@@ -183,7 +239,6 @@ const CrearEditarLibro = ({ setNewBook }) => {
                 variant="standard"
                 value={libroData.lugar}
                 onChange={handleChange}
-                disabled={editando}
               />
               <TextField
                 id="libroCantidad"
@@ -192,7 +247,6 @@ const CrearEditarLibro = ({ setNewBook }) => {
                 variant="standard"
                 value={libroData.cantidad}
                 onChange={handleChange}
-                disabled={editando}
               />
               <TextField
                 id="libroPaginas"
@@ -201,7 +255,6 @@ const CrearEditarLibro = ({ setNewBook }) => {
                 variant="standard"
                 value={libroData.paginas}
                 onChange={handleChange}
-                disabled={editando}
               />
               <TextField
                 id="libroFecha"
@@ -210,7 +263,6 @@ const CrearEditarLibro = ({ setNewBook }) => {
                 variant="standard"
                 value={libroData.fecha_publicacion}
                 onChange={handleChange}
-                disabled={editando}
               />
               <TextField
                 id="libroIsbn"
@@ -219,47 +271,44 @@ const CrearEditarLibro = ({ setNewBook }) => {
                 variant="standard"
                 value={libroData.isbn}
                 onChange={handleChange}
-                disabled={editando}
               />
             </UserInfoContainer>
-            {editando ? (
+
+            <EditIconsContainer>
               <Tooltip
-                //   onClick={() => setEditando(true)}
-                color="primary"
-                title="Editar"
+                onClick={(e) =>
+                  swal({
+                    title: `Agregar nuevo libro "${libroData.titulo}"?`,
+                    closeOnClickOutside: false,
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willGiven) => {
+                    if (willGiven) {
+                      hundleSubmitLibro(e);
+                    }
+                  })
+                }
+                color="success"
+                title="Aceptar"
                 placement="bottom"
                 arrow
               >
                 <IconButton>
-                  <EditNoteIcon />
+                  <DoneAllIcon />
                 </IconButton>
               </Tooltip>
-            ) : (
-              <EditIconsContainer>
-                <Tooltip
-                  onClick={(e) => handleCrearEditarLibro(e)}
-                  color="success"
-                  title="Aceptar"
-                  placement="bottom"
-                  arrow
-                >
-                  <IconButton>
-                    <DoneAllIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip
-                  color="error"
-                  title="Cancelar"
-                  placement="bottom"
-                  arrow
-                  onClick={() => setNewBook(false)}
-                >
-                  <IconButton>
-                    <CancelOutlinedIcon />
-                  </IconButton>
-                </Tooltip>
-              </EditIconsContainer>
-            )}
+              <Tooltip
+                color="error"
+                title="Cancelar"
+                placement="bottom"
+                arrow
+                onClick={() => handleCancel()}
+              >
+                <IconButton>
+                  <CancelOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+            </EditIconsContainer>
           </Paper>
         </Box>
       ) : null}

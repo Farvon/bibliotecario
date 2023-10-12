@@ -7,12 +7,38 @@ import LayersClearIcon from "@mui/icons-material/LayersClear";
 import Tooltip from "@mui/material/Tooltip";
 import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 
-const Libro = ({ user, libro, autor, admin }) => {
+import { deleteLibro } from "../backend/controllers/libros";
+
+import useAlert from "../hooks/useAlerts";
+
+const Libro = ({
+  user,
+  libro,
+  autor,
+  admin,
+  setInfoLibro,
+  setNewBook,
+  setEditar,
+}) => {
   const [showCard, setShowCard] = useState(false);
   const [nombreAutor, setNombreAutor] = useState("");
 
+  const { alertSuccess, alertError } = useAlert();
+
   const handleClick = () => {
     setShowCard(true);
+  };
+
+  const handleEditBook = (libro) => {
+    setEditar(true);
+    setInfoLibro(libro);
+    setNewBook(true);
+  };
+
+  const handleDelete = (id) => {
+    deleteLibro(id)
+      .then(() => alertSuccess("Libro borrado correctamente"))
+      .then(() => window.location.reload());
   };
 
   useEffect(() => {
@@ -36,22 +62,33 @@ const Libro = ({ user, libro, autor, admin }) => {
             {admin == true && (
               <Td>
                 <Tooltip color="primary" title="Editar" placement="top" arrow>
-                  <IconButton onClick={() => alert("Editar " + libro.titulo)}>
+                  <IconButton onClick={() => handleEditBook(libro)}>
                     <StickyNote2OutlinedIcon />
                   </IconButton>
                 </Tooltip>
 
                 <Tooltip color="error" title="Eliminar" placement="top" arrow>
-                  <IconButton onClick={() => alert("Borrar " + libro.titulo)}>
+                  <IconButton
+                    onClick={() =>
+                      swal({
+                        title: `Eliminar libro "${libro.titulo}"?`,
+                        closeOnClickOutside: false,
+                        buttons: true,
+                        dangerMode: true,
+                      }).then((willGiven) => {
+                        if (willGiven) {
+                          handleDelete(libro.id);
+                        }
+                      })
+                    }
+                  >
                     <LayersClearIcon />
                   </IconButton>
                 </Tooltip>
               </Td>
             )}
           </>
-        ) : (
-          "Hola"
-        )}
+        ) : null}
       </Tr>
 
       {showCard ? (
