@@ -22,6 +22,8 @@ import {
   crearLibro,
 } from "../backend/controllers/libros";
 
+import useAlert from "../hooks/useAlerts";
+
 const CrearEditarLibro = ({ setNewBook }) => {
   const [libroData, setLibroData] = useState({
     titulo: "",
@@ -33,6 +35,8 @@ const CrearEditarLibro = ({ setNewBook }) => {
     fecha_publicacion: null,
     isbn: "",
   });
+
+  const { alertSuccess, alertError } = useAlert();
 
   const [autores, setAutores] = useState([]);
   const [autorSelectedNombre, setAutorSelectedNombre] = useState("");
@@ -85,8 +89,8 @@ const CrearEditarLibro = ({ setNewBook }) => {
     libroData.cantidad != null &&
     libroData.paginas != null
       ? crearLibro(libroData)
-          //   .then(() => alertSuccess("Usuario Creado - Verifique su E-mail"))
-          .then(() => setTimeout(() => {}, 2000))
+          .then(() => alertSuccess("Libro creado correctamente"))
+          .then(() => setNewBook(false))
       : //   .then(() => setLoading(false))
         null;
   };
