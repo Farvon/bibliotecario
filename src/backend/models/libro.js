@@ -1,6 +1,14 @@
 class Libro {
-  constructor(id, titulo, autor_id, publicacion) {
-    this.id = id; // Identificador único del libro
+  constructor(
+    titulo,
+    autor_id,
+    editorial,
+    lugar,
+    cantidad,
+    paginas,
+    fecha_publicacion,
+    isbn
+  ) {
     this.titulo = titulo; // Título del libro
     this.autor_id = autor_id; // Autor del libro
     this.editorial = editorial;
@@ -14,7 +22,6 @@ class Libro {
   // Método para convertir el objeto Libro a un formato adecuado para Supabase
   toSupabaseFormat() {
     return {
-      id: this.id,
       titulo: this.titulo,
       autor_id: this.autor_id,
       editorial: this.editorial,
@@ -29,7 +36,6 @@ class Libro {
   // Método para crear un objeto Libro a partir de datos obtenidos de Supabase
   static fromSupabaseData(data) {
     return new Libro(
-      data.id,
       data.titulo,
       data.autor_id,
       data.editorial,

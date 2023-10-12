@@ -1,4 +1,5 @@
 import { supabase } from "../client";
+import Libro from "../models/libro";
 
 // Controladores de tabla Libros
 export const getLibros = async () => {
@@ -15,6 +16,32 @@ export const getLibrosById = async (id) => {
   return libro;
 };
 
+export const crearLibro = async (libro) => {
+  const nuevoLibro = new Libro(
+    libro.titulo,
+    libro.autor_id,
+    libro.editorial,
+    libro.lugar,
+    libro.cantidad,
+    libro.paginas,
+    libro.fecha_publicacion,
+    libro.isbn
+  );
+
+  const libroData = nuevoLibro.toSupabaseFormat();
+
+  try {
+    const { newData, newError } = await supabase
+      .from("Libros")
+      .insert([libroData]);
+    if (newError) {
+      console.log(newError);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Controladores de tabla Autores
 export const getAutores = async () => {
   const { data: Autores, error } = await supabase.from("Autores").select("*");
@@ -27,6 +54,14 @@ export const getAutoresById = async (autor_id) => {
     .select("nombre")
     .eq("id", autor_id);
   return [AutorById, error];
+};
+
+export const postNewAutor = async (autor) => {
+  const { data, error } = await supabase
+    .from("Autores")
+    .insert({ nombre: autor })
+    .select();
+  console.log(data, error);
 };
 
 // Controladores de tabla Inventario
