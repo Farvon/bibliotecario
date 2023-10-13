@@ -2,11 +2,13 @@ import * as React from "react";
 
 import HojaPerfil from "./HojaPerfil";
 import MisRetiros from "./MisRetiros";
+import MisReservas from "./MisReservas";
 
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import { brown } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -76,9 +78,14 @@ export default function UserBasicTabs({ user }) {
               {...a11yProps(0)}
             />
             <Tab
-              icon={<MenuBookRounded />}
+              icon={<AutoStoriesIcon />}
               label="Mis Reservas"
               {...a11yProps(1)}
+            />
+            <Tab
+              icon={<MenuBookRounded />}
+              label="Mis Retiros"
+              {...a11yProps(2)}
             />
             {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
           </Tabs>
@@ -88,6 +95,9 @@ export default function UserBasicTabs({ user }) {
         <HojaPerfil user_id={user.id} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
+        <MisReservas user_id={user.id} />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
         <MisRetiros user_id={user.id} />
       </CustomTabPanel>
       {/* <CustomTabPanel value={value} index={2}>

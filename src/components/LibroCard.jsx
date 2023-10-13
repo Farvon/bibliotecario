@@ -6,19 +6,26 @@ import styled from "styled-components";
 import useAlert from "../hooks/useAlerts";
 
 import {
-  getDisponibles,
+  // getDisponibles,
   getInventario,
   updateInventario,
 } from "../backend/controllers/libros";
 import { crearReserva } from "../backend/controllers/reservas";
 
-const LibroCard = ({ admin, user, onCloseIconClick, libro, autor }) => {
+const LibroCard = ({
+  admin,
+  user,
+  onCloseIconClick,
+  libro,
+  autor,
+  disponibles,
+}) => {
   const { alertSuccess, alertError } = useAlert();
 
   const [alignment, setAlignment] = React.useState("web");
 
   const cardRef = useRef(null);
-  const [disponibles, setDisponibles] = useState();
+  // const [disponibles, setDisponibles] = useState();
   const [dataReserva, setDataReserva] = useState({
     usuario_id: "",
     inventario_id: "",
@@ -33,8 +40,8 @@ const LibroCard = ({ admin, user, onCloseIconClick, libro, autor }) => {
     //Trae todos los inventarios del Libro
     getInventario(libro.id).then((data) => setInventarioCompleto(data));
 
-    // Trae disponibles segun inventario
-    getDisponibles(libro.id).then((data) => setDisponibles(data));
+    // // Trae disponibles segun inventario
+    // getDisponibles(libro.id).then((data) => setDisponibles(data));
 
     const handleClickOutside = (event) => {
       if (cardRef.current && !cardRef.current.contains(event.target)) {

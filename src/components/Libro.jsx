@@ -7,7 +7,7 @@ import LayersClearIcon from "@mui/icons-material/LayersClear";
 import Tooltip from "@mui/material/Tooltip";
 import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 
-import { deleteLibro } from "../backend/controllers/libros";
+import { deleteLibro, getDisponibles } from "../backend/controllers/libros";
 
 import useAlert from "../hooks/useAlerts";
 
@@ -22,6 +22,7 @@ const Libro = ({
 }) => {
   const [showCard, setShowCard] = useState(false);
   const [nombreAutor, setNombreAutor] = useState("");
+  const [disponibles, setDisponibles] = useState();
 
   const { alertSuccess, alertError } = useAlert();
 
@@ -42,6 +43,8 @@ const Libro = ({
   };
 
   useEffect(() => {
+    getDisponibles(libro.id).then((data) => setDisponibles(data));
+
     autor === "Desconocido"
       ? setNombreAutor("Desconocido")
       : setNombreAutor(autor.nombre);
@@ -61,6 +64,7 @@ const Libro = ({
             <Td>{nombreAutor}</Td>
             <Td>{libro.editorial}</Td>
             <Td>{libro.cantidad}</Td>
+            <Td>{disponibles}</Td>
             {admin == true && (
               <Td>
                 <Tooltip color="primary" title="Editar" placement="top" arrow>
@@ -100,6 +104,7 @@ const Libro = ({
           user={user}
           libro={libro}
           autor={nombreAutor}
+          disponibles={disponibles}
           onCloseIconClick={() => setShowCard(false)}
         />
       ) : null}
@@ -123,7 +128,7 @@ const Tr = styled.tr`
 const Td = styled.td`
   display: flex;
   justify-content: center;
-  width: 25%;
+  width: 20%;
   gap: 5%;
 `;
 

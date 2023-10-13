@@ -61,9 +61,9 @@ function MisReservas({ user_id }) {
         </Tr>
       </Thead>
       <tbody>
-        {misRetirosSorted.map((item) => (
+        {misRetirosSorted.map((item, index) => (
           <>
-            <MiRetiroCard key={item.id} retiro={item} />
+            <MiRetiroCard key={index} retiro={item} />
           </>
         ))}
       </tbody>

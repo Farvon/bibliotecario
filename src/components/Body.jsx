@@ -28,8 +28,10 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   }, []);
 
   const handleSrcBook = (src) => {
-    const bookSrched = biblioteca.filter((item) =>
-      item.titulo.toLowerCase().includes(src)
+    const bookSrched = biblioteca.filter(
+      (item) =>
+        item.titulo.toLowerCase().includes(src) ||
+        item.editorial.toLowerCase().includes(src)
     );
     setBibliotecaSrched(bookSrched);
   };
@@ -72,6 +74,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
             <Td>Autor</Td>
             <Td>Editorial</Td>
             <Td>Ejemplares</Td>
+            <Td>Disponibles</Td>
             {admin == true && <Td>Acciones</Td>}
           </Tr>
         </Thead>
@@ -151,7 +154,7 @@ const Tr = styled.tr`
 const Td = styled.td`
   display: flex;
   justify-content: center;
-  width: 25%;
+  width: 20%;
 `;
 
 const ImgContainer = styled.div`

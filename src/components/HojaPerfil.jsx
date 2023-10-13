@@ -75,7 +75,7 @@ function HojaPerfil({ user_id }) {
           width: 500,
           maxWidth: 500,
           minWidth: 300,
-          height: "50vh",
+          height: "100%",
         },
       }}
     >

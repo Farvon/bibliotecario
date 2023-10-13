@@ -106,5 +106,5 @@ const TdEstado = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${({ dias }) => (dias <= 1 ? "green" : "red")};
+  color: ${({ dias }) => (dias <= 3 ? "green" : "red")};
 `;
