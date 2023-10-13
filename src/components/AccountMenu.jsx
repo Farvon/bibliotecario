@@ -28,6 +28,10 @@ const AccountMenu = () => {
     window.location.href = "/perfil";
   };
 
+  const handleClickReglamento = () => {
+    window.location.href = "/reglamento";
+  };
+
   const handleSingOut = () => {
     singOut().then(() => {
       window.location.href = "/";
@@ -92,6 +96,10 @@ const AccountMenu = () => {
       >
         <MenuItem onClick={(handleClose, handleClickPerfil)}>
           <LocalLibraryRoundedIcon /> Mi Perfil
+        </MenuItem>
+
+        <MenuItem onClick={(handleClose, handleClickReglamento)}>
+          <LocalLibraryRoundedIcon /> Reglamento
         </MenuItem>
 
         {/* <MenuItem onClick={handleClose}>

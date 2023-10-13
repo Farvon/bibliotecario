@@ -144,3 +144,9 @@ export const updateInventarioDevuelto = async (id) => {
     .eq("id", id)
     .select();
 };
+
+//-----Controladores de Table Carreras
+export const getCarreras = async () => {
+  const { data: Carreras, error } = await supabase.from("Carreras").select("*");
+  return [error, Carreras];
+};

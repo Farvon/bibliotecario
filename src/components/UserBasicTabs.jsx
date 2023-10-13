@@ -100,9 +100,6 @@ export default function UserBasicTabs({ user }) {
       <CustomTabPanel value={value} index={2}>
         <MisRetiros user_id={user.id} />
       </CustomTabPanel>
-      {/* <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel> */}
     </Box>
   );
 }

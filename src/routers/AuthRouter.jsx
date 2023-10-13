@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Admin from "../views/Admin";
 import Home from "../views/Home";
 import PerfilUser from "../views/PerfilUser";
+import Reglamento from "../views/Reglamento";
 
 const AuthRouter = ({ user }) => {
   useEffect(() => {}, []);
@@ -29,6 +30,12 @@ const AuthRouter = ({ user }) => {
           path="/perfil"
           name="perfil"
           element={<PerfilUser user={user} />}
+          exact
+        />
+        <Route
+          path="/reglamento"
+          name="reglamento"
+          element={<Reglamento />}
           exact
         />
       </Routes>
