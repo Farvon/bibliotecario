@@ -28,8 +28,17 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   }, []);
 
   const handleSrcBook = (src) => {
+    const autoresMatch = autores.filter((autor) =>
+      autor.nombre.toLowerCase().includes(src)
+    );
+
+    let autoresMatchId = [];
+    autoresMatch.map((elem) => autoresMatchId.push(elem.id));
+    console.log("Autores que cumplen con la busqueda ", autoresMatchId);
+
     const bookSrched = biblioteca.filter(
       (item) =>
+        autoresMatchId.includes(item.autor_id) ||
         item.titulo.toLowerCase().includes(src) ||
         item.editorial.toLowerCase().includes(src)
     );
@@ -86,9 +95,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
                 user={user}
                 libro={item}
                 autor={
-                  item.autor_id
-                    ? autores.find((e) => e.id === item.autor_id)
-                    : "Desconocido"
+                  item.autor_id && autores.find((e) => e.id === item.autor_id)
                 }
                 admin={admin}
                 setInfoLibro={setInfoLibro}
