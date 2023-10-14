@@ -79,14 +79,13 @@ export default function BasicTabs() {
     const partesFechaRetiro = fechaRetiroString.split("-");
     const fechaRetiro = new Date(
       partesFechaRetiro[0], // Año
-      partesFechaRetiro[2] - 1, // Mes (restamos 1 porque en JavaScript los meses van de 0 a 11)
-      partesFechaRetiro[1] // Día
+      partesFechaRetiro[1] - 1, // Mes (restamos 1 porque en JavaScript los meses van de 0 a 11)
+      partesFechaRetiro[2] // Día
     );
-
     const fechaHoy = new Date();
     const diferenciaEnMilisegundos = fechaHoy - fechaRetiro;
     const dias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
-    dias > 2 ? contador++ : null;
+    dias > 3 ? contador++ : null;
   });
 
   return (

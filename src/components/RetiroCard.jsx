@@ -48,7 +48,13 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
   };
 
   const handleDevolucion = (id, inventario_id) => {
-    const fechaDevolucion = new Date().toLocaleDateString("es-ES");
+    var today = new Date();
+    var day = today.getDate();
+    var month = today.getMonth() + 1;
+    var year = today.getFullYear();
+    var fecha = `${year}/${month}/${day}`;
+
+    const fechaDevolucion = fecha;
 
     updateDevolucion(id);
     updateInventarioDevuelto(inventario_id);
@@ -63,14 +69,14 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
   const partesFechaRetiro = fechaRetiroString.split("-");
   const fechaRetiro = new Date(
     partesFechaRetiro[0], // Año
-    partesFechaRetiro[2] - 1, // Mes (restamos 1 porque en JavaScript los meses van de 0 a 11)
-    partesFechaRetiro[1] // Día
+    partesFechaRetiro[1] - 1, // Mes (restamos 1 porque en JavaScript los meses van de 0 a 11)
+    partesFechaRetiro[2] // Día
   );
 
   const fechaHoy = new Date();
   const diferenciaEnMilisegundos = fechaHoy - fechaRetiro;
   const dias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
-  const estado = dias <= 1 ? true : false;
+  const estado = dias > 3 ? false : true;
 
   return (
     <Tr key={reserva.id}>

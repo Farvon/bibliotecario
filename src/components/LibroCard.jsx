@@ -129,6 +129,13 @@ const LibroCard = ({
               <Info>
                 <Etiqueta>N° Inventario</Etiqueta>
                 <ToggleButtonGroup
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "auto",
+                  }}
                   size="small"
                   color="primary"
                   value={alignment}
