@@ -20,12 +20,11 @@ const Reglamento = () => {
       }}
     >
       <Paper>
-        <h2>Reglamento</h2>
         <embed
           src="./Historia Institucional.pdf"
           type="application/pdf"
           width="100%"
-          height="500px"
+          height="100%"
         />
       </Paper>
     </Box>
