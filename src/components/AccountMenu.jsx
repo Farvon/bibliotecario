@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { singOut } from "../backend/controllers/usuarios";
 
 import Box from "@mui/material/Box";
+import EditNotificationsRoundedIcon from "@mui/icons-material/EditNotificationsRounded";
 import LocalLibraryRoundedIcon from "@mui/icons-material/LocalLibraryRounded";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -99,7 +100,9 @@ const AccountMenu = () => {
         </MenuItem>
 
         <MenuItem onClick={(handleClose, handleClickReglamento)}>
-          <LocalLibraryRoundedIcon /> Reglamento
+          {/* <TaskRoundedIcon /> */}
+          <EditNotificationsRoundedIcon />
+          Reglamento
         </MenuItem>
 
         {/* <MenuItem onClick={handleClose}>

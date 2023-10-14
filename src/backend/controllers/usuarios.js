@@ -12,7 +12,8 @@ export const crearUsuario = async (user) => {
     user.nombre,
     user.telefono,
     user.direccion,
-    false
+    user.carrera,
+    user.curso
   );
 
   const userData = nuevoUsuario.toSupabaseFormat();
@@ -36,7 +37,8 @@ export const updateUsuario = async (id, user) => {
     user.nombre,
     user.telefono,
     user.direccion,
-    false
+    user.carrera,
+    user.curso
   );
 
   const userData = nuevoUsuario.toSupabaseFormat();

@@ -11,7 +11,10 @@ function MisReservas({ user_id }) {
 
   useEffect(() => {
     getReservasNuevas(user_id).then(
-      (data) => (setMisReservas(data), setMisReservasSorted(data))
+      (data) => (
+        setMisReservas(data),
+        setMisReservasSorted(data.filter((item) => item.usuario_id == user_id))
+      )
     );
   }, []);
 

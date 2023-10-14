@@ -30,7 +30,6 @@ const LibroCard = ({
     usuario_id: "",
     inventario_id: "",
     fecha_retiro: "",
-    fecha_devolucion: "",
   });
 
   const [inventarioCompleto, setInventarioCompleto] = useState([]);
@@ -67,16 +66,17 @@ const LibroCard = ({
   };
 
   const handleReserva = () => {
-    // var today = new Date();
-    // var day = today.getDate();
-    // var month = today.getMonth() + 1;
-    // var year = today.getFullYear();
-    // var fecha = `${year}/${month}/${day}`;
+    var today = new Date();
+    var day = today.getDate();
+    var month = today.getMonth() + 1;
+    var year = today.getFullYear();
+    var fecha = `${year}/${month}/${day}`;
 
     const newReserva = {
       usuario_id: user.id,
       inventario_id: inventarioSelected,
-      fecha_retiro: new Date().toLocaleDateString("es-ES"),
+      fecha_retiro: fecha,
+      fecha_devolucion: null,
     };
 
     setDataReserva(newReserva);

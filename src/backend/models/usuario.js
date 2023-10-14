@@ -1,11 +1,12 @@
 class Usuario {
-  constructor(id, email, nombre, telefono, direccion, activo) {
+  constructor(id, email, nombre, telefono, direccion, carrera, curso) {
     this.id = id; // Identificador único del usuario
     this.email = email;
     this.nombre = nombre;
     this.telefono = telefono;
     this.direccion = direccion;
-    this.activo = activo; // TRUE o FALSE
+    this.carrera = carrera; // TRUE o FALSE
+    this.curso = curso;
   }
 
   // Método para convertir el objeto a un formato adecuado para Supabase
@@ -16,7 +17,8 @@ class Usuario {
       nombre: this.nombre,
       telefono: this.telefono,
       direccion: this.direccion,
-      activo: this.activo,
+      carrera: this.carrera,
+      curso: this.curso,
     };
   }
 
@@ -28,7 +30,8 @@ class Usuario {
       data.nombre,
       data.telefono,
       data.direccion,
-      data.activo
+      data.carrera,
+      data.curso
     );
   }
 }
