@@ -24,12 +24,18 @@ function MisReservas({ user_id }) {
         <Tr>
           <Td>Libro</Td>
           <Td>Inventario</Td>
+          <Td>Cancelar</Td>
         </Tr>
       </Thead>
       <tbody>
         {misReservasSorted.map((item, index) => (
           <>
-            <MiReservaCard key={index} retiro={item} />
+            <MiReservaCard
+              key={index}
+              reserva={item}
+              misReservas={misReservas}
+              setMisReservas={setMisReservas}
+            />
           </>
         ))}
       </tbody>

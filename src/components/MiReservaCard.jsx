@@ -1,24 +1,27 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import FileDownloadDoneIcon from "@mui/icons-material/FileDownloadDone";
+import IconButton from "@mui/material/IconButton";
+import DoNotDisturbAltRoundedIcon from "@mui/icons-material/DoNotDisturbAltRounded";
 import Tooltip from "@mui/material/Tooltip";
-import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 import {
   getInventarioById,
   getLibrosById,
+  updateInventarioUndo,
 } from "../backend/controllers/libros";
 
-const MiReservaCard = ({ retiro }) => {
+import { deleteReserva } from "../backend/controllers/reservas";
+
+const MiReservaCard = ({ reserva, misReservas, setMisReservas }) => {
   const [inventarioById, setInventarioById] = useState();
   const [libroById, setLibroById] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getInventarioById(retiro.inventario_id)
+    getInventarioById(reserva.inventario_id)
       .then((data2) =>
         getLibrosById(data2[0].libro_id).then((data3) => {
           setInventarioById(data2[0]), setLibroById(data3[0]);
@@ -27,18 +30,13 @@ const MiReservaCard = ({ retiro }) => {
       .then(() => setLoading(false));
   }, []);
 
-  const fechaRetiroString = retiro.fecha_retiro; // Supongamos que esto es "2023-03-10"
-  const partesFechaRetiro = fechaRetiroString.split("-");
-  const fechaRetiro = new Date(
-    partesFechaRetiro[0], // Año
-    partesFechaRetiro[2] - 1, // Mes (restamos 1 porque en JavaScript los meses van de 0 a 11)
-    partesFechaRetiro[1] // Día
-  );
-
-  const fechaHoy = new Date();
-  const diferenciaEnMilisegundos = fechaHoy - fechaRetiro;
-  const dias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
-  const estado = dias <= 3 ? "En tiempo" : "Excedido";
+  const handleRechazar = (reserva_id, inventario_id) => {
+    console.log(reserva_id, inventario_id);
+    deleteReserva(reserva_id);
+    updateInventarioUndo(inventario_id);
+    const newReservas = misReservas.filter((item) => item.id != reserva_id);
+    setMisReservas(newReservas);
+  };
 
   return (
     <Tr>
@@ -47,6 +45,27 @@ const MiReservaCard = ({ retiro }) => {
           <Td>{libroById.titulo}</Td>
 
           <Td>{inventarioById.inventario}</Td>
+
+          <Td>
+            <Tooltip title="Denegar" placement="top" arrow>
+              <IconButton
+                onClick={() =>
+                  swal({
+                    title: "Rechazar Reserva?",
+                    closeOnClickOutside: false,
+                    buttons: ["No", "Si"],
+                    dangerMode: true,
+                  }).then((willNotGiven) => {
+                    if (willNotGiven) {
+                      handleRechazar(reserva.id, reserva.inventario_id);
+                    }
+                  })
+                }
+              >
+                <DoNotDisturbAltRoundedIcon color="error" />
+              </IconButton>
+            </Tooltip>
+          </Td>
         </>
       ) : (
         <Box sx={{ display: "flex", margin: "auto" }}>
