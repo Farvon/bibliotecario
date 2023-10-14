@@ -26,6 +26,7 @@ const LibroCard = ({
 
   const cardRef = useRef(null);
   // const [disponibles, setDisponibles] = useState();
+  //CONTROLAR SI ESTO ES NECESARIO
   const [dataReserva, setDataReserva] = useState({
     usuario_id: "",
     inventario_id: "",

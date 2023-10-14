@@ -6,6 +6,7 @@ import ReservaCard from "./ReservaCard";
 
 const Reservas = () => {
   const [reservas, setReservas] = useState([]);
+
   useEffect(() => {
     getReservasNuevas().then((data) => setReservas(data));
   }, []);
@@ -17,9 +18,11 @@ const Reservas = () => {
           <Td>Alumno</Td>
           <Td>Libro</Td>
           <Td>N° Inventario</Td>
+          <Td>Carrera</Td>
           <Td>Acciones</Td>
         </Tr>
       </Thead>
+
       <tbody>
         {reservas.map((item) => (
           <ReservaCard

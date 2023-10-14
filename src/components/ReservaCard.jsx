@@ -14,12 +14,15 @@ import {
   getInventarioById,
   getLibrosById,
   updateInventarioUndo,
+  getCarreras,
 } from "../backend/controllers/libros";
 
 const ReservaCard = ({ reserva, reservas, setReservas }) => {
   const [userById, setUserById] = useState();
   const [inventarioById, setInventarioById] = useState();
   const [libroById, setLibroById] = useState();
+  const [carreras, setCarreras] = useState();
+  const [carreraUsr, setCarreraUsr] = useState([]);
 
   useEffect(() => {
     getInventarioById(reserva.inventario_id).then((data2) =>
@@ -27,7 +30,11 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
         setInventarioById(data2[0]), setLibroById(data3[0]);
       })
     );
-
+    getCarreras()
+      .then((item) => setCarreras(item[1]))
+      .then(
+        () => carreras && setCarreraUsr(carreras.find((item) => item.id == 1))
+      );
     getUserById(reserva.usuario_id).then((data) => setUserById(data[0]));
   }, []);
 
@@ -46,11 +53,12 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
 
   return (
     <Tr>
-      {userById && inventarioById && libroById ? (
+      {userById && inventarioById && libroById && carreras ? (
         <>
           <Td>{userById.nombre}</Td>
           <Td>{libroById.titulo}</Td>
           <Td>{inventarioById.inventario}</Td>
+          <Td>{carreraUsr.carrera}</Td>
           <Td>
             <Tooltip title="Aprobar" placement="top" arrow>
               <IconButton
