@@ -79,7 +79,6 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
 
   const hundleSubmitLibro = (e) => {
     e.preventDefault();
-    console.log(editar);
     editar ? actualizarLibro() : crearNuevoLibro();
   };
 

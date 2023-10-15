@@ -3,10 +3,13 @@ import styled from "styled-components";
 
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import DoNotDisturbAltRoundedIcon from "@mui/icons-material/DoNotDisturbAltRounded";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+
+import UsuarioCard from "./UsuarioCard";
 
 import { deleteReserva, updateReserva } from "../backend/controllers/reservas";
 import { getUserById } from "../backend/controllers/usuarios";
@@ -23,6 +26,7 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
   const [libroById, setLibroById] = useState();
   const [carreras, setCarreras] = useState();
   const [carreraUsr, setCarreraUsr] = useState([]);
+  const [showCard, setShowCard] = useState(false);
 
   useEffect(() => {
     getInventarioById(reserva.inventario_id).then((data2) =>
@@ -37,6 +41,10 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
 
     getUserById(reserva.usuario_id).then((data) => setUserById(data[0]));
   }, [carreras]);
+
+  const handleClick = () => {
+    setShowCard(true);
+  };
 
   const handleAprobar = (id) => {
     updateReserva(id);
@@ -55,7 +63,17 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
     <Tr>
       {userById && inventarioById && libroById && carreras ? (
         <>
-          <Td>{userById.nombre}</Td>
+          <TdAlumno>
+            <Tooltip title="Info" placement="top" arrow>
+              <IconButton color="warning">
+                <ContactPageRoundedIcon
+                  fontSize="small"
+                  onClick={() => handleClick()}
+                />
+              </IconButton>
+            </Tooltip>
+            {userById.nombre}
+          </TdAlumno>
           <Td>{libroById.titulo}</Td>
           <Td>{inventarioById.inventario}</Td>
           <Td>{carreraUsr.carrera}</Td>
@@ -96,6 +114,13 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
               </IconButton>
             </Tooltip>
           </Td>
+          {showCard ? (
+            <UsuarioCard
+              user={userById}
+              onCloseIconClick={() => setShowCard(false)}
+              carreras={carreras}
+            />
+          ) : null}
         </>
       ) : (
         <Box sx={{ display: "flex", margin: "auto" }}>
@@ -122,5 +147,14 @@ const Td = styled.td`
   display: flex;
   justify-content: center;
   width: 25%;
+  gap: 5%;
+`;
+
+const TdAlumno = styled.td`
+  display: flex;
+  justify-content: left;
+  font-size: 100%;
+  align-items: center;
+  width: 20%;
   gap: 5%;
 `;

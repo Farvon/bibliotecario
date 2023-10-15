@@ -62,9 +62,6 @@ function HojaPerfil({ user_id }) {
           (carreraUsr = carreras.find((item) => item.id == userData.carrera))
       )
       .then(() => setCarreraSelectedNombre(carreraUsr.carrera));
-
-    console.log(userData.carrera);
-    console.log(carreras);
   }, []);
 
   const handleEdit = () => {

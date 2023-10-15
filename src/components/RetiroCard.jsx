@@ -25,7 +25,7 @@ import {
 import UsuarioCard from "./UsuarioCard";
 import useAlert from "../hooks/useAlerts";
 
-const RetiroCard = ({ reserva, reservas, setReservas }) => {
+const RetiroCard = ({ reserva, reservas, setReservas, carreras }) => {
   const [userById, setUserById] = useState();
   const [inventarioById, setInventarioById] = useState();
   const [libroById, setLibroById] = useState();
@@ -135,6 +135,7 @@ const RetiroCard = ({ reserva, reservas, setReservas }) => {
             <UsuarioCard
               user={userById}
               onCloseIconClick={() => setShowCard(false)}
+              carreras={carreras}
             />
           ) : null}
         </>

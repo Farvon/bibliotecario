@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 
-const UsuarioCard = ({ user, onCloseIconClick }) => {
+const UsuarioCard = ({ user, onCloseIconClick, carreras }) => {
   const cardRef = useRef(null);
 
   useEffect(() => {
@@ -15,6 +15,7 @@ const UsuarioCard = ({ user, onCloseIconClick }) => {
         onCloseIconClick();
       }
     };
+
     // Bind and unbind the event listener
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -36,13 +37,13 @@ const UsuarioCard = ({ user, onCloseIconClick }) => {
             width: 500,
             maxWidth: 500,
             minWidth: 300,
-            height: "50vh",
+            height: "100%",
           },
         }}
       >
         <Paper>
           <h2>Información de Usuario</h2>
-          {user ? (
+          {user && carreras ? (
             <>
               <UserInfoContainer>
                 <TextField
@@ -75,6 +76,26 @@ const UsuarioCard = ({ user, onCloseIconClick }) => {
                   name="direccion"
                   variant="standard"
                   value={user.direccion}
+                  disabled
+                />
+                <TextField
+                  id="userCarrera"
+                  label="Carrera"
+                  name="carrera"
+                  variant="standard"
+                  value={
+                    user.carrera != null
+                      ? carreras[user.carrera - 1].carrera
+                      : ""
+                  }
+                  disabled
+                />
+                <TextField
+                  id="userCurso"
+                  label="Curso"
+                  name="curso"
+                  variant="standard"
+                  value={user.curso}
                   disabled
                 />
               </UserInfoContainer>

@@ -3,12 +3,15 @@ import styled from "styled-components";
 
 import { getReservasAprobadas } from "../backend/controllers/reservas";
 import RetiroCard from "./RetiroCard";
+import { getCarreras } from "../backend/controllers/libros";
 
 const Retiros = () => {
   const [reservas, setReservas] = useState([]);
+  const [carreras, setCarreras] = useState();
 
   useEffect(() => {
     getReservasAprobadas().then((data) => setReservas(data));
+    getCarreras().then((carreras) => setCarreras(carreras[1]));
   }, []);
 
   return (
@@ -30,6 +33,7 @@ const Retiros = () => {
             reserva={item}
             reservas={reservas}
             setReservas={setReservas}
+            carreras={carreras}
           />
         ))}
       </tbody>

@@ -31,7 +31,6 @@ const MiReservaCard = ({ reserva, misReservas, setMisReservas }) => {
   }, []);
 
   const handleRechazar = (reserva_id, inventario_id) => {
-    console.log(reserva_id, inventario_id);
     deleteReserva(reserva_id);
     updateInventarioUndo(inventario_id);
     const newReservas = misReservas.filter((item) => item.id != reserva_id);
