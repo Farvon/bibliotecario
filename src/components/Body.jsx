@@ -104,7 +104,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
         </Thead>
         {autores && biblioteca ? (
           <tbody>
-            {carreraSrc != ""
+            {carreraSrc
               ? bibliotecaSrched.map(
                   (item) =>
                     item.carrera_id == carreraSrc && (
@@ -120,6 +120,10 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
                         setInfoLibro={setInfoLibro}
                         setNewBook={setNewBook}
                         setEditar={setEditar}
+                        carrera={
+                          item.carrera_id &&
+                          carreras.find((e) => e.id === item.carrera_id)
+                        }
                       />
                     )
                 )
@@ -136,6 +140,10 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
                     setInfoLibro={setInfoLibro}
                     setNewBook={setNewBook}
                     setEditar={setEditar}
+                    carrera={
+                      item.carrera_id &&
+                      carreras.find((e) => e.id === item.carrera_id)
+                    }
                   />
                 ))}
           </tbody>

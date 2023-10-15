@@ -7,7 +7,8 @@ class Libro {
     cantidad,
     paginas,
     fecha_publicacion,
-    isbn
+    isbn,
+    carrera_id
   ) {
     this.titulo = titulo; // Título del libro
     this.autor_id = autor_id; // Autor del libro
@@ -17,6 +18,7 @@ class Libro {
     this.paginas = paginas;
     this.fecha_publicacion = fecha_publicacion; // Año de publicación del libro
     this.isbn = isbn;
+    this.carrera_id = carrera_id;
   }
 
   // Método para convertir el objeto Libro a un formato adecuado para Supabase
@@ -30,6 +32,7 @@ class Libro {
       paginas: this.paginas,
       fecha_publicacion: this.fecha_publicacion,
       isbn: this.isbn,
+      carrera_id: this.carrera_id,
     };
   }
 
@@ -43,7 +46,8 @@ class Libro {
       data.cantidad,
       data.paginas,
       data.fecha_publicacion,
-      data.isbn
+      data.isbn,
+      data.carrera_id
     );
   }
 }

@@ -25,7 +25,8 @@ export const crearLibro = async (libro) => {
     libro.cantidad,
     libro.paginas,
     libro.fecha_publicacion,
-    libro.isbn
+    libro.isbn,
+    libro.carrera_id
   );
 
   const libroData = nuevoLibro.toSupabaseFormat();
@@ -51,7 +52,8 @@ export const editarLibro = async (id, libro) => {
     libro.cantidad,
     libro.paginas,
     libro.fecha_publicacion,
-    libro.isbn
+    libro.isbn,
+    libro.carrera_id
   );
 
   const libroData = nuevoLibro.toSupabaseFormat();

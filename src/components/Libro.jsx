@@ -19,6 +19,7 @@ const Libro = ({
   setInfoLibro,
   setNewBook,
   setEditar,
+  carrera,
 }) => {
   const [showCard, setShowCard] = useState(false);
   const [nombreAutor, setNombreAutor] = useState("");
@@ -106,6 +107,7 @@ const Libro = ({
           autor={nombreAutor}
           disponibles={disponibles}
           onCloseIconClick={() => setShowCard(false)}
+          carrera={carrera}
         />
       ) : null}
     </>

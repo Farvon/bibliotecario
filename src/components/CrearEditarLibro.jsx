@@ -12,7 +12,6 @@ import Select from "@mui/material/Select";
 
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -21,6 +20,7 @@ import {
   postNewAutor,
   editarLibro,
   crearLibro,
+  getCarreras,
 } from "../backend/controllers/libros";
 
 import useAlert from "../hooks/useAlerts";
@@ -35,6 +35,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     paginas: null,
     fecha_publicacion: null,
     isbn: "",
+    carrera_id: null,
   });
 
   const { alertSuccess, alertError } = useAlert();
@@ -42,10 +43,15 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const [autores, setAutores] = useState([]);
   const [autorSelectedNombre, setAutorSelectedNombre] = useState("");
 
+  const [carreras, setCarreras] = useState([]);
+  const [carreraSelectedNombre, setCarreraSelectedNombre] = useState("");
+
   useEffect(() => {
     getAutores().then((allAutores) => {
       setAutores(allAutores[1]);
     });
+
+    getCarreras().then((allCarreras) => setCarreras(allCarreras[1]));
 
     setLibroData({
       titulo: infoLibro.titulo,
@@ -56,6 +62,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
       paginas: infoLibro.paginas,
       fecha_publicacion: infoLibro.fecha_publicacion,
       isbn: infoLibro.isbn,
+      carrera_id: infoLibro.carrera_id,
     });
   }, []);
 
@@ -97,11 +104,12 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
 
     libroData.titulo != "" &&
     libroData.autor_id != "" &&
+    libroData.carrera_id != "" &&
     libroData.cantidad != null
       ? crearLibro(libroData)
           .then(() => alertSuccess("Libro creado correctamente"))
           .then(() => handleCancel())
-      : alertError("Título, Autor y Cantidad no pueden quedar vacios");
+      : alertError("Título, Autor, Carrera y Cantidad no pueden quedar vacios");
   };
 
   const actualizarLibro = () => {
@@ -120,11 +128,11 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     libroData.titulo != "" &&
     libroData.autor_id != "" &&
     libroData.cantidad != null &&
-    libroData.paginas != null
+    libroData.carrera_id != ""
       ? editarLibro(infoLibro.id, libroData)
           .then(() => alertSuccess("Libro Actualizado correctamente"))
           .then(() => handleCancel())
-      : alertError("Título, Autor y Cantidad no pueden quedar vacios");
+      : alertError("Título, Autor, Carrera y Cantidad no pueden quedar vacios");
   };
 
   const handleAddAutor = () => {
@@ -149,6 +157,19 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     });
   };
 
+  const handleChangeCarrera = (event) => {
+    const carrera = carreras.find(
+      (carrera) => carrera.carrera == event.target.value
+    );
+    setAutorSelectedNombre(carrera.carrera);
+    setLibroData((prevUserData) => {
+      return {
+        ...prevUserData,
+        carrera_id: carrera.id,
+      };
+    });
+  };
+
   const handleCancel = () => {
     setInfoLibro({
       titulo: "",
@@ -159,6 +180,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
       paginas: null,
       fecha_publicacion: null,
       isbn: "",
+      carrera_id: null,
     });
     setNewBook(false);
   };
@@ -260,6 +282,21 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                 value={libroData.isbn}
                 onChange={handleChange}
               />
+              <FormControl variant="standard" sx={{ m: 1, width: 200 }}>
+                <InputLabel htmlFor="select-carreras">Carrera</InputLabel>
+                <Select
+                  id="select-carreras"
+                  value={carreraSelectedNombre}
+                  label="Carrera"
+                  onChange={handleChangeCarrera}
+                >
+                  {carreras.map((carrera) => (
+                    <MenuItem key={carrera.id} value={carrera.carrera}>
+                      {carrera.carrera}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </UserInfoContainer>
 
             <EditIconsContainer>

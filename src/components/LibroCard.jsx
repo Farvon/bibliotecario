@@ -19,6 +19,7 @@ const LibroCard = ({
   libro,
   autor,
   disponibles,
+  carrera,
 }) => {
   const { alertSuccess, alertError } = useAlert();
 
@@ -95,6 +96,7 @@ const LibroCard = ({
             <FormImg src="./book.png" />
             <FormInfo>
               <Titulo>{libro.titulo}</Titulo>
+              <Carrera>{carrera != null && carrera.carrera}</Carrera>
               <Info>
                 <Etiqueta>Autor:</Etiqueta>
                 <InfoLibro> {autor}</InfoLibro>
@@ -236,6 +238,15 @@ const Titulo = styled.span`
   font-weight: bold;
   font-size: 1.5em;
   margin-bottom: 8px;
+  max-width: 40vw;
+`;
+
+const Carrera = styled.span`
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1em;
+  margin-top: -4px;
+  margin-bottom: 16px;
   max-width: 40vw;
 `;
 
