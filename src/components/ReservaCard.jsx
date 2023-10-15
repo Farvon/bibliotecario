@@ -30,13 +30,13 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
         setInventarioById(data2[0]), setLibroById(data3[0]);
       })
     );
-    getCarreras()
-      .then((item) => setCarreras(item[1]))
-      .then(
-        () => carreras && setCarreraUsr(carreras.find((item) => item.id == 1))
-      );
+    getCarreras().then((item) => setCarreras(item[1]));
+    carreras &&
+      libroById &&
+      setCarreraUsr(carreras.find((item) => item.id == libroById.carrera_id));
+
     getUserById(reserva.usuario_id).then((data) => setUserById(data[0]));
-  }, []);
+  }, [carreras]);
 
   const handleAprobar = (id) => {
     updateReserva(id);
