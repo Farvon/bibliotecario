@@ -102,7 +102,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
             {admin == true && <Td>Acciones</Td>}
           </Tr>
         </Thead>
-        {autores && biblioteca ? (
+        {autores && biblioteca && carreras ? (
           <tbody>
             {carreraSrc
               ? bibliotecaSrched.map(
