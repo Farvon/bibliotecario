@@ -26,6 +26,7 @@ function HojaPerfil({ user_id }) {
   const [user, setUser] = useState();
   const [carreras, setCarreras] = useState([]);
   const [carreraSelectedNombre, setCarreraSelectedNombre] = useState("");
+  const [cursoSelected, setCursoSelected] = useState("");
   const [editando, setEditando] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({
@@ -52,7 +53,8 @@ function HojaPerfil({ user_id }) {
             direccion: data[0].direccion,
             carrera: data[0].carrera,
             curso: data[0].curso,
-          })
+          }),
+          setCursoSelected(userData.curso)
         )
       )
       .then(() => getCarreras().then((carreras) => setCarreras(carreras[1])))
@@ -61,12 +63,13 @@ function HojaPerfil({ user_id }) {
         () =>
           (carreraUsr = carreras.find((item) => item.id == userData.carrera))
       )
-      .then(() => setCarreraSelectedNombre(carreraUsr.carrera));
+      .then(() => carreraUsr && setCarreraSelectedNombre(carreraUsr.carrera));
   }, []);
 
   const handleEdit = () => {
     setEditando(true);
     setLoading(true);
+
     updateUsuario(user_id, userData)
       .then(() => (setEditando(false), setLoading(false)))
       .then(() => alertSuccess("Usuario Editado"));
@@ -94,9 +97,14 @@ function HojaPerfil({ user_id }) {
     });
   };
 
-  const IniciarCarrera = () => {
-    const carreraSlc = carreras.find((item) => item.id == userData.carrera);
-    setCarreraSelectedNombre(carreraSlc.carrera);
+  const handleChangeCurso = (e) => {
+    setCursoSelected(e.target.value);
+    setUserData((prevUserData) => {
+      return {
+        ...prevUserData,
+        curso: e.target.value,
+      };
+    });
   };
 
   return (
@@ -165,7 +173,9 @@ function HojaPerfil({ user_id }) {
                     name="carrera"
                     variant="standard"
                     value={
-                      userData.carrera && carreras[userData.carrera - 1].carrera
+                      userData.carrera
+                        ? carreras[userData.carrera - 1].carrera
+                        : null
                     }
                     disabled={!editando}
                   />
@@ -188,15 +198,23 @@ function HojaPerfil({ user_id }) {
                     </Select>
                   </FormControl>
                 )}
-                <TextField
-                  id="userCurso"
-                  label="Curso"
-                  name="curso"
-                  variant="standard"
-                  value={userData.curso}
-                  onChange={handleChange}
-                  disabled={!editando}
-                />
+                <FormControl variant="standard" sx={{ m: 1, width: 200 }}>
+                  <InputLabel htmlFor="select-curso">Curso</InputLabel>
+
+                  <Select
+                    sx={{ textAlign: "left" }}
+                    id="select-curso"
+                    value={userData.curso}
+                    label="Curso"
+                    onChange={handleChangeCurso}
+                    disabled={!editando}
+                  >
+                    <MenuItem value="1°">1°</MenuItem>
+                    <MenuItem value="2°">2°</MenuItem>
+
+                    <MenuItem value="3°">3°</MenuItem>
+                  </Select>
+                </FormControl>
               </UserInfoContainer>
               {!editando ? (
                 <Tooltip
