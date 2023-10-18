@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import LocalLibraryRoundedIcon from "@mui/icons-material/LocalLibraryRounded";
 import MenuBookRounded from "@mui/icons-material/MenuBookRounded";
+import styled from "styled-components";
 
 const theme = createTheme({
   palette: {
@@ -77,20 +78,18 @@ export default function UserBasicTabs({ user }) {
               label="Perfil"
               {...a11yProps(0)}
             />
+
             <Tab
               icon={<AutoStoriesIcon />}
-              label="Mis Reservas"
+              label="Reservas"
               {...a11yProps(1)}
             />
-            <Tab
-              icon={<MenuBookRounded />}
-              label="Mis Retiros"
-              {...a11yProps(2)}
-            />
+            <Tab icon={<MenuBookRounded />} label="Retiros" {...a11yProps(2)} />
             {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
           </Tabs>
         </ThemeProvider>
       </Box>
+
       <CustomTabPanel value={value} index={0}>
         <HojaPerfil user_id={user.id} />
       </CustomTabPanel>

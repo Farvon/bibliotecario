@@ -50,7 +50,7 @@ function MisReservas({ user_id }) {
       <Thead>
         <Tr>
           <Td>Libro</Td>
-          <Td>Inventario</Td>
+          <TdWeb>Inventario</TdWeb>
           <TdSort onClick={() => sortByFecha()}>
             Fecha de retiro {sortedFecha ? "⮟" : "⮝"}
           </TdSort>
@@ -81,6 +81,9 @@ const Table = styled.table`
   margin: 0 auto;
   font-size: 0.8em;
   width: 70vw;
+  @media (max-width: 767px) {
+    width: 90vw;
+  }
 `;
 
 const Thead = styled.thead``;
@@ -94,6 +97,9 @@ const Tr = styled.tr`
   margin: 10px;
   font-size: 1.2em;
   font-weight: bold;
+  @media (max-width: 767px) {
+    font-size: 0.8em;
+  }
 `;
 
 const Td = styled.td`
@@ -101,6 +107,16 @@ const Td = styled.td`
   justify-content: center;
   align-items: center;
   width: 20%;
+`;
+
+const TdWeb = styled.td`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const TdSort = styled.td`

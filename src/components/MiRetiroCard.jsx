@@ -46,19 +46,19 @@ const MiRetiroCard = ({ retiro }) => {
         <>
           <Td>{libroById.titulo}</Td>
 
-          <Td>{inventarioById.inventario}</Td>
+          <TdWeb>{inventarioById.inventario}</TdWeb>
           <Td>{retiro.fecha_retiro}</Td>
           <Td>
             {retiro.devuelto ? (
               <DevueltoContainer>
-                <span>Devuelto</span>
+                <SpanWeb>Devuelto</SpanWeb>
                 <Tooltip color="success">
                   <FileDownloadDoneIcon />
                 </Tooltip>
               </DevueltoContainer>
             ) : (
               <DevueltoContainer>
-                <span>Pendiente</span>
+                <SpanWeb>Pendiente</SpanWeb>
                 <Tooltip color="warning">
                   <HourglassTopIcon />
                 </Tooltip>
@@ -88,11 +88,34 @@ const Tr = styled.tr`
   box-shadow: 0px 6px 10px 0px rgba(117, 117, 117, 0.2);
   background-color: white;
 `;
+
 const Td = styled.td`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 20%;
+
+  @media (max-width: 767px) {
+    width: 25%;
+    font-size: 0.7em;
+  }
+`;
+
+const TdWeb = styled.td`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
+
+const SpanWeb = styled.span`
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const DevueltoContainer = styled.div`

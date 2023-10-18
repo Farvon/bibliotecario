@@ -15,9 +15,6 @@ import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-
 const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [bookSrch, setBookSrch] = useState();
   const [biblioteca, setBiblioteca] = useState();
