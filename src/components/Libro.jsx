@@ -32,7 +32,11 @@ const Libro = ({
   const handleClick = () => {
     setShowCard(true);
     setShowAcciones(false);
-    console.log(showAcciones);
+  };
+
+  const handleClose = () => {
+    setShowCard(false);
+    setShowAcciones(true);
   };
 
   const handleEditBook = (libro) => {
@@ -120,7 +124,7 @@ const Libro = ({
           libro={libro}
           autor={nombreAutor}
           disponibles={disponibles}
-          onCloseIconClick={() => setShowCard(false)}
+          onCloseIconClick={() => handleClose()}
           carrera={carrera}
           showAcciones={showAcciones}
           setShowAcciones={setShowAcciones}

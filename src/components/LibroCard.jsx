@@ -89,6 +89,7 @@ const LibroCard = ({
       .then(() => updateInventario(newReserva.inventario_id))
       .then(() => alertSuccess("Reserva generada"));
     onCloseIconClick();
+    setShowAcciones(true);
   };
 
   return (
