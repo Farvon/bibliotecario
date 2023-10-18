@@ -163,6 +163,9 @@ const LibroCard = ({
           </CardForm>
           {admin == false && (
             <CardButtons>
+              <CloseButton onClick={() => onCloseIconClick()}>
+                Cancelar
+              </CloseButton>
               <ReservarButton
                 onClick={() =>
                   inventarioSelected != null
@@ -180,9 +183,6 @@ const LibroCard = ({
               >
                 Reservar
               </ReservarButton>
-              <CloseButton onClick={() => onCloseIconClick()}>
-                Cancelar
-              </CloseButton>
             </CardButtons>
           )}
         </CardContainer>
