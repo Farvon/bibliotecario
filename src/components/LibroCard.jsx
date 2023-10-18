@@ -20,6 +20,8 @@ const LibroCard = ({
   autor,
   disponibles,
   carrera,
+  showAcciones,
+  setShowAcciones,
 }) => {
   const { alertSuccess, alertError } = useAlert();
 
@@ -47,6 +49,7 @@ const LibroCard = ({
     const handleClickOutside = (event) => {
       if (cardRef.current && !cardRef.current.contains(event.target)) {
         onCloseIconClick();
+        setShowAcciones(true);
       }
     };
 
@@ -209,6 +212,12 @@ const CardContainer = styled.div`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding: 18px 0px;
   width: 50vw;
+  max-height: 80vh;
+  z-index: 1000;
+
+  @media (max-width: 767px) {
+    width: 80vw;
+  }
 `;
 
 const CardForm = styled.div`
@@ -226,6 +235,10 @@ const FormImg = styled.img`
   width: 20%;
   height: 20%;
   margin-right: 20px;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const FormInfo = styled.div`
@@ -235,10 +248,16 @@ const FormInfo = styled.div`
 `;
 
 const Titulo = styled.span`
+  display: flex;
+  margin: auto;
   font-weight: bold;
   font-size: 1.5em;
   margin-bottom: 8px;
-  max-width: 30vw;
+  max-width: 80%;
+
+  @media (max-width: 767px) {
+    font-size: 1em;
+  }
 `;
 
 const Carrera = styled.span`
@@ -248,6 +267,13 @@ const Carrera = styled.span`
   margin-top: -4px;
   margin-bottom: 16px;
   max-width: 40vw;
+
+  @media (max-width: 767px) {
+    display: flex;
+    margin: auto;
+    margin-bottom: 16px;
+    font-size: 1em;
+  }
 `;
 
 const Info = styled.div`
@@ -280,6 +306,10 @@ const ReservarButton = styled.button`
   background: lightblue;
   border: none;
   box-shadow: 2px 2px 3px #c5c5c5, -6px -6px 12px #ffffff;
+
+  @media (max-width: 767px) {
+    width: 30%;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -287,4 +317,7 @@ const CloseButton = styled.button`
   background: pink;
   border: none;
   box-shadow: 2px 2px 3px #c5c5c5, -6px -6px 12px #ffffff;
+  @media (max-width: 767px) {
+    width: 30%;
+  }
 `;

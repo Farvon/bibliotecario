@@ -25,6 +25,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [autores, setAutores] = useState();
   const [carreras, setCarreras] = useState();
   const [carreraSrc, setCarreraSrc] = useState();
+  const [showAcciones, setShowAcciones] = useState(true);
 
   useEffect(() => {
     getAutores().then((allAutores) => {
@@ -88,16 +89,20 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
         )}
       </InputContainer>
       {carreras && (
-        <MenuCarreras carreras={carreras} setCarreraSrc={setCarreraSrc} />
+        <MenuCarreras
+          showAcciones={showAcciones}
+          carreras={carreras}
+          setCarreraSrc={setCarreraSrc}
+        />
       )}
       <Table>
         <Thead>
           <Tr>
             <Td></Td>
             <Td>Titulo</Td>
-            <Td>Autor</Td>
-            <Td>Editorial</Td>
-            <Td>Ejemplares</Td>
+            <TdWeb>Autor</TdWeb>
+            <TdWeb>Editorial</TdWeb>
+            <TdWeb>Ejemplares</TdWeb>
             <Td>Disponibles</Td>
             {admin == true && <Td>Acciones</Td>}
           </Tr>
@@ -110,6 +115,8 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
                     item.carrera_id == carreraSrc && (
                       <Libro
                         key={item.id}
+                        showAcciones={showAcciones}
+                        setShowAcciones={setShowAcciones}
                         user={user}
                         libro={item}
                         autor={
@@ -130,6 +137,8 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
               : bibliotecaSrched.map((item) => (
                   <Libro
                     key={item.id}
+                    showAcciones={showAcciones}
+                    setShowAcciones={setShowAcciones}
                     user={user}
                     libro={item}
                     autor={
@@ -189,6 +198,10 @@ const Table = styled.table`
   margin: 0 auto;
   font-size: 0.8em;
   width: 80vw;
+
+  @media (max-width: 767px) {
+    width: 90vw;
+  }
 `;
 
 const Thead = styled.thead``;
@@ -199,19 +212,27 @@ const Tr = styled.tr`
   margin: 10px;
   font-size: 1.2em;
   font-weight: bold;
+  @media (max-width: 767px) {
+    font-size: 0.8em;
+  }
 `;
 
 const Td = styled.td`
   display: flex;
   justify-content: center;
   width: 20%;
+
+  @media (max-width: 767px) {
+    width: 25%;
+  }
 `;
 
-const ImgContainer = styled.div`
+const TdWeb = styled.td`
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin: auto;
-  margin-top: 20px;
+  width: 20%;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;

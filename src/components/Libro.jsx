@@ -20,6 +20,8 @@ const Libro = ({
   setNewBook,
   setEditar,
   carrera,
+  showAcciones,
+  setShowAcciones,
 }) => {
   const [showCard, setShowCard] = useState(false);
   const [nombreAutor, setNombreAutor] = useState("");
@@ -29,6 +31,8 @@ const Libro = ({
 
   const handleClick = () => {
     setShowCard(true);
+    setShowAcciones(false);
+    console.log(showAcciones);
   };
 
   const handleEditBook = (libro) => {
@@ -64,15 +68,19 @@ const Libro = ({
             <Td onClick={(e) => handleClick()}>
               <A>{libro.titulo}</A>
             </Td>
-            <Td>{nombreAutor}</Td>
-            <Td>{libro.editorial}</Td>
-            <Td>{libro.cantidad}</Td>
+            <TdWeb>{nombreAutor}</TdWeb>
+            <TdWeb>{libro.editorial}</TdWeb>
+            <TdWeb>{libro.cantidad}</TdWeb>
             <Td>{disponibles}</Td>
             {admin == true && (
-              <Td>
+              <TdAcciones>
                 <Tooltip color="primary" title="Editar" placement="top" arrow>
                   <IconButton onClick={() => handleEditBook(libro)}>
-                    <StickyNote2OutlinedIcon />
+                    <IconContainerEdit>
+                      <StickyNote2OutlinedIcon
+                        sx={{ display: !showAcciones ? "none" : true }}
+                      />
+                    </IconContainerEdit>
                   </IconButton>
                 </Tooltip>
 
@@ -92,10 +100,14 @@ const Libro = ({
                       })
                     }
                   >
-                    <LayersClearIcon />
+                    <IconContainerBorrar>
+                      <LayersClearIcon
+                        sx={{ display: !showAcciones ? "none" : true }}
+                      />
+                    </IconContainerBorrar>
                   </IconButton>
                 </Tooltip>
-              </Td>
+              </TdAcciones>
             )}
           </>
         ) : null}
@@ -110,6 +122,8 @@ const Libro = ({
           disponibles={disponibles}
           onCloseIconClick={() => setShowCard(false)}
           carrera={carrera}
+          showAcciones={showAcciones}
+          setShowAcciones={setShowAcciones}
         />
       ) : null}
     </>
@@ -136,6 +150,39 @@ const Td = styled.td`
   gap: 5%;
 `;
 
+const TdAcciones = styled.td`
+  display: flex;
+  justify-content: center;
+  width: 20%;
+`;
+
+const IconContainerEdit = styled.div`
+  @media (max-width: 767px) {
+    display: flex;
+    font-size: 5px;
+    margin-right: -5px;
+  }
+`;
+
+const IconContainerBorrar = styled.div`
+  @media (max-width: 767px) {
+    display: flex;
+    font-size: 5px;
+    margin-left: -13px;
+  }
+`;
+
+const TdWeb = styled.td`
+  display: flex;
+  justify-content: center;
+  width: 20%;
+  gap: 5%;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
+
 const Img = styled.img`
   display: flex;
   width: 5vw;
@@ -149,5 +196,9 @@ const A = styled.a`
   &:hover {
     font-weight: bold;
     color: black;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 10px;
   }
 `;

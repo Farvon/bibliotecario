@@ -4,7 +4,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function MenuCarreras({ carreras, setCarreraSrc }) {
+export default function MenuCarreras({
+  carreras,
+  setCarreraSrc,
+  showAcciones,
+}) {
   const [carreraSelected, setCarreraSelected] = React.useState("");
 
   const handleChange = (event) => {
@@ -13,24 +17,28 @@ export default function MenuCarreras({ carreras, setCarreraSrc }) {
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-      <InputLabel id="demo-select-small-label">Carrera</InputLabel>
-      <Select
-        labelId="demo-select-small-label"
-        id="demo-select-small"
-        value={carreraSelected}
-        label="Carrera"
-        onChange={handleChange}
-      >
-        <MenuItem value="">
-          <em>Todas</em>
-        </MenuItem>
-        {carreras.map((carrera) => (
-          <MenuItem value={carrera.id} key={carrera.id}>
-            <em>{carrera.carrera}</em>
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <>
+      {showAcciones ? (
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <InputLabel id="demo-select-small-label">Carrera</InputLabel>
+          <Select
+            labelId="demo-select-small-label"
+            id="demo-select-small"
+            value={carreraSelected}
+            label="Carrera"
+            onChange={handleChange}
+          >
+            <MenuItem value="">
+              <em>Todas</em>
+            </MenuItem>
+            {carreras.map((carrera) => (
+              <MenuItem value={carrera.id} key={carrera.id}>
+                <em>{carrera.carrera}</em>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      ) : null}
+    </>
   );
 }
