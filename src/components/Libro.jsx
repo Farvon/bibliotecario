@@ -57,7 +57,9 @@ const Libro = ({
         {libro ? (
           <>
             <Td onClick={(e) => handleClick()}>
-              <Img src="./book.png" />
+              <Img
+                src={libro.carrera_id ? `./${libro.carrera_id}.png` : "./8.png"}
+              />
             </Td>
             <Td onClick={(e) => handleClick()}>
               <A>{libro.titulo}</A>

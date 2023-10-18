@@ -93,7 +93,9 @@ const LibroCard = ({
       <Backdrop>
         <CardContainer ref={cardRef}>
           <CardForm>
-            <FormImg src="./book.png" />
+            <FormImg
+              src={libro.carrera_id ? `./${libro.carrera_id}.png` : "./8.png"}
+            />
             <FormInfo>
               <Titulo>{libro.titulo}</Titulo>
               <Carrera>{carrera != null && carrera.carrera}</Carrera>
@@ -135,9 +137,6 @@ const LibroCard = ({
                   sx={{
                     display: "flex",
                     flexWrap: "wrap",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    margin: "auto",
                   }}
                   size="small"
                   color="primary"
@@ -224,8 +223,9 @@ const CardForm = styled.div`
 
 const FormImg = styled.img`
   display: flex;
-  width: 40%;
-  height: 40%;
+  width: 20%;
+  height: 20%;
+  margin-right: 20px;
 `;
 
 const FormInfo = styled.div`
@@ -238,7 +238,7 @@ const Titulo = styled.span`
   font-weight: bold;
   font-size: 1.5em;
   margin-bottom: 8px;
-  max-width: 40vw;
+  max-width: 30vw;
 `;
 
 const Carrera = styled.span`
