@@ -139,7 +139,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     swal("Ingrese el nombre del autor", {
       content: "input",
     }).then((value) => {
-      value != null ??
+      value != null &&
         postNewAutor(value).then(() =>
           alertSuccess("Autor creado correctamente")
         );
