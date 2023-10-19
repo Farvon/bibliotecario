@@ -8,6 +8,7 @@ import { getCarreras } from "../backend/controllers/libros";
 const Retiros = () => {
   const [reservas, setReservas] = useState([]);
   const [carreras, setCarreras] = useState();
+  const [showAcciones, setShowAcciones] = useState(true);
 
   useEffect(() => {
     getReservasAprobadas().then((data) => setReservas(data));
@@ -34,6 +35,8 @@ const Retiros = () => {
             reservas={reservas}
             setReservas={setReservas}
             carreras={carreras}
+            showAcciones={showAcciones}
+            setShowAcciones={setShowAcciones}
           />
         ))}
       </tbody>
@@ -52,7 +55,11 @@ const Table = styled.table`
   width: 80vw;
 `;
 
-const Thead = styled.thead``;
+const Thead = styled.thead`
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
 
 const Tr = styled.tr`
   display: flex;

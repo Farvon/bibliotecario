@@ -15,6 +15,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { brown } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -88,6 +89,8 @@ export default function BasicTabs() {
     dias > 3 ? contador++ : null;
   });
 
+  const matches = useMediaQuery("(min-width:600px)");
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -100,17 +103,36 @@ export default function BasicTabs() {
             indicatorColor="primary"
           >
             <Tab
+              sx={
+                !matches && {
+                  fontSize: "9px",
+                }
+              }
               label="Reservas"
               {...a11yProps(0)}
               onClick={() => setNewBook(false)}
             />
 
             <Tab
+              sx={
+                !matches && {
+                  fontSize: "9px",
+                }
+              }
               label="Retiros"
               {...a11yProps(1)}
               onClick={() => setNewBook(false)}
             />
-            <Tab label="Gestionar Biblioteca" {...a11yProps(2)} />
+            <Tab
+              label="Gestionar Biblioteca"
+              {...a11yProps(2)}
+              sx={
+                !matches && {
+                  fontSize: "9px",
+                }
+              }
+            />
+
             {contador > 0 ? (
               <Badge
                 badgeContent={4}

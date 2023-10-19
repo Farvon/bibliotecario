@@ -20,7 +20,13 @@ import {
   getCarreras,
 } from "../backend/controllers/libros";
 
-const ReservaCard = ({ reserva, reservas, setReservas }) => {
+const ReservaCard = ({
+  reserva,
+  reservas,
+  setReservas,
+  showAcciones,
+  setShowAcciones,
+}) => {
   const [userById, setUserById] = useState();
   const [inventarioById, setInventarioById] = useState();
   const [libroById, setLibroById] = useState();
@@ -44,6 +50,12 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
 
   const handleClick = () => {
     setShowCard(true);
+    setShowAcciones(false);
+  };
+
+  const handleClose = () => {
+    setShowCard(false);
+    setShowAcciones(true);
   };
 
   const handleAprobar = (id) => {
@@ -63,13 +75,13 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
     <Tr>
       {userById && inventarioById && libroById && carreras ? (
         <>
-          <TdAlumno>
+          <TdAlumno onClick={() => handleClick()}>
             <Tooltip title="Info" placement="top" arrow>
-              <IconButton color="warning">
-                <ContactPageRoundedIcon
-                  fontSize="small"
-                  onClick={() => handleClick()}
-                />
+              <IconButton
+                color="warning"
+                sx={{ display: !showAcciones ? "none" : null }}
+              >
+                <ContactPageRoundedIcon fontSize="small" />
               </IconButton>
             </Tooltip>
             {userById.nombre}
@@ -80,6 +92,7 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
           <Td>
             <Tooltip title="Aprobar" placement="top" arrow>
               <IconButton
+                sx={{ display: !showAcciones ? "none" : null }}
                 onClick={() =>
                   swal({
                     title: "Se entregó el libro al Alumno/a?",
@@ -97,6 +110,7 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
             </Tooltip>
             <Tooltip title="Denegar" placement="top" arrow>
               <IconButton
+                sx={{ display: !showAcciones ? "none" : null }}
                 onClick={() =>
                   swal({
                     title: "Rechazar Reserva?",
@@ -117,7 +131,7 @@ const ReservaCard = ({ reserva, reservas, setReservas }) => {
           {showCard ? (
             <UsuarioCard
               user={userById}
-              onCloseIconClick={() => setShowCard(false)}
+              onCloseIconClick={() => handleClose()}
               carreras={carreras}
             />
           ) : null}
@@ -142,12 +156,28 @@ const Tr = styled.tr`
   border: 1px solid #eeeeee;
   box-shadow: 0px 6px 10px 0px rgba(117, 117, 117, 0.2);
   background-color: white;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 const Td = styled.td`
   display: flex;
   justify-content: center;
   width: 25%;
   gap: 5%;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    border-top: 1px solid #eeeeee;
+    margin-bottom: 10px;
+
+    &:nth-child(2) {
+      padding-top: 10px;
+    }
+  }
 `;
 
 const TdAlumno = styled.td`
@@ -157,4 +187,9 @@ const TdAlumno = styled.td`
   align-items: center;
   width: 20%;
   gap: 5%;
+
+  @media (max-width: 767px) {
+    justify-content: center;
+    width: 100%;
+  }
 `;

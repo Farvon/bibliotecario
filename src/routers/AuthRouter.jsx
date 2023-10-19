@@ -29,7 +29,15 @@ const AuthRouter = ({ user }) => {
         <Route
           path="/perfil"
           name="perfil"
-          element={<PerfilUser user={user} />}
+          element={
+            <>
+              {user && user.email === "admin@bibliotecario.com" ? (
+                <Admin admin={true} />
+              ) : (
+                <PerfilUser user={user} />
+              )}
+            </>
+          }
           exact
         />
         <Route

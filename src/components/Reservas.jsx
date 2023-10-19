@@ -6,6 +6,7 @@ import ReservaCard from "./ReservaCard";
 
 const Reservas = () => {
   const [reservas, setReservas] = useState([]);
+  const [showAcciones, setShowAcciones] = useState(true);
 
   useEffect(() => {
     getReservasNuevas().then((data) => setReservas(data));
@@ -30,6 +31,8 @@ const Reservas = () => {
             reserva={item}
             reservas={reservas}
             setReservas={setReservas}
+            showAcciones={showAcciones}
+            setShowAcciones={setShowAcciones}
           />
         ))}
       </tbody>
@@ -48,7 +51,11 @@ const Table = styled.table`
   width: 80vw;
 `;
 
-const Thead = styled.thead``;
+const Thead = styled.thead`
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
 
 const Tr = styled.tr`
   display: flex;

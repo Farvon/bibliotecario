@@ -25,7 +25,14 @@ import {
 import UsuarioCard from "./UsuarioCard";
 import useAlert from "../hooks/useAlerts";
 
-const RetiroCard = ({ reserva, reservas, setReservas, carreras }) => {
+const RetiroCard = ({
+  reserva,
+  reservas,
+  setReservas,
+  carreras,
+  showAcciones,
+  setShowAcciones,
+}) => {
   const [userById, setUserById] = useState();
   const [inventarioById, setInventarioById] = useState();
   const [libroById, setLibroById] = useState();
@@ -45,6 +52,12 @@ const RetiroCard = ({ reserva, reservas, setReservas, carreras }) => {
 
   const handleClick = () => {
     setShowCard(true);
+    setShowAcciones(false);
+  };
+
+  const handleClose = () => {
+    setShowCard(false);
+    setShowAcciones(true);
   };
 
   const handleDevolucion = (id, inventario_id) => {
@@ -84,7 +97,10 @@ const RetiroCard = ({ reserva, reservas, setReservas, carreras }) => {
         <>
           <TdAlumno>
             <Tooltip title="Info" placement="top" arrow>
-              <IconButton color="warning">
+              <IconButton
+                color="warning"
+                sx={{ display: !showAcciones ? "none" : null }}
+              >
                 <ContactPageRoundedIcon
                   fontSize="small"
                   onClick={() => handleClick()}
@@ -100,13 +116,22 @@ const RetiroCard = ({ reserva, reservas, setReservas, carreras }) => {
             {estado ? (
               <Tooltip title="En tiempo" placement="top">
                 <DevueltoContainer>
-                  <AlarmOnIcon color="terciary" sx={{ opacity: 0.1 }} />
+                  <AlarmOnIcon
+                    color="terciary"
+                    sx={{
+                      opacity: 0.1,
+                      display: !showAcciones ? "none" : null,
+                    }}
+                  />
                 </DevueltoContainer>
               </Tooltip>
             ) : (
               <Tooltip title="Excedido" placement="top">
                 <DevueltoContainer>
-                  <NotificationsActiveIcon color="error" />
+                  <NotificationsActiveIcon
+                    color="error"
+                    sx={{ display: !showAcciones ? "none" : null }}
+                  />
                 </DevueltoContainer>
               </Tooltip>
             )}
@@ -114,6 +139,7 @@ const RetiroCard = ({ reserva, reservas, setReservas, carreras }) => {
           <Td>
             <Tooltip title="Recibir" placement="top" arrow>
               <IconButton
+                sx={{ display: !showAcciones ? "none" : null }}
                 onClick={() =>
                   swal({
                     title: "Recibir Libro?",
@@ -134,7 +160,7 @@ const RetiroCard = ({ reserva, reservas, setReservas, carreras }) => {
           {showCard ? (
             <UsuarioCard
               user={userById}
-              onCloseIconClick={() => setShowCard(false)}
+              onCloseIconClick={() => handleClose()}
               carreras={carreras}
             />
           ) : null}
@@ -159,6 +185,12 @@ const Tr = styled.tr`
   border: 1px solid #eeeeee;
   box-shadow: 0px 6px 10px 0px rgba(117, 117, 117, 0.2);
   background-color: white;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 const Td = styled.td`
   display: flex;
@@ -166,6 +198,20 @@ const Td = styled.td`
   align-items: center;
   width: 20%;
   gap: 5%;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    border-top: 1px solid #EEEEEE;
+    margin-bottom: 10px;
+
+    &:nth-child(2) {
+      padding-top: 10px;
+    }
+
+    &:last-child {
+      margin-bottom:0;
+      padding-bottom: 0px;
+    }
 `;
 
 const TdAlumno = styled.td`
@@ -175,6 +221,11 @@ const TdAlumno = styled.td`
   align-items: center;
   width: 20%;
   gap: 5%;
+
+  @media (max-width: 767px) {
+    justify-content: center;
+    width: 100%;
+  }
 `;
 
 const DevueltoContainer = styled.div`
