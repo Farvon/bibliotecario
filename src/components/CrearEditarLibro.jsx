@@ -15,12 +15,16 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+
 import {
   getAutores,
   postNewAutor,
   editarLibro,
   crearLibro,
   getCarreras,
+  getInventario,
 } from "../backend/controllers/libros";
 
 import useAlert from "../hooks/useAlerts";
@@ -42,7 +46,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const { alertSuccess, alertError } = useAlert();
 
   const [autores, setAutores] = useState([]);
-  const [autoresSort, setAutoresSort] = useState([]);
+  const [inventario, setInventario] = useState();
   const [autorSelectedNombre, setAutorSelectedNombre] = useState("");
 
   const [carreras, setCarreras] = useState([]);
@@ -66,6 +70,12 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
       isbn: infoLibro.isbn,
       carrera_id: infoLibro.carrera_id,
     });
+
+    editar &&
+      getInventario(infoLibro.id).then((inventarioById) =>
+        setInventario(inventarioById)
+      );
+    console.log(inventario);
   }, []);
 
   const handleChange = (e) => {
@@ -172,6 +182,13 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     });
   };
 
+  const handleAddInventario = () => {
+    alert("agregar");
+  };
+  const handleDeleteInventario = () => {
+    alert("Borrar");
+  };
+
   const handleCancel = () => {
     setInfoLibro({
       titulo: "",
@@ -206,7 +223,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
           }}
         >
           <Paper>
-            <h2>Nuevo Libro</h2>
+            {!editar ? <h2>Nuevo Libro</h2> : <h2>Editar Libro</h2>}
             <UserInfoContainer>
               <TextField
                 id="libroTitulo"
@@ -301,6 +318,31 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                   ))}
                 </Select>
               </FormControl>
+              {editar && inventario && (
+                <>
+                  <h4>Inventario</h4>
+                  <InventarioContainer>
+                    {inventario.map((item) => (
+                      <Stack
+                        key={item.id}
+                        direction="row"
+                        spacing={item.id + 1}
+                        sx={{
+                          padding: "4px",
+                        }}
+                      >
+                        <Chip
+                          label={item.inventario}
+                          onDelete={() => handleDeleteInventario()}
+                        />
+                      </Stack>
+                    ))}
+                    <Stack direction="row">
+                      <Chip label="+" onClick={() => handleAddInventario()} />
+                    </Stack>
+                  </InventarioContainer>
+                </>
+              )}
             </UserInfoContainer>
 
             <EditIconsContainer>
@@ -363,4 +405,12 @@ const EditIconsContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 10%;
+`;
+
+const InventarioContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 `;
