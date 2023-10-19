@@ -24,6 +24,7 @@ import {
 } from "../backend/controllers/libros";
 
 import useAlert from "../hooks/useAlerts";
+import { AnchorOutlined } from "@mui/icons-material";
 
 const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const [libroData, setLibroData] = useState({
@@ -41,6 +42,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const { alertSuccess, alertError } = useAlert();
 
   const [autores, setAutores] = useState([]);
+  const [autoresSort, setAutoresSort] = useState([]);
   const [autorSelectedNombre, setAutorSelectedNombre] = useState("");
 
   const [carreras, setCarreras] = useState([]);
@@ -227,11 +229,13 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                     <a>Agregar nuevo Autor</a>
                   </MenuItem>
 
-                  {autores.map((autor) => (
-                    <MenuItem key={autor.id} value={autor.nombre}>
-                      {autor.nombre}
-                    </MenuItem>
-                  ))}
+                  {autores
+                    .sort((a, b) => a.nombre.localeCompare(b.nombre))
+                    .map((autor) => (
+                      <MenuItem key={autor.id} value={autor.nombre}>
+                        {autor.nombre}
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
               <TextField
