@@ -183,8 +183,16 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   };
 
   const handleAddInventario = () => {
-    alert("agregar");
+    swal("Ingrese el n° de Inventario", {
+      content: "input",
+    }).then((value) => {
+      value != null &&
+        alert(value).then(() =>
+          alertSuccess("Inventario agregado correctamente")
+        );
+    });
   };
+
   const handleDeleteInventario = () => {
     alert("Borrar");
   };
@@ -235,11 +243,11 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
               />
 
               <FormControl variant="standard" sx={{ m: 1, width: 200 }}>
-                <InputLabel htmlFor="select-autores">Autores</InputLabel>
+                <InputLabel htmlFor="select-autor">Autor</InputLabel>
                 <Select
-                  id="select-autores"
+                  id="select-autor"
                   value={autorSelectedNombre}
-                  label="Autores"
+                  label="Autor"
                   onChange={handleChangeAutor}
                 >
                   <MenuItem value={""} onClick={() => handleAddAutor()}>
@@ -272,6 +280,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                 onChange={handleChange}
               />
               <TextField
+                type="number"
                 id="libroCantidad"
                 label="Cantidad de copias"
                 name="cantidad"
@@ -280,6 +289,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                 onChange={handleChange}
               />
               <TextField
+                type="number"
                 id="libroPaginas"
                 label="Cantidad de Páginas"
                 name="paginas"
