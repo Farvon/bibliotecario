@@ -79,13 +79,11 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   }, []);
 
   const handleChange = (e) => {
-    e.target.name == "cantidad" ||
-    e.target.name == "paginas" ||
     e.target.name == "fecha_publicacion"
       ? setLibroData((prevUserData) => {
           return {
             ...prevUserData,
-            [e.target.name]: Number(e.target.value),
+            [e.target.name]: e.target.value,
           };
         })
       : setLibroData((prevUserData) => {
@@ -298,6 +296,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                 onChange={handleChange}
               />
               <TextField
+                type="number"
                 id="libroFecha"
                 label="Año de publicación"
                 name="fecha_publicacion"
