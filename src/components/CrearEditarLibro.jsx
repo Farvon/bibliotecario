@@ -189,7 +189,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     });
   };
 
-  const handleChangeAutor = (event) => {
+  const handleChangeAutorNew = (event) => {
     const autor = autores.find((autor) => autor.nombre == event.target.value);
     setAutorSelectedNombre(autor.nombre);
     setLibroData((prevUserData) => {
@@ -200,11 +200,15 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     });
   };
 
+  const handleChangeAutor = (event) => {
+    event.target.value != "" && handleChangeAutorNew(event);
+  };
+
   const handleChangeCarrera = (event) => {
     const carrera = carreras.find(
       (carrera) => carrera.carrera == event.target.value
     );
-    setAutorSelectedNombre(carrera.carrera);
+    setCarreraSelectedNombre(carrera.carrera);
     setLibroData((prevUserData) => {
       return {
         ...prevUserData,
