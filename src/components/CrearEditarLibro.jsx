@@ -30,6 +30,7 @@ import {
   getInventario,
   deleteAutorById,
   getAutorById,
+  getCarreraById,
 } from "../backend/controllers/libros";
 
 import useAlert from "../hooks/useAlerts";
@@ -82,6 +83,11 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     editar &&
       getAutorById(infoLibro.autor_id).then((autor) =>
         setAutorSelectedNombre(autor[0][0].nombre)
+      );
+
+    editar &&
+      getCarreraById(infoLibro.carrera_id).then((carrera) =>
+        setCarreraSelectedNombre(carrera[0][0].carrera)
       );
 
     editar &&

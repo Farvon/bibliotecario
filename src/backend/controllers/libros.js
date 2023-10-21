@@ -156,3 +156,11 @@ export const getCarreras = async () => {
   const { data: Carreras, error } = await supabase.from("Carreras").select("*");
   return [error, Carreras];
 };
+
+export const getCarreraById = async (carrera_id) => {
+  const { data: CarreraById, error } = await supabase
+    .from("Carreras")
+    .select("carrera")
+    .eq("id", carrera_id);
+  return [CarreraById, error];
+};
