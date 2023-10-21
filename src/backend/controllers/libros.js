@@ -81,7 +81,7 @@ export const getAutores = async () => {
   return [error, Autores];
 };
 
-export const getAutoresById = async (autor_id) => {
+export const getAutorById = async (autor_id) => {
   const { data: AutorById, error } = await supabase
     .from("Autores")
     .select("nombre")
@@ -94,7 +94,11 @@ export const postNewAutor = async (autor) => {
     .from("Autores")
     .insert({ nombre: autor })
     .select();
-  console.log(data, error);
+  return data, error;
+};
+
+export const deleteAutorById = async (id) => {
+  const { data, error } = await supabase.from("Autores").delete().eq("id", id);
 };
 
 // Controladores de tabla Inventario

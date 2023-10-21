@@ -10,6 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
+import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import IconButton from "@mui/material/IconButton";
@@ -18,6 +19,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
+import { useMediaQuery } from "@mui/material";
+
 import {
   getAutores,
   postNewAutor,
@@ -25,10 +28,11 @@ import {
   crearLibro,
   getCarreras,
   getInventario,
+  deleteAutorById,
+  getAutorById,
 } from "../backend/controllers/libros";
 
 import useAlert from "../hooks/useAlerts";
-import { AnchorOutlined } from "@mui/icons-material";
 
 const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const [libroData, setLibroData] = useState({
@@ -45,7 +49,11 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
 
   const { alertSuccess, alertError } = useAlert();
 
+  const [actualiza, setActualiza] = useState(false);
+
   const [autores, setAutores] = useState([]);
+  const [deleteAutor, setDeleteAutor] = useState(false);
+
   const [inventario, setInventario] = useState();
   const [autorSelectedNombre, setAutorSelectedNombre] = useState("");
 
@@ -72,11 +80,15 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     });
 
     editar &&
+      getAutorById(infoLibro.autor_id).then((autor) =>
+        setAutorSelectedNombre(autor[0][0].nombre)
+      );
+
+    editar &&
       getInventario(infoLibro.id).then((inventarioById) =>
         setInventario(inventarioById)
       );
-    console.log(inventario);
-  }, []);
+  }, [actualiza]);
 
   const handleChange = (e) => {
     e.target.name == "fecha_publicacion"
@@ -150,9 +162,24 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
       content: "input",
     }).then((value) => {
       value != null &&
-        postNewAutor(value).then(() =>
-          alertSuccess("Autor creado correctamente")
-        );
+        postNewAutor(value)
+          .then((data) => setActualiza(!actualiza))
+          .then(() => alertSuccess("Autor creado correctamente"));
+    });
+  };
+
+  const handleDeleteAutor = (nombreAutor, id) => {
+    swal({
+      title: `Eliminar autor "${nombreAutor}"?`,
+      closeOnClickOutside: false,
+      buttons: ["No", "Si"],
+    }).then((willGiven) => {
+      if (willGiven) {
+        deleteAutorById(id)
+          .then(() => alertSuccess("Autor eliminado"))
+          .then(() => setAutorSelectedNombre(""))
+          .then(() => setActualiza(!actualiza));
+      }
     });
   };
 
@@ -210,6 +237,8 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     setNewBook(false);
   };
 
+  const matches = useMediaQuery("(min-width:600px)");
+
   return (
     <>
       {autores ? (
@@ -247,16 +276,36 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                   value={autorSelectedNombre}
                   label="Autor"
                   onChange={handleChangeAutor}
+                  onOpen={() => setDeleteAutor(true)}
+                  onClose={() => setDeleteAutor(false)}
                 >
-                  <MenuItem value={""} onClick={() => handleAddAutor()}>
+                  <MenuItem
+                    sx={!matches && { fontSize: "10px" }}
+                    value={""}
+                    onClick={() => handleAddAutor()}
+                  >
                     <a>Agregar nuevo Autor</a>
                   </MenuItem>
 
                   {autores
                     .sort((a, b) => a.nombre.localeCompare(b.nombre))
                     .map((autor) => (
-                      <MenuItem key={autor.id} value={autor.nombre}>
+                      <MenuItem
+                        sx={!matches && { fontSize: "8px" }}
+                        key={autor.id}
+                        value={autor.nombre}
+                      >
                         {autor.nombre}
+                        {deleteAutor && (
+                          <DeleteActor>
+                            <PersonRemoveRoundedIcon
+                              sx={!matches && { fontSize: "20px" }}
+                              onClick={() =>
+                                handleDeleteAutor(autor.nombre, autor.id)
+                              }
+                            />
+                          </DeleteActor>
+                        )}
                       </MenuItem>
                     ))}
                 </Select>
@@ -422,4 +471,9 @@ const InventarioContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: auto;
+`;
+
+const DeleteActor = styled.div`
+  display: flex;
+  margin-left: auto;
 `;
