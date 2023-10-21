@@ -46,11 +46,11 @@ const MiReservaCard = ({ reserva, misReservas, setMisReservas }) => {
           <Td>{inventarioById.inventario}</Td>
 
           <Td>
-            <Tooltip title="Denegar" placement="top" arrow>
+            <Tooltip title="Cancelar" placement="top" arrow>
               <IconButton
                 onClick={() =>
                   swal({
-                    title: "Rechazar Reserva?",
+                    title: "Cancelar Reserva?",
                     closeOnClickOutside: false,
                     buttons: ["No", "Si"],
                     dangerMode: true,

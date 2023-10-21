@@ -118,6 +118,19 @@ export const getInventarioById = async (id) => {
   return Inventario;
 };
 
+export const postInventario = async (inventario, libro_id) => {
+  const { data, error } = await supabase
+    .from("Inventario")
+    .insert([{ inventario: inventario, libro_id: libro_id }])
+    .select();
+  return { data, error };
+};
+
+export const deleteInventarioById = async (id) => {
+  const { error } = await supabase.from("Inventario").delete().eq("id", id);
+  return error;
+};
+
 export const getDisponibles = async (libro_id) => {
   const { data, count } = await supabase
     .from("Inventario")

@@ -167,9 +167,6 @@ export default function BasicTabs() {
           />
         )}
       </CustomTabPanel>
-      {/* <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel> */}
     </Box>
   );
 }

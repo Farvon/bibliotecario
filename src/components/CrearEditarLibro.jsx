@@ -31,6 +31,8 @@ import {
   deleteAutorById,
   getAutorById,
   getCarreraById,
+  postInventario,
+  deleteInventarioById,
 } from "../backend/controllers/libros";
 
 import useAlert from "../hooks/useAlerts";
@@ -217,19 +219,29 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     });
   };
 
-  const handleAddInventario = () => {
+  const handleAddInventario = (libro_id) => {
     swal("Ingrese el n° de Inventario", {
       content: "input",
-    }).then((value) => {
-      value != null &&
-        alert(value).then(() =>
-          alertSuccess("Inventario agregado correctamente")
-        );
+    }).then((data) => {
+      data != null &&
+        postInventario(data, libro_id)
+          .then((data) => setActualiza(!actualiza))
+          .then(() => alertSuccess("Inventario agregado correctamente"));
     });
   };
 
-  const handleDeleteInventario = () => {
-    alert("Borrar");
+  const handleDeleteInventario = (inventario) => {
+    swal({
+      title: `Eliminar inventario "${inventario.inventario}"?`,
+      closeOnClickOutside: false,
+      buttons: ["No", "Si"],
+    }).then((willGiven) => {
+      if (willGiven) {
+        deleteInventarioById(inventario.id)
+          .then((data) => setActualiza(!actualiza))
+          .then(() => alertSuccess("Inventario eliminado correctamente"));
+      }
+    });
   };
 
   const handleCancel = () => {
@@ -401,12 +413,15 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                       >
                         <Chip
                           label={item.inventario}
-                          onDelete={() => handleDeleteInventario()}
+                          onDelete={() => handleDeleteInventario(item)}
                         />
                       </Stack>
                     ))}
                     <Stack direction="row">
-                      <Chip label="+" onClick={() => handleAddInventario()} />
+                      <Chip
+                        label="+"
+                        onClick={() => handleAddInventario(infoLibro.id)}
+                      />
                     </Stack>
                   </InventarioContainer>
                 </>
