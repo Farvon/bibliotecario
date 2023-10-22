@@ -30,6 +30,10 @@ const Recover = () => {
       : alertError("Ingrese un email válido");
   };
 
+  function timeout(delay) {
+    return new Promise((res) => setTimeout(res, delay));
+  }
+
   return (
     <FormContainer>
       <Form>

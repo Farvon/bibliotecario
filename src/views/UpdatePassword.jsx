@@ -44,6 +44,10 @@ const UpdatePassword = () => {
       : alertError("Ingrese una contraseña válida");
   };
 
+  function timeout(delay) {
+    return new Promise((res) => setTimeout(res, delay));
+  }
+
   //del Input
   const [showPassword, setShowPassword] = React.useState(false);
 
