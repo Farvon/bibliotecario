@@ -21,7 +21,7 @@ const Recover = () => {
     e.preventDefault();
     email != ""
       ? forgotPassword(email)
-          .then(() => alertSuccess("Email enviado"))
+          .then((data) => alertSuccess("Email enviado"))
           .then(() => timeout(2000))
           .then(() => (window.location.href = "/"))
       : alertError("Ingrese un email válido");
