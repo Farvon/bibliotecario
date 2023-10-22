@@ -37,6 +37,8 @@ import {
 
 import useAlert from "../hooks/useAlerts";
 
+import NumberInputBasic from "./NumberInputBasic";
+
 const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const [libroData, setLibroData] = useState({
     titulo: "",
@@ -63,10 +65,19 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const [carreras, setCarreras] = useState([]);
   const [carreraSelectedNombre, setCarreraSelectedNombre] = useState("");
 
+  const [fechaPublicacion, setFechaPublicacion] = useState();
+
   useEffect(() => {
-    getAutores().then((allAutores) => {
-      setAutores(allAutores[1]);
-    });
+    getAutores()
+      .then((allAutores) => {
+        setAutores(allAutores[1]);
+      })
+      .then(
+        (data) => (
+          setFechaPublicacion(infoLibro.fecha_publicacion),
+          console.log(infoLibro.fecha_publicacion)
+        )
+      );
 
     getCarreras().then((allCarreras) => setCarreras(allCarreras[1]));
 
@@ -103,7 +114,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
       ? setLibroData((prevUserData) => {
           return {
             ...prevUserData,
-            [e.target.name]: e.target.value,
+            [e.target.name]: fechaPublicacion,
           };
         })
       : setLibroData((prevUserData) => {
@@ -122,13 +133,12 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const crearNuevoLibro = () => {
     const cantidadInt = Number(libroData.cantidad);
     const paginasInt = Number(libroData.paginas);
-    const fechaInt = Number(libroData.fecha_publicacion);
     setLibroData((prevUserData) => {
       return {
         ...prevUserData,
         cantidad: cantidadInt,
         paginas: paginasInt,
-        fecha_publicacion: fechaInt,
+        fecha_publicacion: añoPublicacion,
       };
     });
 
@@ -145,13 +155,12 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const actualizarLibro = () => {
     const cantidadInt = Number(libroData.cantidad);
     const paginasInt = Number(libroData.paginas);
-    const fechaInt = Number(libroData.fecha_publicacion);
     setLibroData((prevUserData) => {
       return {
         ...prevUserData,
         cantidad: cantidadInt,
         paginas: paginasInt,
-        fecha_publicacion: fechaInt,
+        fecha_publicacion: añoPublicacion,
       };
     });
 
@@ -366,7 +375,14 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                 value={libroData.paginas}
                 onChange={handleChange}
               />
-              <TextField
+              <NumberInputBasic
+                name="fecha_publicacion"
+                setFechaPublicacion={setFechaPublicacion}
+                fechaPublicacion={fechaPublicacion}
+                editar={editar}
+              />
+              {/* <TextField
+                min={15}
                 type="number"
                 id="libroFecha"
                 label="Año de publicación"
@@ -374,7 +390,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                 variant="standard"
                 value={libroData.fecha_publicacion}
                 onChange={handleChange}
-              />
+              /> */}
               <TextField
                 id="libroIsbn"
                 label="I.S.B.N."
