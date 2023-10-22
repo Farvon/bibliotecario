@@ -92,14 +92,14 @@ const Login = (user) => {
       </Form>
       <div>
         Aun no eres usuario?
-        <ButtonRegistro>
+        <Registrate>
           <Link to="/singup">Regístrate</Link>
-        </ButtonRegistro>
+        </Registrate>
       </div>
       <div>
-        <a>
+        <Olvide>
           <Link to="/recover">Olvidé mi contraseña</Link>
-        </a>
+        </Olvide>
       </div>
     </FormContainer>
   );
@@ -124,16 +124,39 @@ const Form = styled.form`
 
 const Button = styled.button`
   display: flex;
-  margin: 20px auto;
   justify-content: center;
-  width: 40%;
+  align-items: center;
+  font-size: 1em;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 220px;
   background: lightblue;
   border: none;
   box-shadow: 2px 2px 3px #c5c5c5, -6px -6px 12px #ffffff;
+
+  &:hover {
+    background: #c8dcdf;
+  }
 `;
 
-const ButtonRegistro = styled.button`
-  border: none;
-  color: red;
-  text-decoration: none;
+const Registrate = styled.a`
+  margin-left: 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+
+  &:hover {
+    text-shadow: 1px 1px 5px lightblue;
+    font-style: italic;
+  }
+`;
+
+const Olvide = styled.a`
+  display: flex;
+  font-size: 0.8em;
+  padding-top: 6px;
+  font-style: italic;
+
+  &:hover {
+    font-weight: bold;
+  }
 `;

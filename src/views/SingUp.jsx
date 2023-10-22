@@ -183,9 +183,9 @@ const SingUp = ({ setLoading }) => {
         </Button>
       </FormContainer>
       <div>
-        <ButtonRegistro>
+        <Volver>
           <Link to="/">Volver</Link>
-        </ButtonRegistro>
+        </Volver>
       </div>
     </>
   );
@@ -201,16 +201,28 @@ const FormContainer = styled.form`
 `;
 const Button = styled.button`
   display: flex;
-  margin: 20px auto;
   justify-content: center;
-  width: 20%;
+  align-items: center;
+  font-size: 1em;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 220px;
   background: lightblue;
   border: none;
   box-shadow: 2px 2px 3px #c5c5c5, -6px -6px 12px #ffffff;
+
+  &:hover {
+    background: #c8dcdf;
+  }
 `;
 
-const ButtonRegistro = styled.button`
-  border: none;
-  color: red;
-  text-decoration: none;
+const Volver = styled.a`
+  margin-left: 10px;
+  font-size: 1em;
+  font-weight: bold;
+
+  &:hover {
+    text-shadow: 1px 1px 5px lightblue;
+    font-style: italic;
+  }
 `;

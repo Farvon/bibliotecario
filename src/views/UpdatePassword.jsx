@@ -134,9 +134,3 @@ const Button = styled.button`
   border: none;
   box-shadow: 2px 2px 3px #c5c5c5, -6px -6px 12px #ffffff;
 `;
-
-const ButtonRegistro = styled.button`
-  border: none;
-  color: red;
-  text-decoration: none;
-`;
