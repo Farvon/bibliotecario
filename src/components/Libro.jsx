@@ -22,6 +22,8 @@ const Libro = ({
   carrera,
   showAcciones,
   setShowAcciones,
+  setActualizar,
+  actualizar,
 }) => {
   const [showCard, setShowCard] = useState(false);
   const [nombreAutor, setNombreAutor] = useState("");
@@ -47,8 +49,8 @@ const Libro = ({
 
   const handleDelete = (id) => {
     deleteLibro(id)
-      .then(() => alertSuccess("Libro borrado correctamente"))
-      .then(() => window.location.reload());
+      .then(() => setActualizar(!actualizar))
+      .then(() => alertSuccess("Libro borrado correctamente"));
   };
 
   useEffect(() => {

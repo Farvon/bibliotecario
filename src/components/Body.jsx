@@ -23,6 +23,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [carreras, setCarreras] = useState();
   const [carreraSrc, setCarreraSrc] = useState();
   const [showAcciones, setShowAcciones] = useState(true);
+  const [actualizar, setActualizar] = useState(false);
 
   useEffect(() => {
     getAutores().then((allAutores) => {
@@ -35,7 +36,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
     });
 
     getCarreras().then((carreras) => setCarreras(carreras[1]));
-  }, []);
+  }, [actualizar]);
 
   const handleSrcBook = (src) => {
     const autoresMatch = autores.filter((autor) =>
@@ -112,6 +113,8 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
                     item.carrera_id == carreraSrc && (
                       <Libro
                         key={item.id}
+                        setActualizar={setActualizar}
+                        actualizar={actualizar}
                         showAcciones={showAcciones}
                         setShowAcciones={setShowAcciones}
                         user={user}
@@ -134,6 +137,8 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
               : bibliotecaSrched.map((item) => (
                   <Libro
                     key={item.id}
+                    setActualizar={setActualizar}
+                    actualizar={actualizar}
                     showAcciones={showAcciones}
                     setShowAcciones={setShowAcciones}
                     user={user}

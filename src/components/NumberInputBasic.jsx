@@ -32,22 +32,39 @@ export default function NumberInputBasic({
   fechaPublicacion,
   setFechaPublicacion,
   editar,
+  setLibroData,
 }) {
   React.useEffect(() => {
-    editar ? setFechaPublicacion(fechaPublicacion) : setFechaPublicacion();
+    editar ? setFechaPublicacion(fechaPublicacion) : setFechaPublicacion("");
   }, []);
-  //VERIFICAR QUE NO APARECE CUANDO NO EXISTE LA FECHA
-  return (
-    fechaPublicacion != null && (
-      <NumberInput
-        min={1800}
-        max={2100}
-        aria-label="Demo number input"
-        placeholder="Año de publicación"
-        value={fechaPublicacion}
-        onChange={(event, val) => setFechaPublicacion(val)}
-      />
-    )
+
+  const handleChange = (e) => {
+    setFechaPublicacion(e);
+    setLibroData((prevUserData) => {
+      return {
+        ...prevUserData,
+        fecha_publicacion: Number(e),
+      };
+    });
+  };
+  return fechaPublicacion != null ? (
+    <NumberInput
+      min={1800}
+      max={2100}
+      aria-label="Demo number input"
+      placeholder="Año de publicación"
+      value={fechaPublicacion}
+      onChange={(event, val) => handleChange(val)}
+    />
+  ) : (
+    <NumberInput
+      min={1800}
+      max={2100}
+      aria-label="Demo number input"
+      placeholder="Año de publicación"
+      value={""}
+      onChange={(event, val) => handleChange(val)}
+    />
   );
 }
 

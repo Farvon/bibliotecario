@@ -55,6 +55,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const { alertSuccess, alertError } = useAlert();
 
   const [actualiza, setActualiza] = useState(false);
+  const [stop, setStop] = useState(false);
 
   const [autores, setAutores] = useState([]);
   const [deleteAutor, setDeleteAutor] = useState(false);
@@ -65,18 +66,17 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const [carreras, setCarreras] = useState([]);
   const [carreraSelectedNombre, setCarreraSelectedNombre] = useState("");
 
-  const [fechaPublicacion, setFechaPublicacion] = useState();
+  const [fechaPublicacion, setFechaPublicacion] = useState("");
 
   useEffect(() => {
     getAutores()
       .then((allAutores) => {
         setAutores(allAutores[1]);
       })
-      .then(
-        (data) => (
-          setFechaPublicacion(infoLibro.fecha_publicacion),
-          console.log(infoLibro.fecha_publicacion)
-        )
+      .then((data) =>
+        infoLibro.fecha_publicacion
+          ? setFechaPublicacion(infoLibro.fecha_publicacion)
+          : setFechaPublicacion("")
       );
 
     getCarreras().then((allCarreras) => setCarreras(allCarreras[1]));
@@ -110,19 +110,12 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   }, [actualiza]);
 
   const handleChange = (e) => {
-    e.target.name == "fecha_publicacion"
-      ? setLibroData((prevUserData) => {
-          return {
-            ...prevUserData,
-            [e.target.name]: fechaPublicacion,
-          };
-        })
-      : setLibroData((prevUserData) => {
-          return {
-            ...prevUserData,
-            [e.target.name]: e.target.value,
-          };
-        });
+    setLibroData((prevUserData) => {
+      return {
+        ...prevUserData,
+        [e.target.name]: e.target.value,
+      };
+    });
   };
 
   const hundleSubmitLibro = (e) => {
@@ -133,12 +126,11 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const crearNuevoLibro = () => {
     const cantidadInt = Number(libroData.cantidad);
     const paginasInt = Number(libroData.paginas);
-    setLibroData((prevUserData) => {
+    setLibroData((prevLibroData) => {
       return {
-        ...prevUserData,
+        ...prevLibroData,
         cantidad: cantidadInt,
         paginas: paginasInt,
-        fecha_publicacion: añoPublicacion,
       };
     });
 
@@ -155,12 +147,12 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
   const actualizarLibro = () => {
     const cantidadInt = Number(libroData.cantidad);
     const paginasInt = Number(libroData.paginas);
-    setLibroData((prevUserData) => {
+
+    setLibroData((prevLibroData) => {
       return {
-        ...prevUserData,
+        ...prevLibroData,
         cantidad: cantidadInt,
         paginas: paginasInt,
-        fecha_publicacion: añoPublicacion,
       };
     });
 
@@ -169,6 +161,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     libroData.cantidad != null &&
     libroData.carrera_id != ""
       ? editarLibro(infoLibro.id, libroData)
+          .then(() => console.log(libroData))
           .then(() => alertSuccess("Libro Actualizado correctamente"))
           .then(() => handleCancel())
       : alertError("Título, Autor, Carrera y Cantidad no pueden quedar vacios");
@@ -380,6 +373,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
                 setFechaPublicacion={setFechaPublicacion}
                 fechaPublicacion={fechaPublicacion}
                 editar={editar}
+                setLibroData={setLibroData}
               />
               {/* <TextField
                 min={15}
