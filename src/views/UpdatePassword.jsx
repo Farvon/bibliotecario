@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
-import { loginUser } from "../backend/controllers/usuarios";
+import { loginUser, updatePassword } from "../backend/controllers/usuarios";
 
 //del Input
 import FormControl from "@mui/material/FormControl";
@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-const Login = (user) => {
+const UpdatePassword = () => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -31,14 +31,13 @@ const Login = (user) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    userData.email != "" &&
-      userData.password != "" &&
-      loginUser(userData)
-        .then((data) => {
-          user.current = data;
-        })
-        .catch((err) => console.error(err))
-        .finally(() => (window.location.href = "/"));
+
+    userData.password != ""
+      ? updatePassword(userData.email, userData.password)
+          .then(() => alertSuccess("Contraseña Actualizada"))
+          .then(() => timeout(2000))
+          .then(() => (window.location.href = "/"))
+      : alertError("Ingrese una contraseña válida");
   };
 
   //del Input
@@ -87,25 +86,14 @@ const Login = (user) => {
           />
         </FormControl>
         <Button type="submit" onClick={(e) => handleSubmit(e)}>
-          Ingresar
+          Actualizar Contraseña
         </Button>
       </Form>
-      <div>
-        Aun no eres usuario?
-        <ButtonRegistro>
-          <Link to="/singup">Regístrate</Link>
-        </ButtonRegistro>
-      </div>
-      <div>
-        <a>
-          <Link to="/recover">Olvidé mi contraseña</Link>
-        </a>
-      </div>
     </FormContainer>
   );
 };
 
-export default Login;
+export default UpdatePassword;
 
 const FormContainer = styled.form`
   display: flex;
