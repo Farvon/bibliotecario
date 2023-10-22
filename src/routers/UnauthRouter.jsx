@@ -19,12 +19,6 @@ const UnauthRouter = ({ user, setLoading }) => {
           exact
         />
         <Route path="/recover" name="recover" element={<Recover />} exact />
-        <Route
-          path="/updatepassword"
-          name="updatePassword"
-          element={<UpdatePassword />}
-          exact
-        />
       </Routes>
     </>
   );

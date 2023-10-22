@@ -46,6 +46,13 @@ const AuthRouter = ({ user }) => {
           element={<Reglamento />}
           exact
         />
+
+        <Route
+          path="/updatepassword"
+          name="updatePassword"
+          element={<UpdatePassword />}
+          exact
+        />
       </Routes>
     </>
   );
