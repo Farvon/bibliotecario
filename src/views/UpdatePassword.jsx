@@ -1,9 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
-import { loginUser, updatePassword } from "../backend/controllers/usuarios";
+import { getUser, updatePassword } from "../backend/controllers/usuarios";
 
 //del Input
 import FormControl from "@mui/material/FormControl";
@@ -23,6 +22,10 @@ const UpdatePassword = () => {
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    getUser().then((data) => setUserData({ email: data.email }));
+  }, []);
 
   const handleChange = (e) => {
     setUserData((prevUserData) => {
@@ -57,47 +60,51 @@ const UpdatePassword = () => {
     event.preventDefault();
   };
   return (
-    <FormContainer>
-      <Form>
-        <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
-          <InputLabel htmlFor="filled-adornment-email">Email</InputLabel>
-          <OutlinedInput
-            onChange={handleChange}
-            id="filled-adornment-email"
-            type="text"
-            label="Email"
-            name="email"
-          />
-        </FormControl>
-        <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">
-            Contraseña
-          </InputLabel>
-          <OutlinedInput
-            onChange={handleChange}
-            id="outlined-adornment-password"
-            type={showPassword ? "text" : "password"}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-            name="password"
-          />
-        </FormControl>
-        <Button type="submit" onClick={(e) => handleSubmit(e)}>
-          Actualizar Contraseña
-        </Button>
-      </Form>
-    </FormContainer>
+    userData && (
+      <FormContainer>
+        <Form>
+          <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
+            <InputLabel htmlFor="filled-adornment-email">Email</InputLabel>
+            <OutlinedInput
+              // onChange={handleChange}
+              id="filled-adornment-email"
+              type="text"
+              label="Email"
+              name="email"
+              value={userData.email}
+              disabled
+            />
+          </FormControl>
+          <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">
+              Contraseña
+            </InputLabel>
+            <OutlinedInput
+              onChange={handleChange}
+              id="outlined-adornment-password"
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+              name="password"
+            />
+          </FormControl>
+          <Button type="submit" onClick={(e) => handleSubmit(e)}>
+            Actualizar Contraseña
+          </Button>
+        </Form>
+      </FormContainer>
+    )
   );
 };
 
