@@ -14,7 +14,11 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+import useAlert from "../hooks/useAlerts";
+
 const UpdatePassword = () => {
+  const { alertSuccess, alertError } = useAlert();
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",

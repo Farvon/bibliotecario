@@ -14,7 +14,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import LocalLibraryRoundedIcon from "@mui/icons-material/LocalLibraryRounded";
 import MenuBookRounded from "@mui/icons-material/MenuBookRounded";
-import styled from "styled-components";
 
 const theme = createTheme({
   palette: {

@@ -5,6 +5,7 @@ import Admin from "../views/Admin";
 import Home from "../views/Home";
 import PerfilUser from "../views/PerfilUser";
 import Reglamento from "../views/Reglamento";
+import UpdatePassword from "../views/UpdatePassword";
 
 const AuthRouter = ({ user }) => {
   useEffect(() => {}, []);

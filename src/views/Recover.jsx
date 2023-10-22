@@ -10,8 +10,11 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
+import useAlert from "../hooks/useAlerts";
+
 const Recover = () => {
   const [email, setEmail] = useState("");
+  const { alertSuccess, alertError } = useAlert();
 
   const handleChange = (e) => {
     setEmail(e.target.value);

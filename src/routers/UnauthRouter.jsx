@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../views/Login";
 import SingUp from "../views/SingUp";
 import Recover from "../views/Recover";
-import UpdatePassword from "../views/UpdatePassword";
 
 const UnauthRouter = ({ user, setLoading }) => {
   useEffect(() => {}, []);
