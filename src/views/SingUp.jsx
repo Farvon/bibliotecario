@@ -51,11 +51,15 @@ const SingUp = ({ setLoading }) => {
     userData.direccion != ""
       ? crearUsuario(userData)
           .then(() => alertSuccess("Usuario Creado - Verifique su E-mail"))
-          .then(() => setLoading(false))
+          .then(() => timeout(2000))
+          .then(() => (window.location.href = "/"))
       : alertError("Complete todos los campos correctamente");
     setLoading(false);
   };
 
+  function timeout(delay) {
+    return new Promise((res) => setTimeout(res, delay));
+  }
   //Inputs
   const [showPassword, setShowPassword] = React.useState(false);
 
