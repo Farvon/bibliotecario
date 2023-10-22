@@ -18,6 +18,7 @@ import useAlert from "../hooks/useAlerts";
 
 const SingUp = ({ setLoading }) => {
   const { alertSuccess, alertError } = useAlert();
+  const [igual, setIgual] = useState(true);
   const [userData, setUserData] = useState({
     nombre: "",
     email: "",
@@ -35,9 +36,14 @@ const SingUp = ({ setLoading }) => {
     });
   };
 
+  const handleChangePasswordRepeat = (e) => {
+    e.target.value == userData.password ? setIgual(true) : setIgual(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
+    igual &&
     userData.nombre != "" &&
     userData.email != "" &&
     userData.password != "" &&
@@ -45,9 +51,9 @@ const SingUp = ({ setLoading }) => {
     userData.direccion != ""
       ? crearUsuario(userData)
           .then(() => alertSuccess("Usuario Creado - Verifique su E-mail"))
-          .then(() => setTimeout(() => {}, 2000))
           .then(() => setLoading(false))
-      : alertError("Completa todos los campos");
+      : alertError("Complete todos los campos correctamente");
+    setLoading(false);
   };
 
   //Inputs
@@ -109,6 +115,37 @@ const SingUp = ({ setLoading }) => {
           />
           <FormHelperText id="outlined-adornment-password">
             *mínimo 6 caracteres
+          </FormHelperText>
+        </FormControl>
+        <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <InputLabel
+            sx={{ color: !igual ? "red" : null }}
+            htmlFor="outlined-adornment-password"
+          >
+            Contraseña
+          </InputLabel>
+          <OutlinedInput
+            sx={{ color: !igual ? "red" : null }}
+            onChange={handleChangePasswordRepeat}
+            id="outlined-adornment-password2"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+            name="password_repeat"
+          />
+          <FormHelperText id="outlined-adornment-password2">
+            *Repita la contraseña
           </FormHelperText>
         </FormControl>
 
