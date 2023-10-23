@@ -62,7 +62,7 @@ export const loginUser = async (user) => {
     email: user.email,
     password: user.password,
   });
-  return data;
+  return { data, error };
 };
 
 export const forgotPassword = async (email) => {

@@ -15,10 +15,17 @@ import FormHelperText from "@mui/material/FormHelperText";
 
 import { crearUsuario } from "../backend/controllers/usuarios";
 import useAlert from "../hooks/useAlerts";
+import { validateEmail } from "../validateEmail";
 
 const SingUp = ({ setLoading }) => {
   const { alertSuccess, alertError } = useAlert();
   const [igual, setIgual] = useState(true);
+  const [invalidNombre, setInvalidNombre] = useState(false);
+  const [invalidTelefono, setInvalidTelefono] = useState(false);
+  const [invalidDireccion, setInvalidDireccion] = useState(false);
+  const [invalidPassword, setInvalidPassword] = useState(false);
+
+  const [invalidEmail, setInvalidEmail] = useState(false);
   const [userData, setUserData] = useState({
     nombre: "",
     email: "",
@@ -28,6 +35,10 @@ const SingUp = ({ setLoading }) => {
   });
 
   const handleChange = (e) => {
+    setInvalidNombre(false);
+    setInvalidEmail(false);
+    setInvalidTelefono(false);
+    setInvalidDireccion(false);
     setUserData((prevUserData) => {
       return {
         ...prevUserData,
@@ -42,10 +53,17 @@ const SingUp = ({ setLoading }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+
+    userData.nombre == "" && setInvalidNombre(true);
+    userData.telefono == "" && setInvalidTelefono(true);
+    userData.direccion == "" && setInvalidDireccion(true);
+    userData.password == "" && setInvalidPassword(true);
+
+    !validateEmail(userData.email) && setInvalidEmail(true);
+
+    validateEmail(userData.email) &&
     igual &&
     userData.nombre != "" &&
-    userData.email != "" &&
     userData.password != "" &&
     userData.telefono != "" &&
     userData.direccion != ""
@@ -76,22 +94,53 @@ const SingUp = ({ setLoading }) => {
         <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-nombre">Nombre</InputLabel>
           <OutlinedInput
+            sx={{
+              border: invalidNombre && "1px solid red",
+              borderRadius: invalidNombre && "6px",
+            }}
             onChange={handleChange}
             id="outlined-adornment-nombre"
             type="text"
             label="Nombre"
             name="nombre"
           />
+          {invalidNombre && (
+            <FormHelperText
+              sx={{ color: "red" }}
+              id="outlined-adornment-password"
+            >
+              *Campo Obligatorio
+            </FormHelperText>
+          )}
         </FormControl>
-        <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
+        <FormControl
+          required
+          sx={{
+            m: 1,
+            width: "25ch",
+          }}
+          variant="outlined"
+        >
           <InputLabel htmlFor="outline-adornment-email">Email</InputLabel>
           <OutlinedInput
+            sx={{
+              border: invalidEmail && "1px solid red",
+              borderRadius: invalidEmail && "6px",
+            }}
             onChange={handleChange}
             id="outline-adornment-email"
-            type="text"
+            type="email"
             label="Email"
             name="email"
           />
+          {invalidEmail && (
+            <FormHelperText
+              sx={{ color: "red" }}
+              id="outlined-adornment-password"
+            >
+              *Email Invalido
+            </FormHelperText>
+          )}
         </FormControl>
 
         <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
@@ -99,6 +148,10 @@ const SingUp = ({ setLoading }) => {
             Contraseña
           </InputLabel>
           <OutlinedInput
+            sx={{
+              border: invalidPassword && "1px solid red",
+              borderRadius: invalidPassword && "6px",
+            }}
             onChange={handleChange}
             id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
@@ -117,9 +170,18 @@ const SingUp = ({ setLoading }) => {
             label="Password"
             name="password"
           />
-          <FormHelperText id="outlined-adornment-password">
-            *mínimo 6 caracteres
-          </FormHelperText>
+          {invalidPassword ? (
+            <FormHelperText
+              sx={{ color: "red" }}
+              id="outlined-adornment-password"
+            >
+              *Campo Obligatorio
+            </FormHelperText>
+          ) : (
+            <FormHelperText id="outlined-adornment-password">
+              *mínimo 6 caracteres
+            </FormHelperText>
+          )}
         </FormControl>
         <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel
@@ -129,7 +191,11 @@ const SingUp = ({ setLoading }) => {
             Contraseña
           </InputLabel>
           <OutlinedInput
-            sx={{ color: !igual ? "red" : null }}
+            sx={{
+              color: !igual ? "red" : null,
+              border: invalidPassword && "1px solid red",
+              borderRadius: invalidPassword && "6px",
+            }}
             onChange={handleChangePasswordRepeat}
             id="outlined-adornment-password2"
             type={showPassword ? "text" : "password"}
@@ -158,24 +224,48 @@ const SingUp = ({ setLoading }) => {
             Teléfono
           </InputLabel>
           <OutlinedInput
+            sx={{
+              border: invalidTelefono && "1px solid red",
+              borderRadius: invalidTelefono && "6px",
+            }}
             onChange={handleChange}
             id="outlined-adornment-telefono"
-            type="text"
+            type="number"
             label="Teléfono"
             name="telefono"
           />
+          {invalidTelefono && (
+            <FormHelperText
+              sx={{ color: "red" }}
+              id="outlined-adornment-password"
+            >
+              *Campo Obligatorio
+            </FormHelperText>
+          )}
         </FormControl>
         <FormControl required sx={{ m: 1, width: "25ch" }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-direccion">
             Dirección
           </InputLabel>
           <OutlinedInput
+            sx={{
+              border: invalidDireccion && "1px solid red",
+              borderRadius: invalidDireccion && "6px",
+            }}
             onChange={handleChange}
             id="outlined-adornment-direccion"
             type="text"
             label="Dirección"
             name="direccion"
           />
+          {invalidDireccion && (
+            <FormHelperText
+              sx={{ color: "red" }}
+              id="outlined-adornment-password"
+            >
+              *Campo Obligatorio
+            </FormHelperText>
+          )}
         </FormControl>
 
         <Button type="submit" onClick={(e) => handleSubmit(e)}>

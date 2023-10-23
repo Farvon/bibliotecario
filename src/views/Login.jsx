@@ -13,12 +13,17 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { validateEmail } from "../validateEmail";
+
+import useAlert from "../hooks/useAlerts";
 
 const Login = (user) => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
+
+  const { alertSuccess, alertError } = useAlert();
 
   const handleChange = (e) => {
     setUserData((prevUserData) => {
@@ -31,14 +36,14 @@ const Login = (user) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    userData.email != "" &&
-      userData.password != "" &&
-      loginUser(userData)
-        .then((data) => {
-          user.current = data;
-        })
-        .catch((err) => console.error(err))
-        .finally(() => (window.location.href = "/"));
+    validateEmail(userData.email) && userData.password != ""
+      ? loginUser(userData)
+          .then((data) => {
+            user.current = data;
+          })
+          .catch((err) => console.log(err))
+          .finally(() => (window.location.href = "/"))
+      : alertError("Ingrese los datos correctamente");
   };
 
   //del Input

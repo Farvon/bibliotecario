@@ -11,6 +11,7 @@ import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
 import useAlert from "../hooks/useAlerts";
+import { validateEmail } from "../validateEmail";
 
 const Recover = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +23,8 @@ const Recover = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    email != ""
+
+    validateEmail(email)
       ? forgotPassword(email)
           .then((data) => alertSuccess("Email enviado"))
           .then(() => timeout(2000))
