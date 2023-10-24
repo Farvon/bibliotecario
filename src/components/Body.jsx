@@ -14,6 +14,9 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+// import Pagination from "@mui/material/Pagination";
+
+import Pagination from "./Pagination";
 
 const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [bookSrch, setBookSrch] = useState();
@@ -24,6 +27,20 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [carreraSrc, setCarreraSrc] = useState();
   const [showAcciones, setShowAcciones] = useState(true);
   const [actualizar, setActualizar] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage, setBooksPerPage] = useState(10);
+
+  // Get current comments
+  const indexOfLastBook = currentPage * booksPerPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+
+  const currentBooks =
+    bibliotecaSrched &&
+    bibliotecaSrched.slice(indexOfFirstBook, indexOfLastBook);
+
+  // Callback to change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     getAutores().then((allAutores) => {
@@ -45,7 +62,6 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
 
     let autoresMatchId = [];
     autoresMatch.map((elem) => autoresMatchId.push(elem.id));
-    // console.log("Autores que cumplen con la busqueda ", autoresMatchId);
 
     const bookSrched = biblioteca.filter(
       (item) =>
@@ -53,7 +69,6 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
         item.titulo.toLowerCase().includes(src) ||
         item.editorial.toLowerCase().includes(src)
     );
-    console.log(carreraSrc);
     setBibliotecaSrched(bookSrched);
   };
 
@@ -93,6 +108,16 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
           setCarreraSrc={setCarreraSrc}
         />
       )}
+      {bibliotecaSrched && (
+        <PaginationContainer>
+          <Pagination
+            itemsPerPage={booksPerPage}
+            currentPage={currentPage}
+            totalItems={bibliotecaSrched.length}
+            paginate={paginate}
+          />
+        </PaginationContainer>
+      )}
       <Table>
         <Thead>
           <Tr>
@@ -108,7 +133,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
         {autores && biblioteca && carreras ? (
           <tbody>
             {carreraSrc
-              ? bibliotecaSrched.map(
+              ? currentBooks.map(
                   (item) =>
                     item.carrera_id == carreraSrc && (
                       <Libro
@@ -134,7 +159,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
                       />
                     )
                 )
-              : bibliotecaSrched.map((item) => (
+              : currentBooks.map((item) => (
                   <Libro
                     key={item.id}
                     setActualizar={setActualizar}
@@ -237,4 +262,12 @@ const TdWeb = styled.td`
   @media (max-width: 767px) {
     display: none;
   }
+`;
+
+const PaginationContainer = styled.div`
+  width: 90vw;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
