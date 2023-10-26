@@ -37,7 +37,11 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
 
   const currentBooks =
     bibliotecaSrched &&
-    bibliotecaSrched.slice(indexOfFirstBook, indexOfLastBook);
+    (carreraSrc
+      ? bibliotecaSrched
+          .filter((item) => item.carrera_id == carreraSrc)
+          .slice(indexOfFirstBook, indexOfLastBook)
+      : bibliotecaSrched.slice(indexOfFirstBook, indexOfLastBook));
 
   // Callback to change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -145,53 +149,28 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
         </Thead>
         {autores && biblioteca && carreras ? (
           <tbody>
-            {carreraSrc
-              ? currentBooks.map(
-                  (item) =>
-                    item.carrera_id == carreraSrc && (
-                      <Libro
-                        key={item.id}
-                        setActualizar={setActualizar}
-                        actualizar={actualizar}
-                        showAcciones={showAcciones}
-                        setShowAcciones={setShowAcciones}
-                        user={user}
-                        libro={item}
-                        autor={
-                          item.autor_id &&
-                          autores.find((e) => e.id === item.autor_id)
-                        }
-                        admin={admin}
-                        setInfoLibro={setInfoLibro}
-                        setNewBook={setNewBook}
-                        setEditar={setEditar}
-                        carrera={
-                          item.carrera_id &&
-                          carreras.find((e) => e.id === item.carrera_id)
-                        }
-                      />
-                    )
-                )
-              : currentBooks.map((item) => (
-                  <Libro
-                    key={item.id}
-                    setActualizar={setActualizar}
-                    actualizar={actualizar}
-                    showAcciones={showAcciones}
-                    setShowAcciones={setShowAcciones}
-                    user={user}
-                    libro={item}
-                    autor={
-                      item.autor_id &&
-                      autores.find((e) => e.id === item.autor_id)
-                    }
-                    admin={admin}
-                    setInfoLibro={setInfoLibro}
-                    setNewBook={setNewBook}
-                    setEditar={setEditar}
-                    carrera={carreras.find((e) => e.id === item.carrera_id)}
-                  />
-                ))}
+            {currentBooks.map((item) => (
+              <Libro
+                key={item.id}
+                setActualizar={setActualizar}
+                actualizar={actualizar}
+                showAcciones={showAcciones}
+                setShowAcciones={setShowAcciones}
+                user={user}
+                libro={item}
+                autor={
+                  item.autor_id && autores.find((e) => e.id === item.autor_id)
+                }
+                admin={admin}
+                setInfoLibro={setInfoLibro}
+                setNewBook={setNewBook}
+                setEditar={setEditar}
+                carrera={
+                  item.carrera_id &&
+                  carreras.find((e) => e.id === item.carrera_id)
+                }
+              />
+            ))}
           </tbody>
         ) : (
           <Box sx={{ display: "flex", margin: "auto" }}>
