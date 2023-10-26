@@ -16,8 +16,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 
-// import Pagination from "./Pagination";
-
 const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [bookSrch, setBookSrch] = useState();
   const [biblioteca, setBiblioteca] = useState();
@@ -28,23 +26,26 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [showAcciones, setShowAcciones] = useState(true);
   const [actualizar, setActualizar] = useState(false);
 
+  const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage, setBooksPerPage] = useState(10);
 
-  // Get current comments
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
 
-  const currentBooks =
-    bibliotecaSrched &&
-    (carreraSrc
-      ? bibliotecaSrched
-          .filter((item) => item.carrera_id == carreraSrc)
-          .slice(indexOfFirstBook, indexOfLastBook)
-      : bibliotecaSrched.slice(indexOfFirstBook, indexOfLastBook));
+  const filterByCarrera = (carreraSrc) => {
+    const bibliotecaFiltered = bibliotecaSrched.filter(
+      (item) => item.carrera_id == carreraSrc
+    );
 
-  // Callback to change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    return bibliotecaFiltered.slice(indexOfFirstBook, indexOfLastBook);
+  };
+
+  const currentBooks = bibliotecaSrched
+    ? carreraSrc
+      ? filterByCarrera(carreraSrc)
+      : bibliotecaSrched.slice(indexOfFirstBook, indexOfLastBook)
+    : null;
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
@@ -58,12 +59,14 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
     getLibros().then((libros) => {
       setBiblioteca(libros[1]);
       setBibliotecaSrched(libros[1]);
+      const pages = calculatePages(carreraSrc, libros[1]);
+      setTotalPages(pages);
     });
 
     getCarreras().then((carreras) => setCarreras(carreras[1]));
-  }, [actualizar]);
+  }, [actualizar, carreraSrc]);
 
-  const handleSrcBook = (src) => {
+  const handleSrcBook = (src, carreraSrc) => {
     const autoresMatch = autores.filter((autor) =>
       autor.nombre.toLowerCase().includes(src)
     );
@@ -78,11 +81,24 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
         item.editorial.toLowerCase().includes(src)
     );
     setBibliotecaSrched(bookSrched);
+    const pages = calculatePages(carreraSrc, bookSrched);
+    setTotalPages(pages);
   };
 
   const handleAdd = () => {
     setEditar(false);
     setNewBook(true);
+  };
+
+  const calculatePages = (carreraSrc, librosTotales) => {
+    console.log(librosTotales);
+
+    const pagesByCarrera =
+      carreraSrc &&
+      librosTotales.filter((item) => item.carrera_id == carreraSrc).length;
+    return !carreraSrc
+      ? Math.ceil(librosTotales.length / booksPerPage)
+      : Math.ceil(pagesByCarrera / booksPerPage);
   };
 
   return (
@@ -91,7 +107,9 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
         <Input
           value={bookSrch}
           placeholder="Que vas a leer hoy?..."
-          onChange={(e) => handleSrcBook(e.target.value.toLowerCase())}
+          onChange={(e) =>
+            handleSrcBook(e.target.value.toLowerCase(), carreraSrc)
+          }
         />
         {admin == true && (
           <AgregarContainer>
@@ -119,22 +137,13 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
       {bibliotecaSrched && (
         <PaginationContainer>
           <Pagination
-            count={Math.ceil(bibliotecaSrched.length / booksPerPage)}
+            count={totalPages}
             page={currentPage}
             onChange={handleChange}
           />
         </PaginationContainer>
       )}
-      {/* {bibliotecaSrched && (
-        <PaginationContainer>
-          <Pagination
-            itemsPerPage={booksPerPage}
-            currentPage={currentPage}
-            totalItems={bibliotecaSrched.length}
-            paginate={paginate}
-          />
-        </PaginationContainer>
-      )} */}
+
       <Table>
         <Thead>
           <Tr>
