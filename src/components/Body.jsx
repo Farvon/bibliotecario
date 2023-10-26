@@ -14,9 +14,9 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-// import Pagination from "@mui/material/Pagination";
+import Pagination from "@mui/material/Pagination";
 
-import Pagination from "./Pagination";
+// import Pagination from "./Pagination";
 
 const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [bookSrch, setBookSrch] = useState();
@@ -41,6 +41,10 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
 
   // Callback to change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
   useEffect(() => {
     getAutores().then((allAutores) => {
@@ -111,13 +115,22 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
       {bibliotecaSrched && (
         <PaginationContainer>
           <Pagination
+            count={Math.ceil(bibliotecaSrched.length / booksPerPage)}
+            page={currentPage}
+            onChange={handleChange}
+          />
+        </PaginationContainer>
+      )}
+      {/* {bibliotecaSrched && (
+        <PaginationContainer>
+          <Pagination
             itemsPerPage={booksPerPage}
             currentPage={currentPage}
             totalItems={bibliotecaSrched.length}
             paginate={paginate}
           />
         </PaginationContainer>
-      )}
+      )} */}
       <Table>
         <Thead>
           <Tr>
@@ -176,10 +189,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
                     setInfoLibro={setInfoLibro}
                     setNewBook={setNewBook}
                     setEditar={setEditar}
-                    carrera={
-                      item.carrera_id &&
-                      carreras.find((e) => e.id === item.carrera_id)
-                    }
+                    carrera={carreras.find((e) => e.id === item.carrera_id)}
                   />
                 ))}
           </tbody>
