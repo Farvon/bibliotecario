@@ -157,7 +157,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     });
 
     libroData.titulo != "" &&
-    libroData.autor_id != "" &&
+    libroData.autor_id != null &&
     libroData.cantidad != null &&
     libroData.carrera_id != ""
       ? editarLibro(infoLibro.id, libroData)
