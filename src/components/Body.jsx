@@ -33,10 +33,17 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
 
+  const calculatePages = (librosTotales) => {
+    const pages = Math.ceil(librosTotales.length / booksPerPage);
+    return pages;
+  };
+
   const filterByCarrera = (carreraSrc) => {
     const bibliotecaFiltered = bibliotecaSrched.filter(
       (item) => item.carrera_id == carreraSrc
     );
+    const pages = calculatePages(bibliotecaFiltered);
+    console.log(pages);
 
     return bibliotecaFiltered.slice(indexOfFirstBook, indexOfLastBook);
   };
@@ -59,14 +66,14 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
     getLibros().then((libros) => {
       setBiblioteca(libros[1]);
       setBibliotecaSrched(libros[1]);
-      const pages = calculatePages(carreraSrc, libros[1]);
+      const pages = calculatePages(libros[1]);
       setTotalPages(pages);
     });
 
     getCarreras().then((carreras) => setCarreras(carreras[1]));
-  }, [actualizar, carreraSrc]);
+  }, [actualizar]);
 
-  const handleSrcBook = (src, carreraSrc) => {
+  const handleSrcBook = (src) => {
     const autoresMatch = autores.filter((autor) =>
       autor.nombre.toLowerCase().includes(src)
     );
@@ -81,7 +88,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
         item.editorial.toLowerCase().includes(src)
     );
     setBibliotecaSrched(bookSrched);
-    const pages = calculatePages(carreraSrc, bookSrched);
+    const pages = calculatePages(bookSrched);
     setTotalPages(pages);
   };
 
@@ -90,16 +97,16 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
     setNewBook(true);
   };
 
-  const calculatePages = (carreraSrc, librosTotales) => {
-    console.log(librosTotales);
+  // const calculatePages = (carreraSrc, librosTotales) => {
+  //   console.log(librosTotales);
 
-    const pagesByCarrera =
-      carreraSrc &&
-      librosTotales.filter((item) => item.carrera_id == carreraSrc).length;
-    return !carreraSrc
-      ? Math.ceil(librosTotales.length / booksPerPage)
-      : Math.ceil(pagesByCarrera / booksPerPage);
-  };
+  //   const pagesByCarrera =
+  //     carreraSrc &&
+  //     librosTotales.filter((item) => item.carrera_id == carreraSrc).length;
+  //   return !carreraSrc
+  //     ? Math.ceil(librosTotales.length / booksPerPage)
+  //     : Math.ceil(pagesByCarrera / booksPerPage);
+  // };
 
   return (
     <>
