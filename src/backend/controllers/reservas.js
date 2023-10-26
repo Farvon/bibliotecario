@@ -60,10 +60,18 @@ export const getReservasAprobadasByUserId = async (user_id) => {
   return newData;
 };
 
-export const updateReserva = async (id) => {
+export const updateReservaAprobada = async (id) => {
   const { data, error } = await supabase
     .from("Reservas")
     .update({ aprobado: true })
+    .eq("id", id)
+    .select();
+};
+
+export const updateFechaReservaAprobada = async (id, fecha) => {
+  const { data, error } = await supabase
+    .from("Reservas")
+    .update({ fecha_retiro: fecha })
     .eq("id", id)
     .select();
 };

@@ -11,7 +11,11 @@ import Box from "@mui/material/Box";
 
 import UsuarioCard from "./UsuarioCard";
 
-import { deleteReserva, updateReserva } from "../backend/controllers/reservas";
+import {
+  deleteReserva,
+  updateReservaAprobada,
+  updateFechaReservaAprobada,
+} from "../backend/controllers/reservas";
 import { getUserById } from "../backend/controllers/usuarios";
 import {
   getInventarioById,
@@ -59,7 +63,14 @@ const ReservaCard = ({
   };
 
   const handleAprobar = (id) => {
-    updateReserva(id);
+    var today = new Date();
+    var day = today.getDate();
+    var month = today.getMonth() + 1;
+    var year = today.getFullYear();
+    var fecha = `${year}/${month}/${day}`;
+
+    updateReservaAprobada(id);
+    updateFechaReservaAprobada(id, fecha);
     const newReservas = reservas.filter((item) => item.id != id);
     setReservas(newReservas);
   };

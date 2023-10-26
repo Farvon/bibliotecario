@@ -135,8 +135,8 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     });
 
     libroData.titulo != "" &&
-    libroData.autor_id != "" &&
-    libroData.carrera_id != "" &&
+    libroData.autor_id != null &&
+    libroData.carrera_id != null &&
     libroData.cantidad != null
       ? crearLibro(libroData)
           .then(() => alertSuccess("Libro creado correctamente"))
@@ -159,7 +159,7 @@ const CrearEditarLibro = ({ setNewBook, infoLibro, setInfoLibro, editar }) => {
     libroData.titulo != "" &&
     libroData.autor_id != null &&
     libroData.cantidad != null &&
-    libroData.carrera_id != ""
+    libroData.carrera_id != null
       ? editarLibro(infoLibro.id, libroData)
           .then(() => console.log(libroData))
           .then(() => alertSuccess("Libro Actualizado correctamente"))
