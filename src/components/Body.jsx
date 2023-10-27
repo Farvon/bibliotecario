@@ -25,6 +25,10 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   const [carreraSrc, setCarreraSrc] = useState();
   const [showAcciones, setShowAcciones] = useState(true);
   const [actualizar, setActualizar] = useState(false);
+  const [carreraActual, setCarreraActual] = useState();
+  const [booksByCarrera, setBooksByCarrera] = useState();
+  const [booksByCarrera2, setBooksByCarrera2] = useState();
+  const [noneFilter, setNoneFilter] = useState(false);
 
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,19 +43,34 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   };
 
   const filterByCarrera = (carreraSrc) => {
-    const bibliotecaFiltered = bibliotecaSrched.filter(
+    const bibliotecaFiltered = biblioteca.filter(
       (item) => item.carrera_id == carreraSrc
     );
+
     const pages = calculatePages(bibliotecaFiltered);
-    console.log(pages);
+    setCarreraActual(carreraSrc);
+    setTotalPages(pages);
+    setBooksByCarrera(bibliotecaFiltered);
+    setBooksByCarrera2(bibliotecaFiltered);
+    setNoneFilter(false);
 
     return bibliotecaFiltered.slice(indexOfFirstBook, indexOfLastBook);
   };
 
+  const filterNone = () => {
+    const pages = calculatePages(bibliotecaSrched);
+
+    !noneFilter && (setTotalPages(pages), setNoneFilter(true));
+
+    return bibliotecaSrched.slice(indexOfFirstBook, indexOfLastBook);
+  };
+
   const currentBooks = bibliotecaSrched
     ? carreraSrc
-      ? filterByCarrera(carreraSrc)
-      : bibliotecaSrched.slice(indexOfFirstBook, indexOfLastBook)
+      ? carreraSrc != carreraActual
+        ? filterByCarrera(carreraSrc)
+        : booksByCarrera.slice(indexOfFirstBook, indexOfLastBook)
+      : filterNone()
     : null;
 
   const handleChange = (event, value) => {
@@ -81,13 +100,24 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
     let autoresMatchId = [];
     autoresMatch.map((elem) => autoresMatchId.push(elem.id));
 
-    const bookSrched = biblioteca.filter(
-      (item) =>
-        autoresMatchId.includes(item.autor_id) ||
-        item.titulo.toLowerCase().includes(src) ||
-        item.editorial.toLowerCase().includes(src)
-    );
-    setBibliotecaSrched(bookSrched);
+    const bookSrched = carreraSrc
+      ? booksByCarrera2.filter(
+          (item) =>
+            autoresMatchId.includes(item.autor_id) ||
+            item.titulo.toLowerCase().includes(src) ||
+            item.editorial.toLowerCase().includes(src)
+        )
+      : biblioteca.filter(
+          (item) =>
+            autoresMatchId.includes(item.autor_id) ||
+            item.titulo.toLowerCase().includes(src) ||
+            item.editorial.toLowerCase().includes(src)
+        );
+
+    !carreraSrc
+      ? setBibliotecaSrched(bookSrched)
+      : setBooksByCarrera(bookSrched);
+
     const pages = calculatePages(bookSrched);
     setTotalPages(pages);
   };
