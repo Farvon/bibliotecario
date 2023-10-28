@@ -146,8 +146,6 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
   };
 
   const filterBooks = () => {
-    console.log(inputToFilter);
-    console.log(carreraToFilter);
     const autoresMatch = autores.filter((autor) =>
       autor.nombre.toLowerCase().includes(inputToFilter)
     );
