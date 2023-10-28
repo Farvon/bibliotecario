@@ -8,13 +8,17 @@ export default function MenuCarreras({
   carreras,
   setCarreraSrc,
   showAcciones,
+  filterBooks,
+  carreraToFilter,
+  setCarreraToFilter,
 }) {
   const [carreraSelected, setCarreraSelected] = React.useState("");
 
-  const handleChange = (event) => {
-    setCarreraSelected(event.target.value);
-    setCarreraSrc(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setCarreraSelected(event.target.value);
+  //   setCarreraSrc(event.target.value);
+
+  // };
 
   return (
     <>
@@ -24,9 +28,9 @@ export default function MenuCarreras({
           <Select
             labelId="demo-select-small-label"
             id="demo-select-small"
-            value={carreraSelected}
+            value={carreraToFilter ? carreraToFilter : ""}
             label="Carrera"
-            onChange={handleChange}
+            onChange={(e) => setCarreraToFilter(e.target.value)}
           >
             <MenuItem value="">
               <em>Todas</em>
