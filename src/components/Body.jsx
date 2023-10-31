@@ -17,18 +17,12 @@ import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 
 const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
-  // const [bookSrch, setBookSrch] = useState();
   const [biblioteca, setBiblioteca] = useState();
   const [bibliotecaSrched, setBibliotecaSrched] = useState();
   const [autores, setAutores] = useState();
   const [carreras, setCarreras] = useState();
-  // const [carreraSrc, setCarreraSrc] = useState();
   const [showAcciones, setShowAcciones] = useState(true);
   const [actualizar, setActualizar] = useState(false);
-  // const [carreraActual, setCarreraActual] = useState();
-  // const [booksByCarrera, setBooksByCarrera] = useState();
-  // const [booksByCarrera2, setBooksByCarrera2] = useState();
-  // const [noneFilter, setNoneFilter] = useState(false);
 
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,78 +38,6 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
     const pages = Math.ceil(librosTotales.length / booksPerPage);
     return pages;
   };
-
-  // const filterByCarrera = (carreraSrc) => {
-  //   const bibliotecaFiltered = biblioteca.filter(
-  //     (item) => item.carrera_id == carreraSrc
-  //   );
-
-  //   const pages = calculatePages(bibliotecaFiltered);
-  //   setCarreraActual(carreraSrc);
-  //   setTotalPages(pages);
-  //   setBooksByCarrera(bibliotecaFiltered);
-  //   setBooksByCarrera2(bibliotecaFiltered);
-  //   setNoneFilter(false);
-
-  //   return bibliotecaFiltered.slice(indexOfFirstBook, indexOfLastBook);
-  // };
-
-  // const filterNone = () => {
-  //   const pages = calculatePages(bibliotecaSrched);
-
-  //   !noneFilter && (setTotalPages(pages), setNoneFilter(true));
-
-  //   return bibliotecaSrched.slice(indexOfFirstBook, indexOfLastBook);
-  // };
-
-  // const currentBooks = bibliotecaSrched
-  //   ? carreraSrc
-  //     ? carreraSrc != carreraActual
-  //       ? filterByCarrera(carreraSrc)
-  //       : booksByCarrera.slice(indexOfFirstBook, indexOfLastBook)
-  //     : filterNone()
-  //   : null;
-
-  // const handleSrcBook = (src) => {
-  //   const autoresMatch = autores.filter((autor) =>
-  //     autor.nombre.toLowerCase().includes(src)
-  //   );
-
-  //   let autoresMatchId = [];
-  //   autoresMatch.map((elem) => autoresMatchId.push(elem.id));
-
-  //   const bookSrched = carreraSrc
-  //     ? booksByCarrera2.filter(
-  //         (item) =>
-  //           autoresMatchId.includes(item.autor_id) ||
-  //           item.titulo.toLowerCase().includes(src) ||
-  //           item.editorial.toLowerCase().includes(src)
-  //       )
-  //     : biblioteca.filter(
-  //         (item) =>
-  //           autoresMatchId.includes(item.autor_id) ||
-  //           item.titulo.toLowerCase().includes(src) ||
-  //           item.editorial.toLowerCase().includes(src)
-  //       );
-
-  //   !carreraSrc
-  //     ? setBibliotecaSrched(bookSrched)
-  //     : setBooksByCarrera(bookSrched);
-
-  //   const pages = calculatePages(bookSrched);
-  //   setTotalPages(pages);
-  // };
-
-  // const calculatePages = (carreraSrc, librosTotales) => {
-  //   console.log(librosTotales);
-
-  //   const pagesByCarrera =
-  //     carreraSrc &&
-  //     librosTotales.filter((item) => item.carrera_id == carreraSrc).length;
-  //   return !carreraSrc
-  //     ? Math.ceil(librosTotales.length / booksPerPage)
-  //     : Math.ceil(pagesByCarrera / booksPerPage);
-  // };
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
@@ -200,9 +122,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
         <MenuCarreras
           showAcciones={showAcciones}
           carreras={carreras}
-          // filterBooks={filterBooks}
           carreraToFilter={carreraToFilter}
-          // setCarreraSrc={setCarreraSrc}
           setCarreraToFilter={setCarreraToFilter}
         />
       )}

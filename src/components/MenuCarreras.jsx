@@ -6,20 +6,10 @@ import Select from "@mui/material/Select";
 
 export default function MenuCarreras({
   carreras,
-  setCarreraSrc,
   showAcciones,
-  filterBooks,
   carreraToFilter,
   setCarreraToFilter,
 }) {
-  const [carreraSelected, setCarreraSelected] = React.useState("");
-
-  // const handleChange = (event) => {
-  //   setCarreraSelected(event.target.value);
-  //   setCarreraSrc(event.target.value);
-
-  // };
-
   return (
     <>
       {showAcciones ? (
