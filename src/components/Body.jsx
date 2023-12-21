@@ -69,7 +69,7 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
 
   const filterBooks = () => {
     const autoresMatch = autores.filter((autor) =>
-      autor.nombre.toLowerCase().includes(inputToFilter)
+      autor.nombre.toLowerCase().includes(inputToFilter.toLocaleLowerCase())
     );
 
     let autoresMatchId = [];
@@ -78,8 +78,8 @@ const Body = ({ user, admin, setNewBook, setInfoLibro, setEditar }) => {
     const bookSrched = biblioteca.filter(
       (item) =>
         autoresMatchId.includes(item.autor_id) ||
-        item.titulo.toLowerCase().includes(inputToFilter) ||
-        item.editorial.toLowerCase().includes(inputToFilter)
+        item.titulo.toLowerCase().includes(inputToFilter.toLocaleLowerCase()) ||
+        item.editorial.toLowerCase().includes(inputToFilter.toLocaleLowerCase())
     );
     const bookSrchedByCarrera = carreraToFilter
       ? bookSrched.filter((item) => item.carrera_id == carreraToFilter)
