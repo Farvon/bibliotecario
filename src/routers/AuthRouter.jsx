@@ -5,6 +5,7 @@ import Admin from "../views/Admin";
 import Home from "../views/Home";
 import PerfilUser from "../views/PerfilUser";
 import Reglamento from "../views/Reglamento";
+import UserManual from "../views/UserManual";
 import UpdatePassword from "../views/UpdatePassword";
 
 const AuthRouter = ({ user }) => {
@@ -47,6 +48,8 @@ const AuthRouter = ({ user }) => {
           element={<Reglamento />}
           exact
         />
+
+        <Route path="/manual" name="manual" element={<UserManual />} exact />
 
         <Route
           path="/updatepassword"

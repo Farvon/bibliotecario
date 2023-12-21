@@ -89,7 +89,7 @@ const RetiroCard = ({
   const fechaHoy = new Date();
   const diferenciaEnMilisegundos = fechaHoy - fechaRetiro;
   const dias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
-  const estado = dias > 3 ? false : true;
+  const estado = dias > 7 ? false : true;
 
   return (
     <Tr key={reserva.id}>

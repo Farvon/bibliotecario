@@ -7,6 +7,7 @@ import { singOut } from "../backend/controllers/usuarios";
 import Box from "@mui/material/Box";
 import EditNotificationsRoundedIcon from "@mui/icons-material/EditNotificationsRounded";
 import LocalLibraryRoundedIcon from "@mui/icons-material/LocalLibraryRounded";
+import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -31,6 +32,10 @@ const AccountMenu = () => {
 
   const handleClickReglamento = () => {
     window.location.href = "/reglamento";
+  };
+
+  const handleClickManual = () => {
+    window.location.href = "/manual";
   };
 
   const handleSingOut = () => {
@@ -100,9 +105,13 @@ const AccountMenu = () => {
         </MenuItem>
 
         <MenuItem onClick={(handleClose, handleClickReglamento)}>
-          {/* <TaskRoundedIcon /> */}
           <EditNotificationsRoundedIcon />
           Reglamento
+        </MenuItem>
+        <MenuItem onClick={(handleClose, handleClickManual)}>
+          {/* <TaskRoundedIcon /> */}
+          <RecentActorsIcon />
+          Manual de Usuario
         </MenuItem>
 
         {/* <MenuItem onClick={handleClose}>
@@ -115,7 +124,7 @@ const AccountMenu = () => {
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          Cerrar Sesión
         </MenuItem>
       </Menu>
     </>

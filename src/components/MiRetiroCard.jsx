@@ -38,7 +38,7 @@ const MiRetiroCard = ({ retiro }) => {
   const fechaHoy = new Date();
   const diferenciaEnMilisegundos = fechaHoy - fechaRetiro;
   const dias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
-  const estado = dias <= 3 ? "En tiempo" : "Excedido";
+  const estado = dias > 1 ? "Excedido" : "En tiempo";
 
   return (
     <Tr>
@@ -129,5 +129,5 @@ const TdEstado = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${({ dias }) => (dias <= 3 ? "green" : "red")};
+  color: ${({ dias }) => (dias > 7 ? "red" : "green")};
 `;
