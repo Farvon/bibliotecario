@@ -1,8 +1,16 @@
-# React + Vite
+# Bibliotecario
+Aplicación web para la gestión de Bibliotecas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
+# Tecnologías utilizadas
+- React.js
+- Supabase
+- Material UI
+- Styled Components
 
-Currently, two official plugins are available:
+---
+# Capturas
+![image](https://github.com/Farvon/bibliotecario/assets/78886951/7bf79053-3d32-48ab-b982-dc9f252bece4)
+![image](https://github.com/Farvon/bibliotecario/assets/78886951/3d5997bf-b44a-4ec4-85f0-7893f1b029bb)
+![image](https://github.com/Farvon/bibliotecario/assets/78886951/82216dc2-b423-47d9-9c51-ac6bb7d6eac3)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
