@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import LocalLibraryRoundedIcon from "@mui/icons-material/LocalLibraryRounded";
+import SummarizeIcon from "@mui/icons-material/Summarize";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -23,6 +24,10 @@ const AdminAccountMenu = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDocument = () => {
+    window.location.href = "/documentacion";
   };
 
   const handleSingOut = () => {
@@ -97,11 +102,17 @@ const AdminAccountMenu = () => {
         </MenuItem>
         <Divider /> */}
 
+        <MenuItem onClick={(handleClose, handleDocument)}>
+          <ListItemIcon>
+            <SummarizeIcon fontSize="small" />
+          </ListItemIcon>
+          Documentación del Proyecto
+        </MenuItem>
         <MenuItem onClick={(handleClose, handleSingOut)}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          Cerrar Sesión
         </MenuItem>
       </Menu>
     </React.Fragment>

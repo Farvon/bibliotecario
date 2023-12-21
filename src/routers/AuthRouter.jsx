@@ -7,6 +7,7 @@ import PerfilUser from "../views/PerfilUser";
 import Reglamento from "../views/Reglamento";
 import UserManual from "../views/UserManual";
 import UpdatePassword from "../views/UpdatePassword";
+import Documentacion from "../views/Documentacion";
 
 const AuthRouter = ({ user }) => {
   useEffect(() => {}, []);
@@ -50,6 +51,13 @@ const AuthRouter = ({ user }) => {
         />
 
         <Route path="/manual" name="manual" element={<UserManual />} exact />
+
+        <Route
+          path="/documentacion"
+          name="documentacion"
+          element={<Documentacion />}
+          exact
+        />
 
         <Route
           path="/updatepassword"
