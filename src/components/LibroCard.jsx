@@ -213,7 +213,7 @@ const CardContainer = styled.div`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding: 18px 0px;
   width: 50vw;
-  max-height: 80vh;
+
   z-index: 1000;
 
   @media (max-width: 767px) {
@@ -246,6 +246,7 @@ const FormInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-width: 60%;
 `;
 
 const Titulo = styled.span`
@@ -254,7 +255,6 @@ const Titulo = styled.span`
   font-weight: bold;
   font-size: 1.5em;
   margin-bottom: 8px;
-  max-width: 80%;
 
   @media (max-width: 767px) {
     font-size: 1em;
@@ -281,6 +281,7 @@ const Info = styled.div`
   display: flex;
   flex-direction: row;
   width: 90%;
+  justify-content: center;
   margin-bottom: 12px;
   padding: 0 20px;
   flex-wrap: wrap;
